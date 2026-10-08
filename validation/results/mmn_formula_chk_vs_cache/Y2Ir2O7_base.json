@@ -1,0 +1,8 @@
+{
+  "n_R_ours": 1097,
+  "n_R_cache": 1097,
+  "R_in_cache_not_ours": 0,
+  "max_abs_diff_A": 4.1632777109728235e-07,
+  "relative_l2": 9.33853270769567e-07,
+  "centres_max_diff_A": 0.0
+}

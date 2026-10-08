@@ -1,0 +1,449 @@
+{
+  "all_required_checks_pass": true,
+  "description": "Ti_Q_2A exact H(R)/MMN-derived A(R) interpolation checks",
+  "mmn_donor": "/Users/treycole/Repos/axion-phonon/data/SrTiO3/Ti_Q_2A/output/188914bc889/trial_03_Sr_sp_Ti_pd_O_sp/proj_gauge/SrTiO3.mmn",
+  "trials": {
+    "trial03": {
+      "all_required_checks_pass": true,
+      "central_differences": {
+        "best_curl": {
+          "max_abs": 2.7971654471014806e-10,
+          "relative_frobenius": 6.557644545070471e-10,
+          "step": "1e-05"
+        },
+        "best_dH": {
+          "max_abs": 3.0092336841310403e-09,
+          "relative_frobenius": 2.1880155668010441e-10,
+          "step": "1e-05"
+        },
+        "central_difference_steps_reduced": [
+          0.01,
+          0.003,
+          0.001,
+          0.0003,
+          0.0001,
+          3e-05,
+          1e-05
+        ],
+        "curl_by_step": {
+          "1e-02": {
+            "max_abs": 0.00027890787013032945,
+            "relative_frobenius": 0.0006532880562881576
+          },
+          "1e-03": {
+            "max_abs": 2.7971751945904117e-06,
+            "relative_frobenius": 6.543229316477877e-06
+          },
+          "1e-04": {
+            "max_abs": 2.7972580238697643e-08,
+            "relative_frobenius": 6.543328013033178e-08
+          },
+          "1e-05": {
+            "max_abs": 2.7971654471014806e-10,
+            "relative_frobenius": 6.557644545070471e-10
+          },
+          "3e-03": {
+            "max_abs": 2.5168680822416154e-05,
+            "relative_frobenius": 5.888152674991005e-05
+          },
+          "3e-04": {
+            "max_abs": 2.5175248250363104e-07,
+            "relative_frobenius": 5.888993448833473e-07
+          },
+          "3e-05": {
+            "max_abs": 2.5200320096643873e-09,
+            "relative_frobenius": 5.889289072124404e-09
+          }
+        },
+        "dH_by_step": {
+          "1e-02": {
+            "max_abs": 0.0029854527889492393,
+            "relative_frobenius": 0.0002173048875344329
+          },
+          "1e-03": {
+            "max_abs": 2.985747409158489e-05,
+            "relative_frobenius": 2.173864919581393e-06
+          },
+          "1e-04": {
+            "max_abs": 2.9857870525855133e-07,
+            "relative_frobenius": 2.173874652744087e-08
+          },
+          "1e-05": {
+            "max_abs": 3.0092336841310403e-09,
+            "relative_frobenius": 2.1880155668010441e-10
+          },
+          "3e-03": {
+            "max_abs": 0.00026871511419662155,
+            "relative_frobenius": 1.956418973558787e-05
+          },
+          "3e-04": {
+            "max_abs": 2.6871727397739465e-06,
+            "relative_frobenius": 1.9564856048782398e-07
+          },
+          "3e-05": {
+            "max_abs": 2.687106731365589e-08,
+            "relative_frobenius": 1.957112119692714e-09
+          }
+        },
+        "n_random_kpoints": 4
+      },
+      "connection_mesh": {
+        "cache_R_vectors_identical": true,
+        "finite_difference_shell_completeness_max_abs": 0.0,
+        "inverse_fft_raw_A_original_mesh": {
+          "max_abs": 2.775562339353997e-16,
+          "relative_frobenius": 2.0814512311806552e-16
+        },
+        "n_R_mapped_prehermitian": 729,
+        "n_R_production": 729,
+        "n_R_raw": 512,
+        "production_A_mesh_vs_hermitian_part_of_raw": {
+          "max_abs": 2.77561177114213e-16,
+          "relative_frobenius": 1.943282079912539e-16
+        },
+        "production_R0_diagonal_max_abs_Angstrom": 7.831912652638494e-06,
+        "production_projection_change_from_raw": {
+          "max_abs": 0.016169433362381636,
+          "relative_frobenius": 0.012299841208890142
+        },
+        "raw_A_mesh_hermiticity": {
+          "max_abs": 0.03233886672476327,
+          "relative_frobenius": 0.024599682417780284
+        },
+        "raw_vs_mapped_folded_coefficients": {
+          "max_abs": 4.235164736271502e-22,
+          "relative_frobenius": 2.1145508943326767e-22
+        },
+        "raw_vs_mapped_offgrid_values_expected_to_differ": {
+          "max_abs": 0.306552938682372,
+          "relative_frobenius": 0.27567049607619953
+        },
+        "raw_vs_mapped_original_mesh_values": {
+          "max_abs": 2.775562339353997e-16,
+          "relative_frobenius": 2.081451231185282e-16
+        },
+        "regenerated_vs_cached_A_R": {
+          "max_abs": 0.0,
+          "relative_frobenius": 0.0
+        }
+      },
+      "elapsed_seconds": 52.715719707950484,
+      "hamiltonian_mesh": {
+        "hr_vs_checkpoint_H_original_mesh": {
+          "max_abs": 5.270903748687966e-05,
+          "relative_frobenius": 4.331491590173624e-06
+        },
+        "hr_vs_checkpoint_eigenvalues_max_abs_eV": 5.134178933730027e-05,
+        "n_R_mapped": 729,
+        "n_R_raw": 729,
+        "raw_mesh_H_hermiticity": {
+          "max_abs": 0.0,
+          "relative_frobenius": 0.0
+        },
+        "raw_vs_mapped_folded_coefficients": {
+          "max_abs": 3.3881317890172014e-21,
+          "relative_frobenius": 5.42395968477937e-23
+        },
+        "raw_vs_mapped_offgrid_values_expected_to_differ": {
+          "max_abs": 0.006535736613774539,
+          "relative_frobenius": 0.0002022285542969331
+        },
+        "raw_vs_mapped_original_mesh_values": {
+          "max_abs": 0.0,
+          "relative_frobenius": 0.0
+        },
+        "weight_moved_outside_raw_R_sqrt_fraction": 0.0
+      },
+      "installed_position_matrix": {
+        "R0_diagonal_replaced_max_abs_Angstrom": 7.831912652638494e-06,
+        "n_R_in_full_MMN_transform": 729,
+        "n_R_installed": 729,
+        "pair_hermiticity_relative": 0.0,
+        "weight_discarded_outside_H_R_sqrt_fraction": 0.0
+      },
+      "mp_grid": [
+        8,
+        8,
+        8
+      ],
+      "num_wann": 48,
+      "offgrid_structure": {
+        "A_hermiticity": {
+          "max_abs": 5.826295476204435e-16,
+          "relative_frobenius": 2.9174858079551023e-16
+        },
+        "A_reciprocal_covariance": {
+          "max_abs": 1.6289053439422219e-15,
+          "relative_frobenius": 1.0070908733487013e-15
+        },
+        "H_hermiticity": {
+          "max_abs": 9.930136612989092e-16,
+          "relative_frobenius": 2.884462596482473e-17
+        },
+        "H_reciprocal_covariance": {
+          "max_abs": 1.0530159589964839e-14,
+          "relative_frobenius": 3.86767669145921e-16
+        },
+        "curl_hermiticity": {
+          "max_abs": 1.0007415106216803e-15,
+          "relative_frobenius": 9.520180529621745e-16
+        },
+        "curl_reciprocal_covariance": {
+          "max_abs": 1.5151595604785605e-15,
+          "relative_frobenius": 1.439552674210689e-15
+        },
+        "n_random_kpoints": 7,
+        "reciprocal_shift": [
+          1,
+          -1,
+          2
+        ]
+      },
+      "status": {
+        "A_R_mapping_node_invariance": true,
+        "A_cache_matches_regeneration": true,
+        "A_inverse_fft": true,
+        "A_production_hermitian_projection": true,
+        "A_reciprocal_covariance": true,
+        "H_R_mapping_node_invariance": true,
+        "H_R_reconstructs_checkpoint": true,
+        "H_reciprocal_covariance": true,
+        "analytic_curl_matches_central_difference": true,
+        "analytic_dH_matches_central_difference": true,
+        "curl_reciprocal_covariance": true,
+        "offgrid_A_hermitian": true,
+        "offgrid_H_hermitian": true,
+        "offgrid_curl_hermitian": true
+      },
+      "thresholds": {
+        "cache_relative": 2e-12,
+        "derivative_relative": 2e-07,
+        "fft_or_mapping_relative": 2e-12,
+        "hermiticity_relative": 2e-12,
+        "hr_checkpoint_max_abs_eV": 0.0001,
+        "reciprocal_covariance_relative": 2e-11
+      }
+    },
+    "trial04": {
+      "all_required_checks_pass": true,
+      "central_differences": {
+        "best_curl": {
+          "max_abs": 2.136300891124824e-09,
+          "relative_frobenius": 8.981664990066141e-10,
+          "step": "1e-05"
+        },
+        "best_dH": {
+          "max_abs": 7.622982255562642e-09,
+          "relative_frobenius": 3.833015918918868e-10,
+          "step": "1e-05"
+        },
+        "central_difference_steps_reduced": [
+          0.01,
+          0.003,
+          0.001,
+          0.0003,
+          0.0001,
+          3e-05,
+          1e-05
+        ],
+        "curl_by_step": {
+          "1e-02": {
+            "max_abs": 0.002137938890647101,
+            "relative_frobenius": 0.0008989370573675318
+          },
+          "1e-03": {
+            "max_abs": 2.1389340531188515e-05,
+            "relative_frobenius": 8.996150006439434e-06
+          },
+          "1e-04": {
+            "max_abs": 2.138939849037458e-07,
+            "relative_frobenius": 8.996214625559547e-08
+          },
+          "1e-05": {
+            "max_abs": 2.136300891124824e-09,
+            "relative_frobenius": 8.981664990066141e-10
+          },
+          "3e-03": {
+            "max_abs": 0.00019249682593302137,
+            "relative_frobenius": 8.096041527981525e-05
+          },
+          "3e-04": {
+            "max_abs": 1.925049132250346e-06,
+            "relative_frobenius": 8.096591483978842e-07
+          },
+          "3e-05": {
+            "max_abs": 1.9249842793402917e-08,
+            "relative_frobenius": 8.096716012761172e-09
+          }
+        },
+        "dH_by_step": {
+          "1e-02": {
+            "max_abs": 0.007706276930109723,
+            "relative_frobenius": 0.00038430683988680946
+          },
+          "1e-03": {
+            "max_abs": 7.713572244405498e-05,
+            "relative_frobenius": 3.845121869849994e-06
+          },
+          "1e-04": {
+            "max_abs": 7.713587226732e-07,
+            "relative_frobenius": 3.84511119844003e-08
+          },
+          "1e-05": {
+            "max_abs": 7.622982255562642e-09,
+            "relative_frobenius": 3.833015918918868e-10
+          },
+          "3e-03": {
+            "max_abs": 0.0006941684147925287,
+            "relative_frobenius": 3.4604602082802136e-05
+          },
+          "3e-04": {
+            "max_abs": 6.942275833310418e-06,
+            "relative_frobenius": 3.4606273926292077e-07
+          },
+          "3e-05": {
+            "max_abs": 6.942539609896065e-08,
+            "relative_frobenius": 3.461129028879783e-09
+          }
+        },
+        "n_random_kpoints": 4
+      },
+      "connection_mesh": {
+        "cache_R_vectors_identical": true,
+        "finite_difference_shell_completeness_max_abs": 0.0,
+        "inverse_fft_raw_A_original_mesh": {
+          "max_abs": 2.775578737305794e-16,
+          "relative_frobenius": 1.902237607381709e-16
+        },
+        "n_R_mapped_prehermitian": 729,
+        "n_R_production": 729,
+        "n_R_raw": 512,
+        "production_A_mesh_vs_hermitian_part_of_raw": {
+          "max_abs": 2.220897769027689e-16,
+          "relative_frobenius": 1.7754851209213364e-16
+        },
+        "production_R0_diagonal_max_abs_Angstrom": 0.0006441390272158942,
+        "production_projection_change_from_raw": {
+          "max_abs": 0.05956928077429646,
+          "relative_frobenius": 0.03482454172048542
+        },
+        "raw_A_mesh_hermiticity": {
+          "max_abs": 0.11913856154859293,
+          "relative_frobenius": 0.06964908344097084
+        },
+        "raw_vs_mapped_folded_coefficients": {
+          "max_abs": 1.6543612251060553e-24,
+          "relative_frobenius": 9.094569779558292e-25
+        },
+        "raw_vs_mapped_offgrid_values_expected_to_differ": {
+          "max_abs": 0.3081536785242447,
+          "relative_frobenius": 0.3697080714316701
+        },
+        "raw_vs_mapped_original_mesh_values": {
+          "max_abs": 2.775578737305794e-16,
+          "relative_frobenius": 1.902237607381709e-16
+        },
+        "regenerated_vs_cached_A_R": {
+          "max_abs": 0.0,
+          "relative_frobenius": 0.0
+        }
+      },
+      "elapsed_seconds": 37.08135095797479,
+      "hamiltonian_mesh": {
+        "hr_vs_checkpoint_H_original_mesh": {
+          "max_abs": 5.3322276034606375e-05,
+          "relative_frobenius": 3.4174264925274403e-06
+        },
+        "hr_vs_checkpoint_eigenvalues_max_abs_eV": 7.443136600571165e-05,
+        "n_R_mapped": 721,
+        "n_R_raw": 729,
+        "raw_mesh_H_hermiticity": {
+          "max_abs": 0.0,
+          "relative_frobenius": 0.0
+        },
+        "raw_vs_mapped_folded_coefficients": {
+          "max_abs": 0.0,
+          "relative_frobenius": 0.0
+        },
+        "raw_vs_mapped_offgrid_values_expected_to_differ": {
+          "max_abs": 0.0017893987793722043,
+          "relative_frobenius": 8.733590567692288e-05
+        },
+        "raw_vs_mapped_original_mesh_values": {
+          "max_abs": 0.0,
+          "relative_frobenius": 0.0
+        },
+        "weight_moved_outside_raw_R_sqrt_fraction": 0.0
+      },
+      "installed_position_matrix": {
+        "R0_diagonal_replaced_max_abs_Angstrom": 0.0006441390272158942,
+        "n_R_in_full_MMN_transform": 729,
+        "n_R_installed": 721,
+        "pair_hermiticity_relative": 0.0,
+        "weight_discarded_outside_H_R_sqrt_fraction": 7.50222568316832e-08
+      },
+      "mp_grid": [
+        8,
+        8,
+        8
+      ],
+      "num_wann": 38,
+      "offgrid_structure": {
+        "A_hermiticity": {
+          "max_abs": 5.884223199366898e-16,
+          "relative_frobenius": 3.9073298891655713e-16
+        },
+        "A_reciprocal_covariance": {
+          "max_abs": 1.880440247958859e-15,
+          "relative_frobenius": 1.0583761869851126e-15
+        },
+        "H_hermiticity": {
+          "max_abs": 5.389157964038493e-16,
+          "relative_frobenius": 1.7349398585923725e-17
+        },
+        "H_reciprocal_covariance": {
+          "max_abs": 8.393755988682995e-15,
+          "relative_frobenius": 2.6438672205768174e-16
+        },
+        "curl_hermiticity": {
+          "max_abs": 2.5422197295626198e-15,
+          "relative_frobenius": 1.1830164509434732e-15
+        },
+        "curl_reciprocal_covariance": {
+          "max_abs": 2.367825298831985e-15,
+          "relative_frobenius": 1.817499312470403e-15
+        },
+        "n_random_kpoints": 7,
+        "reciprocal_shift": [
+          1,
+          -1,
+          2
+        ]
+      },
+      "status": {
+        "A_R_mapping_node_invariance": true,
+        "A_cache_matches_regeneration": true,
+        "A_inverse_fft": true,
+        "A_production_hermitian_projection": true,
+        "A_reciprocal_covariance": true,
+        "H_R_mapping_node_invariance": true,
+        "H_R_reconstructs_checkpoint": true,
+        "H_reciprocal_covariance": true,
+        "analytic_curl_matches_central_difference": true,
+        "analytic_dH_matches_central_difference": true,
+        "curl_reciprocal_covariance": true,
+        "offgrid_A_hermitian": true,
+        "offgrid_H_hermitian": true,
+        "offgrid_curl_hermitian": true
+      },
+      "thresholds": {
+        "cache_relative": 2e-12,
+        "derivative_relative": 2e-07,
+        "fft_or_mapping_relative": 2e-12,
+        "hermiticity_relative": 2e-12,
+        "hr_checkpoint_max_abs_eV": 0.0001,
+        "reciprocal_covariance_relative": 2e-11
+      }
+    }
+  }
+}

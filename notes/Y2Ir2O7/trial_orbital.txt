@@ -1,0 +1,745 @@
+# Spreads for different trial orbitals
+
+----------------
+Pseudopotentials
+----------------
+
+O 2-  [He]      2s2 2p6 3s0 ...
+Y 3+  [Ar+3d10] 4s2 4p6 5s0 5p0 4d0 ...
+Ir 4+ [Xe]      5d5 6s0 6p0 ...
+
+---------------------------------
+Band counting and Wannier content
+---------------------------------
+
+Atomic	Energy		Wannier		# of	Cum # of
+Orb'l	range		content		bands	bands
+
+Y 4s	Very deep	No		8	8
+
+Y 4p	Somewhat deep	Option A	24	32
+O 2s	Somewhat deep	Option A	28	60
+
+O 2p	Valence band	Yes		84	144
+Ir 5d	Just below Ef	Yes		20	164 occupied bands
+-
+Ir 5d	Just above Ef	Yes		20	[Conduc bands start here]
+
+Y 4d	Conduc		Option B	40
+
+Ir 6s	Conduc		Option C	8
+Ir 6p	High conduc	Option C	24
+
+Y 5s	High conduc?	No		8	Needs projector with r=2	
+Y 5p	High conduc?	No		24	Needs projector with r=2
+
+--------------------------------
+
+All Wannierizations below use projection only
+
+## Option A
+
+num_wann = 176
+
+begin projections
+Y: p
+Ir1: d
+Ir2: d
+Ir3: d
+Ir4: d
+O: s;p
+end projections
+
+ Final State
+  WF centre and spread    1  (  5.095001,  5.095000,  5.095000 )     0.67615176
+  WF centre and spread    2  (  5.094999,  5.095000,  5.095000 )     0.67618855
+  WF centre and spread    3  (  5.095001,  5.094999,  5.094999 )     0.67609682
+  WF centre and spread    4  (  5.094999,  5.095001,  5.095001 )     0.67623926
+  WF centre and spread    5  (  5.095000,  5.095000,  5.095000 )     0.67610012
+  WF centre and spread    6  (  5.094999,  5.095000,  5.095000 )     0.67624045
+  WF centre and spread    7  (  5.095000,  2.547499,  2.547500 )     0.67619192
+  WF centre and spread    8  (  5.095000,  2.547500,  2.547500 )     0.67614856
+  WF centre and spread    9  (  5.095000,  2.547500,  2.547500 )     0.67624083
+  WF centre and spread   10  (  5.095000,  2.547500,  2.547500 )     0.67609618
+  WF centre and spread   11  (  5.095000,  2.547500,  2.547500 )     0.67624005
+  WF centre and spread   12  (  5.095000,  2.547500,  2.547500 )     0.67610127
+  WF centre and spread   13  (  2.547500,  5.095000,  2.547500 )     0.67619170
+  WF centre and spread   14  (  2.547500,  5.095000,  2.547500 )     0.67614953
+  WF centre and spread   15  (  2.547500,  5.095000,  2.547501 )     0.67623776
+  WF centre and spread   16  (  2.547500,  5.095000,  2.547500 )     0.67610088
+  WF centre and spread   17  (  2.547500,  5.095000,  2.547500 )     0.67624078
+  WF centre and spread   18  (  2.547500,  5.095000,  2.547500 )     0.67610124
+  WF centre and spread   19  (  7.642500,  7.642500,  5.095000 )     0.67615134
+  WF centre and spread   20  (  7.642500,  7.642500,  5.095000 )     0.67619317
+  WF centre and spread   21  (  7.642498,  7.642500,  5.094999 )     0.67609798
+  WF centre and spread   22  (  7.642502,  7.642500,  5.095001 )     0.67624343
+  WF centre and spread   23  (  7.642500,  7.642501,  5.095000 )     0.67609879
+  WF centre and spread   24  (  7.642500,  7.642498,  5.095000 )     0.67624614
+  WF centre and spread   25  (  0.000007,  0.000003,  0.000001 )     1.04062187
+  WF centre and spread   26  ( -0.000006, -0.000004, -0.000002 )     1.04866695
+  WF centre and spread   27  ( -0.000002, -0.000000,  0.000005 )     0.94591942
+  WF centre and spread   28  (  0.000001, -0.000000, -0.000005 )     0.93796174
+  WF centre and spread   29  ( -0.000003,  0.000005, -0.000001 )     0.94584884
+  WF centre and spread   30  (  0.000003, -0.000005,  0.000002 )     0.93803869
+  WF centre and spread   31  (  0.000010, -0.000001, -0.000001 )     1.03760513
+  WF centre and spread   32  ( -0.000013, -0.000000,  0.000001 )     1.05141343
+  WF centre and spread   33  (  0.000002,  0.000011, -0.000003 )     0.94502281
+  WF centre and spread   34  ( -0.000002, -0.000012,  0.000003 )     0.93883063
+  WF centre and spread   35  (  5.095005,  7.642503,  2.547508 )     1.04829925
+  WF centre and spread   36  (  5.094996,  7.642500,  2.547491 )     1.04051910
+  WF centre and spread   37  (  5.095006,  7.642500,  2.547496 )     0.93809390
+  WF centre and spread   38  (  5.094994,  7.642501,  2.547504 )     0.94580756
+  WF centre and spread   39  (  5.094997,  7.642498,  2.547492 )     0.93803805
+  WF centre and spread   40  (  5.095003,  7.642502,  2.547509 )     0.94588414
+  WF centre and spread   41  (  5.095000,  7.642508,  2.547501 )     1.05160598
+  WF centre and spread   42  (  5.095002,  7.642492,  2.547499 )     1.03754428
+  WF centre and spread   43  (  5.095019,  7.642494,  2.547500 )     0.93901360
+  WF centre and spread   44  (  5.094982,  7.642506,  2.547500 )     0.94491843
+  WF centre and spread   45  (  7.642510,  5.095004,  2.547506 )     1.04819860
+  WF centre and spread   46  (  7.642492,  5.094998,  2.547494 )     1.04029461
+  WF centre and spread   47  (  7.642496,  5.094997,  2.547489 )     0.93787805
+  WF centre and spread   48  (  7.642504,  5.095003,  2.547511 )     0.94586953
+  WF centre and spread   49  (  7.642498,  5.095004,  2.547497 )     0.93793552
+  WF centre and spread   50  (  7.642502,  5.094996,  2.547503 )     0.94573432
+  WF centre and spread   51  (  7.642515,  5.094997,  2.547501 )     1.05148680
+  WF centre and spread   52  (  7.642484,  5.095004,  2.547500 )     1.03748172
+  WF centre and spread   53  (  7.642497,  5.095014,  2.547500 )     0.93889627
+  WF centre and spread   54  (  7.642503,  5.094986,  2.547500 )     0.94482586
+  WF centre and spread   55  (  2.547508,  2.547488, -0.000013 )     1.03981538
+  WF centre and spread   56  (  2.547492,  2.547512,  0.000012 )     1.04821552
+  WF centre and spread   57  (  2.547500,  2.547500,  0.000001 )     0.94553371
+  WF centre and spread   58  (  2.547500,  2.547500, -0.000001 )     0.93759588
+  WF centre and spread   59  (  2.547502,  2.547503, -0.000002 )     0.94550601
+  WF centre and spread   60  (  2.547497,  2.547496,  0.000002 )     0.93763760
+  WF centre and spread   61  (  2.547519,  2.547468,  0.000001 )     1.03710001
+  WF centre and spread   62  (  2.547481,  2.547532,  0.000001 )     1.05116371
+  WF centre and spread   63  (  2.547506,  2.547490,  0.000001 )     0.94442615
+  WF centre and spread   64  (  2.547492,  2.547508, -0.000000 )     0.93875361
+  WF centre and spread   65  (  3.821251,  3.821250,  3.821235 )     0.54748762
+  WF centre and spread   66  (  3.821248,  3.821249,  3.821265 )     0.54748274
+  WF centre and spread   67  (  3.821251,  3.821250,  3.821009 )     1.07958407
+  WF centre and spread   68  (  3.821251,  3.821250,  3.821499 )     1.07957121
+  WF centre and spread   69  (  3.821246,  3.821253,  3.821125 )     1.07956638
+  WF centre and spread   70  (  3.821241,  3.821248,  3.821372 )     1.07953075
+  WF centre and spread   71  (  3.821252,  3.821245,  3.821127 )     1.07958969
+  WF centre and spread   72  (  3.821250,  3.821248,  3.821371 )     1.07957071
+  WF centre and spread   73  (  6.368751,  6.368751,  6.368765 )     0.54748309
+  WF centre and spread   74  (  6.368749,  6.368749,  6.368734 )     0.54748738
+  WF centre and spread   75  (  6.368750,  6.368750,  6.368992 )     1.07958247
+  WF centre and spread   76  (  6.368748,  6.368749,  6.368501 )     1.07957194
+  WF centre and spread   77  (  6.368757,  6.368746,  6.368872 )     1.07952248
+  WF centre and spread   78  (  6.368757,  6.368753,  6.368630 )     1.07957574
+  WF centre and spread   79  (  6.368747,  6.368759,  6.368872 )     1.07956242
+  WF centre and spread   80  (  6.368750,  6.368748,  6.368629 )     1.07959869
+  WF centre and spread   81  (  3.440364,  6.368730,  6.368783 )     0.56000134
+  WF centre and spread   82  (  3.440341,  6.368774,  6.368714 )     0.56009428
+  WF centre and spread   83  (  3.446343,  6.368280,  6.369166 )     0.87596545
+  WF centre and spread   84  (  3.446305,  6.369211,  6.368329 )     0.87625439
+  WF centre and spread   85  (  3.471710,  6.369021,  6.368736 )     0.93083169
+  WF centre and spread   86  (  3.471651,  6.368454,  6.368796 )     0.93083143
+  WF centre and spread   87  (  3.446352,  6.368486,  6.368926 )     0.87596390
+  WF centre and spread   88  (  3.446298,  6.369033,  6.368588 )     0.87619973
+  WF centre and spread   89  (  9.297113,  6.368759,  6.368798 )     0.56008410
+  WF centre and spread   90  (  9.297192,  6.368740,  6.368703 )     0.55999612
+  WF centre and spread   91  (  9.291197,  6.369204,  6.369237 )     0.87616596
+  WF centre and spread   92  (  9.291164,  6.368284,  6.368267 )     0.87616661
+  WF centre and spread   93  (  9.265830,  6.368442,  6.368710 )     0.93094694
+  WF centre and spread   94  (  9.265967,  6.369046,  6.368793 )     0.93066041
+  WF centre and spread   95  (  9.291197,  6.368991,  6.368930 )     0.87621863
+  WF centre and spread   96  (  9.291160,  6.368517,  6.368584 )     0.87606004
+  WF centre and spread   97  (  6.368755,  6.368755,  3.440383 )     0.55931071
+  WF centre and spread   98  (  6.368746,  6.368743,  3.440316 )     0.56074212
+  WF centre and spread   99  (  6.368733,  6.368751,  3.472053 )     0.92749272
+  WF centre and spread  100  (  6.368752,  6.368751,  3.471224 )     0.93459226
+  WF centre and spread  101  (  6.368769,  6.368742,  3.446451 )     0.87518698
+  WF centre and spread  102  (  6.368745,  6.368747,  3.446157 )     0.87726138
+  WF centre and spread  103  (  6.368741,  6.368753,  3.446462 )     0.87497437
+  WF centre and spread  104  (  6.368744,  6.368750,  3.446169 )     0.87712945
+  WF centre and spread  105  (  6.368760,  6.368760,  9.297190 )     0.56080011
+  WF centre and spread  106  (  6.368745,  6.368745,  9.297108 )     0.55925532
+  WF centre and spread  107  (  6.368729,  6.368723,  9.266229 )     0.93480894
+  WF centre and spread  108  (  6.368727,  6.368738,  9.265425 )     0.92725066
+  WF centre and spread  109  (  6.368743,  6.368728,  9.291343 )     0.87742015
+  WF centre and spread  110  (  6.368778,  6.368767,  9.291022 )     0.87504531
+  WF centre and spread  111  (  6.368731,  6.368758,  9.291341 )     0.87727518
+  WF centre and spread  112  (  6.368752,  6.368765,  9.291002 )     0.87485166
+  WF centre and spread  113  (  6.368750,  3.440355,  6.368788 )     0.55999871
+  WF centre and spread  114  (  6.368754,  3.440348,  6.368708 )     0.56005561
+  WF centre and spread  115  (  6.368280,  3.446335,  6.369171 )     0.87602094
+  WF centre and spread  116  (  6.369202,  3.446312,  6.368323 )     0.87618205
+  WF centre and spread  117  (  6.368518,  3.446324,  6.368929 )     0.87620095
+  WF centre and spread  118  (  6.368997,  3.446303,  6.368581 )     0.87627428
+  WF centre and spread  119  (  6.369016,  3.471717,  6.368736 )     0.93108057
+  WF centre and spread  120  (  6.368453,  3.471639,  6.368792 )     0.93107311
+  WF centre and spread  121  (  6.368763,  9.297143,  6.368794 )     0.56001720
+  WF centre and spread  122  (  6.368738,  9.297160,  6.368708 )     0.56002552
+  WF centre and spread  123  (  6.369193,  9.291189,  6.369206 )     0.87601524
+  WF centre and spread  124  (  6.368292,  9.291171,  6.368302 )     0.87618972
+  WF centre and spread  125  (  6.369001,  9.291198,  6.368918 )     0.87636499
+  WF centre and spread  126  (  6.368513,  9.291181,  6.368594 )     0.87612326
+  WF centre and spread  127  (  6.368448,  9.265863,  6.368698 )     0.93091250
+  WF centre and spread  128  (  6.369028,  9.265874,  6.368796 )     0.93117950
+  WF centre and spread  129  (  3.821250,  6.749654,  3.821207 )     0.56003739
+  WF centre and spread  130  (  3.821246,  6.749643,  3.821297 )     0.56001845
+  WF centre and spread  131  (  3.821730,  6.743665,  3.820818 )     0.87610371
+  WF centre and spread  132  (  3.820788,  6.743686,  3.821688 )     0.87612939
+  WF centre and spread  133  (  3.821482,  6.743682,  3.821063 )     0.87634855
+  WF centre and spread  134  (  3.821003,  6.743691,  3.821428 )     0.87612516
+  WF centre and spread  135  (  3.820988,  6.718301,  3.821260 )     0.93113410
+  WF centre and spread  136  (  3.821542,  6.718345,  3.821211 )     0.93102112
+  WF centre and spread  137  (  3.821231,  0.892847,  3.821199 )     0.56003268
+  WF centre and spread  138  (  3.821268,  0.892851,  3.821299 )     0.56001049
+  WF centre and spread  139  (  3.820806,  0.898809,  3.820791 )     0.87601212
+  WF centre and spread  140  (  3.821709,  0.898828,  3.821703 )     0.87618756
+  WF centre and spread  141  (  3.820980,  0.898803,  3.821082 )     0.87629019
+  WF centre and spread  142  (  3.821507,  0.898815,  3.821406 )     0.87619085
+  WF centre and spread  143  (  3.821549,  0.924129,  3.821303 )     0.93093770
+  WF centre and spread  144  (  3.820975,  0.924134,  3.821204 )     0.93113781
+  WF centre and spread  145  (  6.749648,  3.821251,  3.821210 )     0.56002023
+  WF centre and spread  146  (  6.749648,  3.821245,  3.821293 )     0.56007644
+  WF centre and spread  147  (  6.743663,  3.821717,  3.820822 )     0.87607764
+  WF centre and spread  148  (  6.743688,  3.820792,  3.821684 )     0.87616283
+  WF centre and spread  149  (  6.718316,  3.820978,  3.821262 )     0.93084680
+  WF centre and spread  150  (  6.718328,  3.821547,  3.821205 )     0.93081547
+  WF centre and spread  151  (  6.743661,  3.821474,  3.821075 )     0.87607827
+  WF centre and spread  152  (  6.743689,  3.821007,  3.821412 )     0.87610484
+  WF centre and spread  153  (  0.892835,  3.821253,  3.821204 )     0.56009193
+  WF centre and spread  154  (  0.892860,  3.821247,  3.821295 )     0.55998837
+  WF centre and spread  155  (  0.898796,  3.820796,  3.820771 )     0.87618204
+  WF centre and spread  156  (  0.898840,  3.821716,  3.821726 )     0.87614420
+  WF centre and spread  157  (  0.924078,  3.821558,  3.821288 )     0.93100381
+  WF centre and spread  158  (  0.924124,  3.820954,  3.821209 )     0.93058863
+  WF centre and spread  159  (  0.898793,  3.821024,  3.821071 )     0.87627412
+  WF centre and spread  160  (  0.898846,  3.821468,  3.821416 )     0.87599883
+  WF centre and spread  161  (  3.821243,  3.821245,  6.749623 )     0.55932028
+  WF centre and spread  162  (  3.821256,  3.821257,  6.749679 )     0.56073298
+  WF centre and spread  163  (  3.821267,  3.821248,  6.717953 )     0.92751127
+  WF centre and spread  164  (  3.821248,  3.821250,  6.718772 )     0.93458751
+  WF centre and spread  165  (  3.821226,  3.821261,  6.743551 )     0.87523347
+  WF centre and spread  166  (  3.821262,  3.821251,  6.743840 )     0.87723459
+  WF centre and spread  167  (  3.821258,  3.821248,  6.743543 )     0.87498365
+  WF centre and spread  168  (  3.821257,  3.821252,  6.743825 )     0.87713554
+  WF centre and spread  169  (  3.821248,  3.821243,  0.892809 )     0.56080786
+  WF centre and spread  170  (  3.821248,  3.821252,  0.892894 )     0.55924855
+  WF centre and spread  171  (  3.821269,  3.821274,  0.923780 )     0.93481633
+  WF centre and spread  172  (  3.821274,  3.821261,  0.924568 )     0.92724205
+  WF centre and spread  173  (  3.821263,  3.821267,  0.898651 )     0.87742252
+  WF centre and spread  174  (  3.821218,  3.821238,  0.898982 )     0.87503611
+  WF centre and spread  175  (  3.821268,  3.821243,  0.898660 )     0.87724139
+  WF centre and spread  176  (  3.821249,  3.821235,  0.898997 )     0.87488970
+  Sum of centres and spreads (845.769996,845.769995,713.300006 )   148.52602654
+ 
+         Spreads (Ang^2)       Omega I      =   119.119148138
+        ================       Omega D      =     0.002060266
+                               Omega OD     =    29.404818141
+    Final Spread (Ang^2)       Omega Total  =   148.526026545
+ ------------------------------------------------------------------------------
+
+
+## Option B
+
+num_wann = 216
+
+begin projections
+Y: p;d
+Ir1: d
+Ir2: d
+Ir3: d
+Ir4: d
+O: s;p
+end projections
+
+Final State
+  WF centre and spread    1  (  5.095001,  5.095000,  5.094999 )     0.71605341
+  WF centre and spread    2  (  5.095000,  5.095000,  5.095001 )     0.71717657
+  WF centre and spread    3  (  5.095000,  5.095000,  5.095000 )     0.71655774
+  WF centre and spread    4  (  5.095000,  5.095000,  5.095000 )     0.71679552
+  WF centre and spread    5  (  5.095000,  5.095000,  5.095000 )     0.71646713
+  WF centre and spread    6  (  5.095000,  5.095000,  5.095000 )     0.71675245
+  WF centre and spread    7  (  5.094992,  5.094992,  5.094951 )     2.83096433
+  WF centre and spread    8  (  5.094992,  5.094966,  5.094972 )     2.82905072
+  WF centre and spread    9  (  5.093073,  5.092447,  5.091896 )    23.65732692
+  WF centre and spread   10  (  5.092254,  5.092996,  5.094016 )    23.93618806
+  WF centre and spread   11  (  5.092716,  5.093690,  5.092483 )    23.64328846
+  WF centre and spread   12  (  5.091829,  5.092380,  5.093413 )    23.91910680
+  WF centre and spread   13  (  5.094977,  5.094938,  5.094899 )     2.84177771
+  WF centre and spread   14  (  5.094951,  5.094979,  5.094898 )     2.82700496
+  WF centre and spread   15  (  5.091967,  5.092251,  5.091663 )    23.74125724
+  WF centre and spread   16  (  5.092798,  5.093348,  5.093621 )    23.84712428
+  WF centre and spread   17  (  5.095000,  2.547500,  2.547500 )     0.71721605
+  WF centre and spread   18  (  5.094999,  2.547500,  2.547498 )     0.71607947
+  WF centre and spread   19  (  5.094997,  2.547499,  2.547499 )     0.71684342
+  WF centre and spread   20  (  5.095000,  2.547500,  2.547501 )     0.71652296
+  WF centre and spread   21  (  5.095000,  2.547500,  2.547500 )     0.71671896
+  WF centre and spread   22  (  5.094999,  2.547499,  2.547500 )     0.71644412
+  WF centre and spread   23  (  5.094974,  2.547497,  2.547470 )     2.82750454
+  WF centre and spread   24  (  5.094964,  2.547509,  2.547445 )     2.83076106
+  WF centre and spread   25  (  5.096850,  2.544327,  2.544842 )    23.90684046
+  WF centre and spread   26  (  5.093825,  2.548200,  2.546894 )    23.55794515
+  WF centre and spread   27  (  5.096582,  2.545440,  2.545901 )    23.86984067
+  WF centre and spread   28  (  5.094028,  2.548188,  2.546937 )    23.53090383
+  WF centre and spread   29  (  5.094965,  2.547431,  2.547429 )     2.83127401
+  WF centre and spread   30  (  5.095000,  2.547450,  2.547459 )     2.84450831
+  WF centre and spread   31  (  5.096049,  2.544686,  2.544932 )    23.79369775
+  WF centre and spread   32  (  5.095130,  2.547568,  2.546743 )    23.62760155
+  WF centre and spread   33  (  2.547500,  5.094999,  2.547499 )     0.71717160
+  WF centre and spread   34  (  2.547500,  5.095000,  2.547499 )     0.71606878
+  WF centre and spread   35  (  2.547502,  5.095000,  2.547500 )     0.71672474
+  WF centre and spread   36  (  2.547498,  5.095000,  2.547500 )     0.71649635
+  WF centre and spread   37  (  2.547499,  5.094998,  2.547500 )     0.71681254
+  WF centre and spread   38  (  2.547500,  5.095000,  2.547499 )     0.71654644
+  WF centre and spread   39  (  2.547495,  5.094952,  2.547436 )     2.83750068
+  WF centre and spread   40  (  2.547487,  5.094987,  2.547485 )     2.84192845
+  WF centre and spread   41  (  2.547028,  5.095166,  2.547196 )    23.70085665
+  WF centre and spread   42  (  2.546376,  5.096054,  2.545172 )    23.36235102
+  WF centre and spread   43  (  2.546727,  5.095440,  2.546189 )    23.74781440
+  WF centre and spread   44  (  2.545864,  5.095810,  2.545118 )    23.40483736
+  WF centre and spread   45  (  2.547439,  5.094985,  2.547423 )     2.82642970
+  WF centre and spread   46  (  2.547424,  5.094968,  2.547452 )     2.84003148
+  WF centre and spread   47  (  2.545606,  5.095626,  2.546219 )    23.64042769
+  WF centre and spread   48  (  2.546642,  5.095981,  2.544903 )    23.46634152
+  WF centre and spread   49  (  7.642499,  7.642501,  5.094999 )     0.71609843
+  WF centre and spread   50  (  7.642500,  7.642499,  5.094998 )     0.71723875
+  WF centre and spread   51  (  7.642498,  7.642501,  5.094999 )     0.71642103
+  WF centre and spread   52  (  7.642501,  7.642500,  5.095000 )     0.71673796
+  WF centre and spread   53  (  7.642500,  7.642503,  5.094999 )     0.71653032
+  WF centre and spread   54  (  7.642501,  7.642495,  5.095001 )     0.71679641
+  WF centre and spread   55  (  7.642408,  7.642422,  5.094961 )     2.84181220
+  WF centre and spread   56  (  7.642395,  7.642399,  5.094934 )     2.83579711
+  WF centre and spread   57  (  7.642048,  7.642208,  5.093901 )    23.32114982
+  WF centre and spread   58  (  7.642876,  7.642246,  5.095175 )    23.72400791
+  WF centre and spread   59  (  7.642197,  7.642233,  5.094124 )    23.37252526
+  WF centre and spread   60  (  7.643141,  7.642044,  5.094952 )    23.77335450
+  WF centre and spread   61  (  7.642529,  7.642513,  5.094945 )     2.83998734
+  WF centre and spread   62  (  7.642501,  7.642549,  5.094922 )     2.82815369
+  WF centre and spread   63  (  7.641797,  7.642533,  5.094378 )    23.40049607
+  WF centre and spread   64  (  7.644157,  7.642826,  5.094442 )    23.63451350
+  WF centre and spread   65  (  0.000006,  0.000008, -0.000009 )     1.03356034
+  WF centre and spread   66  ( -0.000005, -0.000006,  0.000007 )     1.02572570
+  WF centre and spread   67  ( -0.000002, -0.000002,  0.000010 )     0.98765412
+  WF centre and spread   68  (  0.000002,  0.000003, -0.000011 )     0.98604208
+  WF centre and spread   69  (  0.000002,  0.000018,  0.000009 )     0.98739607
+  WF centre and spread   70  ( -0.000001, -0.000019, -0.000010 )     0.98605506
+  WF centre and spread   71  (  0.000028, -0.000013,  0.000005 )     1.03652305
+  WF centre and spread   72  ( -0.000034,  0.000015, -0.000004 )     1.02409478
+  WF centre and spread   73  (  0.000005,  0.000019,  0.000003 )     0.99017989
+  WF centre and spread   74  ( -0.000005, -0.000020, -0.000003 )     0.98347564
+  WF centre and spread   75  (  5.095005,  7.642504,  2.547501 )     1.02563224
+  WF centre and spread   76  (  5.094984,  7.642504,  2.547481 )     1.03367292
+  WF centre and spread   77  (  5.095008,  7.642505,  2.547499 )     0.98639951
+  WF centre and spread   78  (  5.094992,  7.642495,  2.547499 )     0.98726675
+  WF centre and spread   79  (  5.095010,  7.642489,  2.547474 )     0.98607048
+  WF centre and spread   80  (  5.094989,  7.642511,  2.547525 )     0.98729609
+  WF centre and spread   81  (  5.095019,  7.642524,  2.547491 )     1.02405486
+  WF centre and spread   82  (  5.094968,  7.642460,  2.547505 )     1.03591521
+  WF centre and spread   83  (  5.095023,  7.642500,  2.547501 )     0.98378093
+  WF centre and spread   84  (  5.094977,  7.642500,  2.547499 )     0.98977588
+  WF centre and spread   85  (  7.642516,  5.094998,  2.547483 )     1.02561144
+  WF centre and spread   86  (  7.642491,  5.094994,  2.547498 )     1.03334460
+  WF centre and spread   87  (  7.642491,  5.095004,  2.547480 )     0.98622034
+  WF centre and spread   88  (  7.642511,  5.094995,  2.547521 )     0.98750753
+  WF centre and spread   89  (  7.642504,  5.095001,  2.547502 )     0.98629822
+  WF centre and spread   90  (  7.642497,  5.094999,  2.547498 )     0.98709826
+  WF centre and spread   91  (  7.642544,  5.095022,  2.547491 )     1.02468143
+  WF centre and spread   92  (  7.642445,  5.094969,  2.547506 )     1.03611902
+  WF centre and spread   93  (  7.642493,  5.095015,  2.547499 )     0.98383207
+  WF centre and spread   94  (  7.642507,  5.094984,  2.547502 )     0.98975983
+  WF centre and spread   95  (  2.547510,  2.547480,  0.000004 )     1.03400672
+  WF centre and spread   96  (  2.547479,  2.547508, -0.000026 )     1.02582168
+  WF centre and spread   97  (  2.547500,  2.547499, -0.000001 )     0.98723454
+  WF centre and spread   98  (  2.547499,  2.547500,  0.000001 )     0.98649895
+  WF centre and spread   99  (  2.547502,  2.547504, -0.000002 )     0.98697206
+  WF centre and spread  100  (  2.547499,  2.547496,  0.000002 )     0.98636574
+  WF centre and spread  101  (  2.547543,  2.547442,  0.000004 )     1.03504638
+  WF centre and spread  102  (  2.547461,  2.547556, -0.000005 )     1.02370951
+  WF centre and spread  103  (  2.547507,  2.547486, -0.000002 )     0.98946696
+  WF centre and spread  104  (  2.547493,  2.547512,  0.000003 )     0.98403664
+  WF centre and spread  105  (  3.821250,  3.821255,  3.821426 )     4.04058778
+  WF centre and spread  106  (  3.821255,  3.821251,  3.821072 )     4.03985035
+  WF centre and spread  107  (  3.820902,  3.820790,  3.816767 )     6.77548815
+  WF centre and spread  108  (  3.821511,  3.821111,  3.824263 )     6.76309787
+  WF centre and spread  109  (  3.821282,  3.821074,  3.821610 )     6.78102957
+  WF centre and spread  110  (  3.820366,  3.820975,  3.820265 )     6.79612210
+  WF centre and spread  111  (  3.821226,  3.820571,  3.821611 )     6.77766269
+  WF centre and spread  112  (  3.821065,  3.821396,  3.820280 )     6.76996035
+  WF centre and spread  113  (  6.368732,  6.368746,  6.368561 )     4.03980135
+  WF centre and spread  114  (  6.368770,  6.368758,  6.368937 )     4.04056584
+  WF centre and spread  115  (  6.368091,  6.368659,  6.371587 )     6.76001714
+  WF centre and spread  116  (  6.368728,  6.368742,  6.364537 )     6.76871400
+  WF centre and spread  117  (  6.368791,  6.368792,  6.367570 )     6.80242149
+  WF centre and spread  118  (  6.368181,  6.368545,  6.369217 )     6.78532093
+  WF centre and spread  119  (  6.368685,  6.367969,  6.367566 )     6.76761586
+  WF centre and spread  120  (  6.368295,  6.368823,  6.369194 )     6.77951256
+  WF centre and spread  121  (  3.443336,  6.368614,  6.368574 )     0.98774959
+  WF centre and spread  122  (  3.443362,  6.368884,  6.368920 )     0.98786439
+  WF centre and spread  123  (  3.431617,  6.368644,  6.368336 )     1.26513248
+  WF centre and spread  124  (  3.431583,  6.368772,  6.369084 )     1.26473194
+  WF centre and spread  125  (  3.427792,  6.368791,  6.368762 )     1.03298850
+  WF centre and spread  126  (  3.427763,  6.368709,  6.368735 )     1.03257699
+  WF centre and spread  127  (  3.431616,  6.368416,  6.368815 )     1.26494272
+  WF centre and spread  128  (  3.431580,  6.369015,  6.368594 )     1.26502349
+  WF centre and spread  129  (  9.294090,  6.368869,  6.368578 )     0.98832917
+  WF centre and spread  130  (  9.294177,  6.368623,  6.368902 )     0.98555054
+  WF centre and spread  131  (  9.305865,  6.368796,  6.368462 )     1.25623871
+  WF centre and spread  132  (  9.305908,  6.368744,  6.368998 )     1.25880501
+  WF centre and spread  133  (  9.309658,  6.368721,  6.368762 )     1.03281979
+  WF centre and spread  134  (  9.309767,  6.368777,  6.368723 )     1.03192098
+  WF centre and spread  135  (  9.305881,  6.368995,  6.368874 )     1.25696324
+  WF centre and spread  136  (  9.305887,  6.368534,  6.368586 )     1.25814905
+  WF centre and spread  137  (  6.368746,  6.368751,  3.443348 )     0.98742577
+  WF centre and spread  138  (  6.368747,  6.368753,  3.443327 )     0.98749512
+  WF centre and spread  139  (  6.368747,  6.368758,  3.428125 )     1.03064535
+  WF centre and spread  140  (  6.368746,  6.368741,  3.427410 )     1.03422555
+  WF centre and spread  141  (  6.368783,  6.368750,  3.431260 )     1.25279004
+  WF centre and spread  142  (  6.368675,  6.368701,  3.431931 )     1.27216648
+  WF centre and spread  143  (  6.368747,  6.368765,  3.431261 )     1.25393474
+  WF centre and spread  144  (  6.368702,  6.368680,  3.431929 )     1.27170482
+  WF centre and spread  145  (  6.368759,  6.368764,  9.294138 )     0.98572252
+  WF centre and spread  146  (  6.368727,  6.368728,  9.294097 )     0.98665227
+  WF centre and spread  147  (  6.368742,  6.368760,  9.310066 )     1.03403551
+  WF centre and spread  148  (  6.368742,  6.368743,  9.309338 )     1.03047142
+  WF centre and spread  149  (  6.368812,  6.368730,  9.305590 )     1.27195798
+  WF centre and spread  150  (  6.368672,  6.368778,  9.306161 )     1.25261241
+  WF centre and spread  151  (  6.368808,  6.368722,  9.305599 )     1.27230845
+  WF centre and spread  152  (  6.368691,  6.368781,  9.306159 )     1.25258451
+  WF centre and spread  153  (  6.368631,  3.443338,  6.368588 )     0.98660103
+  WF centre and spread  154  (  6.368863,  3.443356,  6.368909 )     0.98810189
+  WF centre and spread  155  (  6.368685,  3.431595,  6.368382 )     1.26343091
+  WF centre and spread  156  (  6.368726,  3.431579,  6.369034 )     1.26165463
+  WF centre and spread  157  (  6.368489,  3.431592,  6.368828 )     1.26273370
+  WF centre and spread  158  (  6.368921,  3.431591,  6.368566 )     1.26203269
+  WF centre and spread  159  (  6.368788,  3.427771,  6.368750 )     1.03234999
+  WF centre and spread  160  (  6.368703,  3.427776,  6.368742 )     1.03256791
+  WF centre and spread  161  (  6.368881,  9.294111,  6.368566 )     0.98695355
+  WF centre and spread  162  (  6.368613,  9.294154,  6.368914 )     0.98639019
+  WF centre and spread  163  (  6.368800,  9.305864,  6.368415 )     1.26129926
+  WF centre and spread  164  (  6.368732,  9.305892,  6.369052 )     1.26274414
+  WF centre and spread  165  (  6.368991,  9.305880,  6.368848 )     1.26127519
+  WF centre and spread  166  (  6.368526,  9.305873,  6.368628 )     1.26226935
+  WF centre and spread  167  (  6.368724,  9.309688,  6.368753 )     1.03201005
+  WF centre and spread  168  (  6.368770,  9.309738,  6.368738 )     1.03250942
+  WF centre and spread  169  (  3.821353,  6.746635,  3.821408 )     0.98758827
+  WF centre and spread  170  (  3.821138,  6.746631,  3.821081 )     0.98588731
+  WF centre and spread  171  (  3.821249,  6.758395,  3.821491 )     1.26260209
+  WF centre and spread  172  (  3.821148,  6.758398,  3.820921 )     1.26306169
+  WF centre and spread  173  (  3.821414,  6.758403,  3.821074 )     1.26346603
+  WF centre and spread  174  (  3.821008,  6.758385,  3.821333 )     1.26282492
+  WF centre and spread  175  (  3.821208,  6.762207,  3.821238 )     1.03243001
+  WF centre and spread  176  (  3.821291,  6.762219,  3.821262 )     1.03239385
+  WF centre and spread  177  (  3.821114,  0.895830,  3.821407 )     0.98695711
+  WF centre and spread  178  (  3.821379,  0.895861,  3.821082 )     0.98767207
+  WF centre and spread  179  (  3.821235,  0.884108,  3.821565 )     1.26097597
+  WF centre and spread  180  (  3.821291,  0.884126,  3.820910 )     1.26163348
+  WF centre and spread  181  (  3.820990,  0.884095,  3.821097 )     1.26122576
+  WF centre and spread  182  (  3.821542,  0.884135,  3.821370 )     1.26158785
+  WF centre and spread  183  (  3.821266,  0.880273,  3.821238 )     1.03235751
+  WF centre and spread  184  (  3.821235,  0.880273,  3.821252 )     1.03231069
+  WF centre and spread  185  (  6.746614,  3.821372,  3.821409 )     0.98680186
+  WF centre and spread  186  (  6.746630,  3.821125,  3.821080 )     0.98682449
+  WF centre and spread  187  (  6.758380,  3.821205,  3.821486 )     1.26538845
+  WF centre and spread  188  (  6.758374,  3.821196,  3.820931 )     1.26589504
+  WF centre and spread  189  (  6.762223,  3.821205,  3.821237 )     1.03242938
+  WF centre and spread  190  (  6.762184,  3.821290,  3.821255 )     1.03280603
+  WF centre and spread  191  (  6.758377,  3.821394,  3.821039 )     1.26635329
+  WF centre and spread  192  (  6.758383,  3.821013,  3.821360 )     1.26545515
+  WF centre and spread  193  (  0.895847,  3.821138,  3.821406 )     0.98626414
+  WF centre and spread  194  (  0.895851,  3.821354,  3.821078 )     0.98848811
+  WF centre and spread  195  (  0.884070,  3.821220,  3.821553 )     1.25788896
+  WF centre and spread  196  (  0.884146,  3.821301,  3.820916 )     1.25629088
+  WF centre and spread  197  (  0.880265,  3.821273,  3.821222 )     1.03237068
+  WF centre and spread  198  (  0.880286,  3.821222,  3.821272 )     1.03217777
+  WF centre and spread  199  (  0.884067,  3.821037,  3.821108 )     1.25713957
+  WF centre and spread  200  (  0.884149,  3.821479,  3.821359 )     1.25737813
+  WF centre and spread  201  (  3.821235,  3.821221,  6.746613 )     0.98722359
+  WF centre and spread  202  (  3.821262,  3.821268,  6.746630 )     0.98564375
+  WF centre and spread  203  (  3.821245,  3.821234,  6.761848 )     1.03090372
+  WF centre and spread  204  (  3.821255,  3.821263,  6.762563 )     1.03399082
+  WF centre and spread  205  (  3.821193,  3.821239,  6.758676 )     1.25438291
+  WF centre and spread  206  (  3.821249,  3.821195,  6.758077 )     1.27255126
+  WF centre and spread  207  (  3.821241,  3.821207,  6.758671 )     1.25353972
+  WF centre and spread  208  (  3.821199,  3.821240,  6.758083 )     1.27336555
+  WF centre and spread  209  (  3.821258,  3.821266,  0.895798 )     0.98756865
+  WF centre and spread  210  (  3.821239,  3.821227,  0.895867 )     0.98784565
+  WF centre and spread  211  (  3.821251,  3.821250,  0.879889 )     1.03433863
+  WF centre and spread  212  (  3.821254,  3.821239,  0.880638 )     1.03058442
+  WF centre and spread  213  (  3.821256,  3.821198,  0.884383 )     1.27116706
+  WF centre and spread  214  (  3.821239,  3.821296,  0.883805 )     1.25116910
+  WF centre and spread  215  (  3.821260,  3.821201,  0.884392 )     1.27116029
+  WF centre and spread  216  (  3.821225,  3.821291,  0.883792 )     1.25124986
+  Sum of centres and spreads (**********,**********,866.106892 )   876.82458086
+ 
+         Spreads (Ang^2)       Omega I      =   396.614551184
+        ================       Omega D      =     1.333659711
+                               Omega OD     =   478.876369970
+    Final Spread (Ang^2)       Omega Total  =   876.824580864
+ ------------------------------------------------------------------------------
+
+## Option C
+
+num_wann = 248
+
+begin projections
+Y: p;d
+Ir1: s;p;d
+Ir2: s;p;d
+Ir3: s;p;d
+Ir4: s;p;d
+O: s;p
+end projections
+
+Final State
+  WF centre and spread    1  (  5.095001,  5.095000,  5.095000 )     0.72306809
+  WF centre and spread    2  (  5.094999,  5.095000,  5.095000 )     0.72349432
+  WF centre and spread    3  (  5.095000,  5.095000,  5.095000 )     0.72290373
+  WF centre and spread    4  (  5.095000,  5.095000,  5.095000 )     0.72365585
+  WF centre and spread    5  (  5.095000,  5.094999,  5.095000 )     0.72290691
+  WF centre and spread    6  (  5.095000,  5.095001,  5.095000 )     0.72365561
+  WF centre and spread    7  (  5.094998,  5.095000,  5.095004 )     2.21650123
+  WF centre and spread    8  (  5.095002,  5.095000,  5.094996 )     2.21344622
+  WF centre and spread    9  (  5.095002,  5.095006,  5.095001 )     4.51990058
+  WF centre and spread   10  (  5.094997,  5.094994,  5.094999 )     4.37109418
+  WF centre and spread   11  (  5.095017,  5.094998,  5.095000 )     4.51934002
+  WF centre and spread   12  (  5.094984,  5.095002,  5.095000 )     4.37113256
+  WF centre and spread   13  (  5.094996,  5.094997,  5.095001 )     2.21317786
+  WF centre and spread   14  (  5.095004,  5.095003,  5.094999 )     2.21676026
+  WF centre and spread   15  (  5.095005,  5.095002,  5.094998 )     4.52950810
+  WF centre and spread   16  (  5.094995,  5.094999,  5.095002 )     4.36062544
+  WF centre and spread   17  (  5.095001,  2.547500,  2.547500 )     0.72352493
+  WF centre and spread   18  (  5.094999,  2.547500,  2.547500 )     0.72303923
+  WF centre and spread   19  (  5.094998,  2.547500,  2.547499 )     0.72366584
+  WF centre and spread   20  (  5.095002,  2.547500,  2.547501 )     0.72289473
+  WF centre and spread   21  (  5.095000,  2.547500,  2.547500 )     0.72367201
+  WF centre and spread   22  (  5.095000,  2.547500,  2.547500 )     0.72289147
+  WF centre and spread   23  (  5.094997,  2.547500,  2.547498 )     2.21352092
+  WF centre and spread   24  (  5.095003,  2.547500,  2.547502 )     2.21641420
+  WF centre and spread   25  (  5.095000,  2.547492,  2.547491 )     4.36721044
+  WF centre and spread   26  (  5.095001,  2.547508,  2.547509 )     4.52340745
+  WF centre and spread   27  (  5.095001,  2.547507,  2.547508 )     4.36654393
+  WF centre and spread   28  (  5.095000,  2.547492,  2.547491 )     4.52361066
+  WF centre and spread   29  (  5.094984,  2.547490,  2.547500 )     2.21683525
+  WF centre and spread   30  (  5.095016,  2.547510,  2.547500 )     2.21310423
+  WF centre and spread   31  (  5.094993,  2.547496,  2.547502 )     4.35735420
+  WF centre and spread   32  (  5.095007,  2.547504,  2.547498 )     4.53254595
+  WF centre and spread   33  (  2.547500,  5.095000,  2.547500 )     0.72348327
+  WF centre and spread   34  (  2.547500,  5.095000,  2.547500 )     0.72307984
+  WF centre and spread   35  (  2.547500,  5.095000,  2.547500 )     0.72364847
+  WF centre and spread   36  (  2.547500,  5.095000,  2.547500 )     0.72291368
+  WF centre and spread   37  (  2.547499,  5.094998,  2.547500 )     0.72364249
+  WF centre and spread   38  (  2.547501,  5.095002,  2.547500 )     0.72292070
+  WF centre and spread   39  (  2.547500,  5.094997,  2.547494 )     2.21342612
+  WF centre and spread   40  (  2.547500,  5.095003,  2.547506 )     2.21651712
+  WF centre and spread   41  (  2.547501,  5.094999,  2.547506 )     4.37330096
+  WF centre and spread   42  (  2.547498,  5.095003,  2.547493 )     4.51786385
+  WF centre and spread   43  (  2.547479,  5.094990,  2.547500 )     4.37428065
+  WF centre and spread   44  (  2.547520,  5.095012,  2.547499 )     4.51652313
+  WF centre and spread   45  (  2.547498,  5.094995,  2.547498 )     2.21678387
+  WF centre and spread   46  (  2.547503,  5.095004,  2.547502 )     2.21315749
+  WF centre and spread   47  (  2.547491,  5.094993,  2.547499 )     4.36369398
+  WF centre and spread   48  (  2.547509,  5.095007,  2.547501 )     4.52668662
+  WF centre and spread   49  (  7.642499,  7.642500,  5.094998 )     0.72305037
+  WF centre and spread   50  (  7.642501,  7.642500,  5.095002 )     0.72351289
+  WF centre and spread   51  (  7.642498,  7.642501,  5.095000 )     0.72289422
+  WF centre and spread   52  (  7.642502,  7.642499,  5.095000 )     0.72366796
+  WF centre and spread   53  (  7.642499,  7.642503,  5.095000 )     0.72288579
+  WF centre and spread   54  (  7.642501,  7.642497,  5.095000 )     0.72367720
+  WF centre and spread   55  (  7.642498,  7.642500,  5.095003 )     2.21643898
+  WF centre and spread   56  (  7.642502,  7.642500,  5.094997 )     2.21349079
+  WF centre and spread   57  (  7.642493,  7.642506,  5.094987 )     4.52128680
+  WF centre and spread   58  (  7.642505,  7.642493,  5.095015 )     4.36960805
+  WF centre and spread   59  (  7.642476,  7.642512,  5.094984 )     4.52133925
+  WF centre and spread   60  (  7.642522,  7.642488,  5.095017 )     4.36911906
+  WF centre and spread   61  (  7.642497,  7.642495,  5.095003 )     2.21303767
+  WF centre and spread   62  (  7.642503,  7.642505,  5.094997 )     2.21689248
+  WF centre and spread   63  (  7.642501,  7.642514,  5.095004 )     4.53023372
+  WF centre and spread   64  (  7.642497,  7.642484,  5.094996 )     4.35978157
+  WF centre and spread   65  (  0.000020, -0.000077, -0.000059 )     6.15838922
+  WF centre and spread   66  ( -0.000021,  0.000076,  0.000057 )     6.20759153
+  WF centre and spread   67  (  0.000013,  0.000014,  0.000077 )     8.95654737
+  WF centre and spread   68  ( -0.000012, -0.000014, -0.000078 )     8.91277953
+  WF centre and spread   69  ( -0.000098, -0.000036, -0.000032 )     8.97250772
+  WF centre and spread   70  (  0.000102,  0.000034,  0.000031 )     8.89696472
+  WF centre and spread   71  (  0.000028,  0.000154,  0.000010 )     8.97235527
+  WF centre and spread   72  ( -0.000027, -0.000150, -0.000009 )     8.89712722
+  WF centre and spread   73  (  0.000001,  0.000001, -0.000001 )     0.94498138
+  WF centre and spread   74  ( -0.000001, -0.000001,  0.000001 )     0.94235645
+  WF centre and spread   75  (  0.000001, -0.000000,  0.000004 )     0.91727003
+  WF centre and spread   76  ( -0.000001,  0.000000, -0.000004 )     0.91727508
+  WF centre and spread   77  (  0.000000,  0.000005,  0.000002 )     0.91708476
+  WF centre and spread   78  (  0.000000, -0.000005, -0.000002 )     0.91733894
+  WF centre and spread   79  (  0.000000,  0.000001,  0.000002 )     0.94557549
+  WF centre and spread   80  ( -0.000000, -0.000001, -0.000002 )     0.94176714
+  WF centre and spread   81  (  0.000001,  0.000007, -0.000003 )     0.91915071
+  WF centre and spread   82  ( -0.000001, -0.000008,  0.000003 )     0.91539652
+  WF centre and spread   83  (  5.094943,  7.642604,  2.547560 )     6.20770384
+  WF centre and spread   84  (  5.095058,  7.642394,  2.547441 )     6.15831641
+  WF centre and spread   85  (  5.095018,  7.642489,  2.547351 )     8.91347169
+  WF centre and spread   86  (  5.094982,  7.642512,  2.547647 )     8.95584229
+  WF centre and spread   87  (  5.095194,  7.642508,  2.547513 )     8.89577134
+  WF centre and spread   88  (  5.094808,  7.642491,  2.547488 )     8.97342862
+  WF centre and spread   89  (  5.094958,  7.642313,  2.547531 )     8.89716574
+  WF centre and spread   90  (  5.095040,  7.642693,  2.547472 )     8.97243391
+  WF centre and spread   91  (  5.095000,  7.642499,  2.547500 )     0.94245918
+  WF centre and spread   92  (  5.095000,  7.642501,  2.547500 )     0.94485019
+  WF centre and spread   93  (  5.095004,  7.642502,  2.547499 )     0.91752377
+  WF centre and spread   94  (  5.094996,  7.642498,  2.547501 )     0.91704553
+  WF centre and spread   95  (  5.095000,  7.642501,  2.547494 )     0.91726499
+  WF centre and spread   96  (  5.095000,  7.642499,  2.547506 )     0.91716511
+  WF centre and spread   97  (  5.095000,  7.642500,  2.547500 )     0.94196738
+  WF centre and spread   98  (  5.095000,  7.642500,  2.547500 )     0.94537533
+  WF centre and spread   99  (  5.095010,  7.642499,  2.547505 )     0.91557991
+  WF centre and spread  100  (  5.094990,  7.642502,  2.547495 )     0.91896229
+  WF centre and spread  101  (  7.642485,  5.094921,  2.547506 )     6.20643714
+  WF centre and spread  102  (  7.642515,  5.095079,  2.547494 )     6.15967458
+  WF centre and spread  103  (  7.642492,  5.094984,  2.547494 )     8.91255590
+  WF centre and spread  104  (  7.642511,  5.095014,  2.547507 )     8.95684221
+  WF centre and spread  105  (  7.642330,  5.094946,  2.547536 )     8.89877170
+  WF centre and spread  106  (  7.642674,  5.095052,  2.547465 )     8.97074708
+  WF centre and spread  107  (  7.642486,  5.095188,  2.547500 )     8.89599284
+  WF centre and spread  108  (  7.642514,  5.094813,  2.547501 )     8.97326542
+  WF centre and spread  109  (  7.642500,  5.094999,  2.547499 )     0.94241642
+  WF centre and spread  110  (  7.642500,  5.095001,  2.547501 )     0.94488943
+  WF centre and spread  111  (  7.642499,  5.094999,  2.547493 )     0.91730010
+  WF centre and spread  112  (  7.642501,  5.095001,  2.547507 )     0.91724070
+  WF centre and spread  113  (  7.642501,  5.095004,  2.547499 )     0.91748884
+  WF centre and spread  114  (  7.642499,  5.094996,  2.547501 )     0.91698803
+  WF centre and spread  115  (  7.642501,  5.094999,  2.547501 )     0.94203790
+  WF centre and spread  116  (  7.642498,  5.095001,  2.547499 )     0.94529752
+  WF centre and spread  117  (  7.642498,  5.095007,  2.547502 )     0.91562752
+  WF centre and spread  118  (  7.642502,  5.094992,  2.547498 )     0.91891084
+  WF centre and spread  119  (  2.547472,  2.547555,  0.000084 )     6.15865559
+  WF centre and spread  120  (  2.547526,  2.547446, -0.000086 )     6.20745997
+  WF centre and spread  121  (  2.547511,  2.547513, -0.000026 )     8.95504633
+  WF centre and spread  122  (  2.547488,  2.547486,  0.000028 )     8.91407697
+  WF centre and spread  123  (  2.547399,  2.547538, -0.000016 )     8.97094777
+  WF centre and spread  124  (  2.547595,  2.547460,  0.000018 )     8.89835611
+  WF centre and spread  125  (  2.547461,  2.547643,  0.000012 )     8.96951836
+  WF centre and spread  126  (  2.547539,  2.547364, -0.000015 )     8.89998026
+  WF centre and spread  127  (  2.547499,  2.547501,  0.000001 )     0.94479997
+  WF centre and spread  128  (  2.547501,  2.547499, -0.000001 )     0.94248127
+  WF centre and spread  129  (  2.547501,  2.547499,  0.000001 )     0.91700735
+  WF centre and spread  130  (  2.547498,  2.547501, -0.000001 )     0.91752848
+  WF centre and spread  131  (  2.547500,  2.547501,  0.000001 )     0.91693384
+  WF centre and spread  132  (  2.547501,  2.547499, -0.000001 )     0.91750068
+  WF centre and spread  133  (  2.547504,  2.547500,  0.000002 )     0.94518705
+  WF centre and spread  134  (  2.547497,  2.547500, -0.000002 )     0.94211369
+  WF centre and spread  135  (  2.547502,  2.547494, -0.000000 )     0.91869723
+  WF centre and spread  136  (  2.547498,  2.547505,  0.000000 )     0.91582117
+  WF centre and spread  137  (  3.821251,  3.821249,  3.821265 )     1.03744846
+  WF centre and spread  138  (  3.821249,  3.821251,  3.821235 )     1.03760332
+  WF centre and spread  139  (  3.821244,  3.821250,  3.820909 )     1.14062555
+  WF centre and spread  140  (  3.821256,  3.821250,  3.821592 )     1.14033021
+  WF centre and spread  141  (  3.821262,  3.821251,  3.821242 )     1.14068615
+  WF centre and spread  142  (  3.821238,  3.821249,  3.821258 )     1.14029692
+  WF centre and spread  143  (  3.821245,  3.821247,  3.821242 )     1.14063614
+  WF centre and spread  144  (  3.821255,  3.821253,  3.821257 )     1.14033908
+  WF centre and spread  145  (  6.368747,  6.368749,  6.368733 )     1.03755507
+  WF centre and spread  146  (  6.368753,  6.368751,  6.368767 )     1.03750217
+  WF centre and spread  147  (  6.368755,  6.368751,  6.369090 )     1.14035407
+  WF centre and spread  148  (  6.368745,  6.368749,  6.368409 )     1.14060813
+  WF centre and spread  149  (  6.368739,  6.368750,  6.368759 )     1.14037397
+  WF centre and spread  150  (  6.368761,  6.368750,  6.368741 )     1.14058888
+  WF centre and spread  151  (  6.368755,  6.368755,  6.368757 )     1.14036249
+  WF centre and spread  152  (  6.368745,  6.368745,  6.368743 )     1.14059571
+  WF centre and spread  153  (  3.445008,  6.368746,  6.368743 )     0.55787575
+  WF centre and spread  154  (  3.444994,  6.368753,  6.368758 )     0.55802423
+  WF centre and spread  155  (  3.451559,  6.368743,  6.368638 )     0.83796916
+  WF centre and spread  156  (  3.451575,  6.368755,  6.368864 )     0.83862184
+  WF centre and spread  157  (  3.489012,  6.368734,  6.368750 )     0.97831432
+  WF centre and spread  158  (  3.489032,  6.368765,  6.368752 )     0.97883850
+  WF centre and spread  159  (  3.451565,  6.368783,  6.368760 )     0.83801453
+  WF centre and spread  160  (  3.451568,  6.368716,  6.368741 )     0.83858012
+  WF centre and spread  161  (  9.292470,  6.368743,  6.368743 )     0.55796349
+  WF centre and spread  162  (  9.292528,  6.368756,  6.368756 )     0.55793645
+  WF centre and spread  163  (  9.285927,  6.368746,  6.368652 )     0.83836601
+  WF centre and spread  164  (  9.285940,  6.368752,  6.368846 )     0.83822574
+  WF centre and spread  165  (  9.248436,  6.368779,  6.368768 )     0.97866421
+  WF centre and spread  166  (  9.248523,  6.368719,  6.368730 )     0.97850454
+  WF centre and spread  167  (  9.285945,  6.368676,  6.368736 )     0.83840816
+  WF centre and spread  168  (  9.285923,  6.368822,  6.368762 )     0.83819155
+  WF centre and spread  169  (  6.368751,  6.368753,  3.444996 )     0.55720153
+  WF centre and spread  170  (  6.368749,  6.368747,  3.445007 )     0.55871210
+  WF centre and spread  171  (  6.368743,  6.368753,  3.489164 )     0.97863229
+  WF centre and spread  172  (  6.368758,  6.368746,  3.488878 )     0.97864020
+  WF centre and spread  173  (  6.368755,  6.368752,  3.451429 )     0.83780862
+  WF centre and spread  174  (  6.368744,  6.368748,  3.451704 )     0.83888350
+  WF centre and spread  175  (  6.368749,  6.368755,  3.451426 )     0.83785654
+  WF centre and spread  176  (  6.368751,  6.368745,  3.451708 )     0.83887404
+  WF centre and spread  177  (  6.368753,  6.368754,  9.292499 )     0.55878680
+  WF centre and spread  178  (  6.368746,  6.368746,  9.292499 )     0.55713136
+  WF centre and spread  179  (  6.368745,  6.368747,  9.248625 )     0.97888530
+  WF centre and spread  180  (  6.368755,  6.368752,  9.248335 )     0.97836956
+  WF centre and spread  181  (  6.368756,  6.368749,  9.285803 )     0.83903860
+  WF centre and spread  182  (  6.368744,  6.368749,  9.286065 )     0.83764923
+  WF centre and spread  183  (  6.368760,  6.368766,  9.285800 )     0.83906114
+  WF centre and spread  184  (  6.368738,  6.368732,  9.286068 )     0.83765728
+  WF centre and spread  185  (  6.368757,  3.445002,  6.368747 )     0.55790025
+  WF centre and spread  186  (  6.368743,  3.445000,  6.368753 )     0.55801395
+  WF centre and spread  187  (  6.368748,  3.451564,  6.368638 )     0.83816768
+  WF centre and spread  188  (  6.368752,  3.451571,  6.368862 )     0.83856479
+  WF centre and spread  189  (  6.368796,  3.451563,  6.368766 )     0.83819119
+  WF centre and spread  190  (  6.368704,  3.451570,  6.368734 )     0.83851482
+  WF centre and spread  191  (  6.368725,  3.489016,  6.368748 )     0.97854059
+  WF centre and spread  192  (  6.368776,  3.489028,  6.368752 )     0.97873411
+  WF centre and spread  193  (  6.368744,  9.292493,  6.368744 )     0.55795906
+  WF centre and spread  194  (  6.368756,  9.292505,  6.368756 )     0.55795775
+  WF centre and spread  195  (  6.368740,  9.285927,  6.368641 )     0.83824058
+  WF centre and spread  196  (  6.368759,  9.285941,  6.368859 )     0.83850324
+  WF centre and spread  197  (  6.368679,  9.285941,  6.368730 )     0.83845976
+  WF centre and spread  198  (  6.368820,  9.285928,  6.368770 )     0.83825515
+  WF centre and spread  199  (  6.368792,  9.248483,  6.368761 )     0.97845023
+  WF centre and spread  200  (  6.368707,  9.248476,  6.368739 )     0.97883704
+  WF centre and spread  201  (  3.821243,  6.745003,  3.821250 )     0.55793702
+  WF centre and spread  202  (  3.821257,  6.744995,  3.821250 )     0.55797906
+  WF centre and spread  203  (  3.821252,  6.738435,  3.821362 )     0.83833992
+  WF centre and spread  204  (  3.821248,  6.738430,  3.821138 )     0.83839569
+  WF centre and spread  205  (  3.821203,  6.738433,  3.821233 )     0.83847940
+  WF centre and spread  206  (  3.821297,  6.738434,  3.821267 )     0.83823838
+  WF centre and spread  207  (  3.821279,  6.700983,  3.821255 )     0.97860465
+  WF centre and spread  208  (  3.821221,  6.700973,  3.821246 )     0.97867413
+  WF centre and spread  209  (  3.821253,  0.897498,  3.821249 )     0.55796440
+  WF centre and spread  210  (  3.821247,  0.897504,  3.821251 )     0.55795312
+  WF centre and spread  211  (  3.821260,  0.904073,  3.821356 )     0.83832690
+  WF centre and spread  212  (  3.821241,  0.904059,  3.821145 )     0.83841503
+  WF centre and spread  213  (  3.821318,  0.904056,  3.821269 )     0.83833868
+  WF centre and spread  214  (  3.821183,  0.904076,  3.821232 )     0.83836809
+  WF centre and spread  215  (  3.821219,  0.941520,  3.821241 )     0.97857007
+  WF centre and spread  216  (  3.821282,  0.941520,  3.821259 )     0.97870903
+  WF centre and spread  217  (  6.744999,  3.821242,  3.821253 )     0.55789965
+  WF centre and spread  218  (  6.744999,  3.821259,  3.821246 )     0.55800174
+  WF centre and spread  219  (  6.738438,  3.821255,  3.821358 )     0.83812913
+  WF centre and spread  220  (  6.738427,  3.821247,  3.821140 )     0.83846592
+  WF centre and spread  221  (  6.700993,  3.821271,  3.821255 )     0.97839236
+  WF centre and spread  222  (  6.700963,  3.821230,  3.821244 )     0.97877702
+  WF centre and spread  223  (  6.738430,  3.821204,  3.821234 )     0.83819586
+  WF centre and spread  224  (  6.738437,  3.821297,  3.821264 )     0.83840597
+  WF centre and spread  225  (  0.897493,  3.821267,  3.821257 )     0.55801610
+  WF centre and spread  226  (  0.897509,  3.821234,  3.821244 )     0.55788482
+  WF centre and spread  227  (  0.904073,  3.821252,  3.821353 )     0.83840677
+  WF centre and spread  228  (  0.904060,  3.821250,  3.821150 )     0.83818711
+  WF centre and spread  229  (  0.941544,  3.821232,  3.821237 )     0.97903604
+  WF centre and spread  230  (  0.941496,  3.821270,  3.821265 )     0.97812391
+  WF centre and spread  231  (  0.904056,  3.821337,  3.821260 )     0.83848441
+  WF centre and spread  232  (  0.904076,  3.821165,  3.821242 )     0.83810997
+  WF centre and spread  233  (  3.821247,  3.821247,  6.745008 )     0.55722644
+  WF centre and spread  234  (  3.821253,  3.821253,  6.744990 )     0.55869098
+  WF centre and spread  235  (  3.821259,  3.821250,  6.700835 )     0.97863627
+  WF centre and spread  236  (  3.821240,  3.821251,  6.701123 )     0.97863152
+  WF centre and spread  237  (  3.821245,  3.821249,  6.738572 )     0.83789194
+  WF centre and spread  238  (  3.821255,  3.821251,  6.738295 )     0.83880231
+  WF centre and spread  239  (  3.821252,  3.821247,  6.738576 )     0.83789270
+  WF centre and spread  240  (  3.821247,  3.821253,  6.738291 )     0.83883719
+  WF centre and spread  241  (  3.821252,  3.821248,  0.897500 )     0.55880301
+  WF centre and spread  242  (  3.821248,  3.821252,  0.897502 )     0.55711336
+  WF centre and spread  243  (  3.821256,  3.821257,  0.941373 )     0.97885390
+  WF centre and spread  244  (  3.821244,  3.821244,  0.941667 )     0.97839696
+  WF centre and spread  245  (  3.821251,  3.821247,  0.904196 )     0.83908518
+  WF centre and spread  246  (  3.821249,  3.821255,  0.903936 )     0.83759995
+  WF centre and spread  247  (  3.821241,  3.821239,  0.904202 )     0.83911115
+  WF centre and spread  248  (  3.821261,  3.821263,  0.903931 )     0.83760864
+  Sum of centres and spreads (**********,**********,906.910003 )   555.44750334
+
+       Spreads (Ang^2)       Omega I      =   407.509410692
+        ================       Omega D      =     0.050409225
+                               Omega OD     =   147.887683424
+    Final Spread (Ang^2)       Omega Total  =   555.447503341
+ ------------------------------------------------------------------------------

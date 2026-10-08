@@ -1,0 +1,39 @@
+{
+  "ab_initio_grid_subspace": {
+    "maximum_projector_frobenius_difference": 3.319211095950128e-14,
+    "minimum_principal_overlap_singular_value": 0.9999999999999962
+  },
+  "all_components_max_abs_difference_A2": 0.022084628875319146,
+  "all_components_relative_l2_difference": 0.017256179274388748,
+  "components": {
+    "xy": {
+      "max_abs_difference_A2": 0.012932230683430801,
+      "max_difference_over_trial03_peak": 0.24710892822695182,
+      "pearson_correlation": 0.999247694290756,
+      "relative_l2_difference": 0.2483107050059183,
+      "rms_difference_A2": 0.0069616367209126085,
+      "trial03_max_abs_A2": 0.05233412963352532,
+      "trial04_max_abs_A2": 0.039416757635473115
+    },
+    "yz": {
+      "max_abs_difference_A2": 0.022084628875319146,
+      "max_difference_over_trial03_peak": 0.02702262491366123,
+      "pearson_correlation": 0.9983100324839688,
+      "relative_l2_difference": 0.017557156924592743,
+      "rms_difference_A2": 0.012942699103422887,
+      "trial03_max_abs_A2": 0.8172643829339581,
+      "trial04_max_abs_A2": 0.8055485814319032
+    },
+    "zx": {
+      "max_abs_difference_A2": 0.019466213000899568,
+      "max_difference_over_trial03_peak": 0.016536702643884838,
+      "pearson_correlation": 0.9999919767508062,
+      "relative_l2_difference": 0.014230553158288672,
+      "rms_difference_A2": 0.010706386779449394,
+      "trial03_max_abs_A2": 1.1771520248081646,
+      "trial04_max_abs_A2": 1.161532105187332
+    }
+  },
+  "max_abs_energy_difference_eV": 0.0001889347404118169,
+  "n_occupied": 38
+}

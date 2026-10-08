@@ -346,3 +346,83 @@ def read_amn(path):
         kpoints = None
 
     return A, kpoints, {"header": (nbnd_h, nproj_h, nk_h), "inferred": (nbnd, nproj, nk), "layout": "block"}
+
+def read_bands_out(filepath):
+    """k-points (nk, 3) and eigenvalues (nbands, nk) in eV from a pw.x ``calculation='bands'`` output."""
+    import re
+
+    # Matches floats, including cases like "0.6835-0.0000" (missing space)
+    float_re = re.compile(r'[+-]?\d+\.\d+')
+    with open(filepath, 'r') as f:
+        lines = f.readlines()
+    kpts, all_eigs = [], []
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        if 'bands (ev)' in line:
+            k_str = line.split('k =')[1].split('(')[0]
+            kpts.append([float(x) for x in float_re.findall(k_str)])
+            i += 2  # blank line after the header
+            eigs = []
+            while i < len(lines) and lines[i].strip():
+                eigs.extend(float(x) for x in float_re.findall(lines[i]))
+                i += 1
+            all_eigs.append(eigs)
+        else:
+            i += 1
+    return np.array(kpts), np.array(all_eigs).T
+
+
+def fermi_energy(scf_out):
+    """Fermi energy (metals) or highest occupied level (insulators) in eV from a pw.x output."""
+    import re
+
+    value = None
+    for line in open(scf_out):
+        if "the Fermi energy is" in line or "highest occupied" in line:
+            # "the Fermi energy is  11.2531 ev", "highest occupied level (ev):  10.0560",
+            # "highest occupied, lowest unoccupied level (ev):  10.0491  11.9568"
+            value = float(re.findall(r"-?\d+\.\d+", line.split(":")[-1] if ":" in line else line)[0])
+    if value is None:
+        raise ValueError(f"no Fermi energy or highest occupied level in {scf_out}")
+    return value
+
+
+def read_kpath(bands_in):
+    """Reduced k-points (nk, 3) and [(index, label)] of a ``K_POINTS crystal_b`` block (labels after ``!``).
+
+    The points are the ones pw.x lists in the matching ``bands.out``, so a Wannier model evaluated at
+    them lines up with the DFT bands point for point."""
+    lines = open(bands_in).read().splitlines()
+    start = next(i for i, line in enumerate(lines) if line.strip().upper().startswith("K_POINTS"))
+    nodes, counts, ticks, index = [], [], [], 0
+    for line in lines[start + 2: start + 2 + int(lines[start + 1].split()[0])]:
+        values, _, label = line.partition("!")
+        values = values.split()
+        nodes.append([float(x) for x in values[:3]])
+        counts.append(int(values[3]))
+        label = label.strip()
+        ticks.append((index, r"$\Gamma$" if label.upper() in ("G", "GAMMA") else label))
+        index += int(values[3])
+    nodes = np.array(nodes)
+    points = [nodes[i] + (nodes[i + 1] - nodes[i]) * j / counts[i]
+              for i in range(len(nodes) - 1) for j in range(counts[i])]
+    return np.array(points + [nodes[-1]]), ticks
+
+
+def read_pdos_by_element(directory, prefix):
+    """{(element, orbital): (energy, dos)} summed over atoms, from ``projwfc.x`` ``pdos_atm#`` files.
+
+    Element is the species label with trailing digits removed (``Ir1`` -> ``Ir``)."""
+    import glob
+    import os
+    import re
+
+    summed = {}
+    for path in sorted(glob.glob(os.path.join(directory, f"{prefix}.pdos_atm#*"))):
+        match = re.search(r'pdos_atm#\d+\((\w+?)\d*\)_wfc#\d+\((\w+)\)', os.path.basename(path))
+        if match:
+            energy, dos = read_dos(path)
+            key = (match.group(1), match.group(2))
+            summed[key] = (energy, summed[key][1] + dos if key in summed else dos)
+    return summed

@@ -1,0 +1,44 @@
+# Allow list for pulling runs from the cluster into data/ (used by sync_from_cluster.sh).
+#
+# rsync takes the first rule that matches a path. Folders are always entered ("+ */"), a file is copied only
+# if it matches a "+" line below, and everything else is skipped by the final "- *": executables (*.x),
+# QE restart data (tmp/, *.save/, wfc*), pseudopotential copies (*.UPF), .mmn/.amn, anything new.
+# To bring a new kind of file by default, add a "+" line above "- *". For a one-off big file (e.g. a .mmn),
+# rsync it by name instead of adding it here.
+# Comments must be on their own line; rsync does not allow them after a rule.
+
+# every folder, but never the QE scratch folders
+- tmp/
+- tmp_bands/
+- *.save/
++ */
+
+# QE and Wannier90 inputs, outputs, logs and job scripts
++ *.in
++ *.out
++ *.wout
++ *.win
++ send_job.sh
++ *.sh
++ *.o[0-9]*
++ *.e[0-9]*
++ NOTE
+
+# Wannier90 results the pipeline reads
++ *_hr.dat
++ *_r.dat
++ *_wsvec.dat
++ *.chk
++ *.eig
++ *.nnkp
++ *_centres.xyz
+
+# band structures and projected DOS
++ *_band.dat
++ *_band.kpt
++ *_band.labelinfo.dat
++ *bands.dat*
++ *.pdos_*
+
+# everything else
+- *

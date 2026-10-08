@@ -1,0 +1,13 @@
+{
+  "num_wann": 38,
+  "nrpts_file": 729,
+  "n_R_ours": 729,
+  "n_R_ours_above_print": 711,
+  "R_in_ours_above_print_but_not_in_file": 0,
+  "rows": 1052676,
+  "exact_fraction": 1.0,
+  "max_abs_diff": 7.047863966358959e-07,
+  "relative_l2": 2.384912537628617e-05,
+  "hermiticity_max_ours": 6.7111776159222746e-15,
+  "seconds": 5.328749179840088
+}

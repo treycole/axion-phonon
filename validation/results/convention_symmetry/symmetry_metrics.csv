@@ -1,0 +1,217 @@
+trial,structure,convention,diagnostic,t,value_A2,abs_value_A2,n_R_H,n_R_A,same_R_set,zero_H_blocks_added,position_source,ws_rule
+a,base,mmn_pair,max_generic,0.80000000,-4.6946181842693648e-09,4.6946181842693648e-09,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+a,base,mmn_pair,max_mirror_kx_half,0.13500000,-6.0996928623498203e-10,6.0996928623498203e-10,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+a,mode,mmn_pair,max_generic,0.08000000,2.3957790274340026e-02,2.3957790274340026e-02,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+a,mode,mmn_pair,max_mirror_kx_half,0.34500000,3.9315283138192022e-08,3.9315283138192022e-08,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+a,mode,mmn_pair,generic_forced_zero,0.00000000,3.5026143550366898e-08,3.5026143550366898e-08,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+a,mode,mmn_pair,generic_forced_zero,0.30000000,-4.4022219346333610e-08,4.4022219346333610e-08,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+a,mode,mmn_pair,generic_forced_zero,0.50000000,3.0125773961081485e-08,3.0125773961081485e-08,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+a,mode,mmn_pair,generic_forced_zero,0.70000000,-5.3648021471989471e-08,5.3648021471989471e-08,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+a,mode,mmn_pair,generic_forced_zero,1.00000000,3.5026142965028069e-08,3.5026142965028069e-08,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+a,base,rdat_direct,max_generic,0.98000000,-2.2079640287793256e-01,2.2079640287793256e-01,729,729,1,0,_r.dat,direct Wannier90 min|R|
+a,base,rdat_direct,max_mirror_kx_half,0.07500000,5.8472885114255121e-02,5.8472885114255121e-02,729,729,1,0,_r.dat,direct Wannier90 min|R|
+a,mode,rdat_direct,max_generic,0.97500000,-2.2194584924780686e-01,2.2194584924780686e-01,729,729,1,0,_r.dat,direct Wannier90 min|R|
+a,mode,rdat_direct,max_mirror_kx_half,0.07500000,5.8050453837469630e-02,5.8050453837469630e-02,729,729,1,0,_r.dat,direct Wannier90 min|R|
+a,mode,rdat_direct,generic_forced_zero,0.00000000,-2.1121884345370187e-01,2.1121884345370187e-01,729,729,1,0,_r.dat,direct Wannier90 min|R|
+a,mode,rdat_direct,generic_forced_zero,0.30000000,-2.3847180972197990e-07,2.3847180972197990e-07,729,729,1,0,_r.dat,direct Wannier90 min|R|
+a,mode,rdat_direct,generic_forced_zero,0.50000000,1.5285678775015608e-02,1.5285678775015608e-02,729,729,1,0,_r.dat,direct Wannier90 min|R|
+a,mode,rdat_direct,generic_forced_zero,0.70000000,1.5517704943938540e-01,1.5517704943938540e-01,729,729,1,0,_r.dat,direct Wannier90 min|R|
+a,mode,rdat_direct,generic_forced_zero,1.00000000,-2.1121884345370318e-01,2.1121884345370318e-01,729,729,1,0,_r.dat,direct Wannier90 min|R|
+a,base,rdat_pair,max_generic,0.72000000,1.8767066209542171e-01,1.8767066209542171e-01,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+a,base,rdat_pair,max_mirror_kx_half,0.91500000,-1.2248711933985013e-01,1.2248711933985013e-01,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+a,mode,rdat_pair,max_generic,0.96000000,-1.9502091925002990e-01,1.9502091925002990e-01,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+a,mode,rdat_pair,max_mirror_kx_half,0.91500000,-1.2263845931594837e-01,1.2263845931594837e-01,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+a,mode,rdat_pair,generic_forced_zero,0.00000000,-1.7960207733240185e-01,1.7960207733240185e-01,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+a,mode,rdat_pair,generic_forced_zero,0.30000000,-2.3842962937508332e-07,2.3842962937508332e-07,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+a,mode,rdat_pair,generic_forced_zero,0.50000000,1.4234038260600677e-02,1.4234038260600677e-02,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+a,mode,rdat_pair,generic_forced_zero,0.70000000,1.8180310802033955e-01,1.8180310802033955e-01,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+a,mode,rdat_pair,generic_forced_zero,1.00000000,-1.7960207733240263e-01,1.7960207733240263e-01,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+a,base,rdat_pair_tau0,max_generic,0.72000000,1.8767066209542432e-01,1.8767066209542432e-01,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+a,base,rdat_pair_tau0,max_mirror_kx_half,0.91500000,-1.2248711933984698e-01,1.2248711933984698e-01,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+a,mode,rdat_pair_tau0,max_generic,0.96000000,-1.9502091925002807e-01,1.9502091925002807e-01,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+a,mode,rdat_pair_tau0,max_mirror_kx_half,0.91500000,-1.2263845931594733e-01,1.2263845931594733e-01,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+a,mode,rdat_pair_tau0,generic_forced_zero,0.00000000,-1.7960207733240408e-01,1.7960207733240408e-01,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+a,mode,rdat_pair_tau0,generic_forced_zero,0.30000000,-2.3842962867294081e-07,2.3842962867294081e-07,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+a,mode,rdat_pair_tau0,generic_forced_zero,0.50000000,1.4234038260598393e-02,1.4234038260598393e-02,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+a,mode,rdat_pair_tau0,generic_forced_zero,0.70000000,1.8180310802034538e-01,1.8180310802034538e-01,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+a,mode,rdat_pair_tau0,generic_forced_zero,1.00000000,-1.7960207733240274e-01,1.7960207733240274e-01,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+b,base,mmn_pair,max_generic,0.11000000,-1.1702437205038385e-09,1.1702437205038385e-09,729,729,1,8,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+b,base,mmn_pair,max_mirror_kx_half,0.30000000,6.9542367995894735e-10,6.9542367995894735e-10,729,729,1,8,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+b,mode,mmn_pair,max_generic,0.07000000,-3.3647788730552502e-03,3.3647788730552502e-03,729,729,1,8,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+b,mode,mmn_pair,max_mirror_kx_half,0.29000000,6.7103699721601991e-10,6.7103699721601991e-10,729,729,1,8,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+b,mode,mmn_pair,generic_forced_zero,0.00000000,-7.6904091529117027e-10,7.6904091529117027e-10,729,729,1,8,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+b,mode,mmn_pair,generic_forced_zero,0.30000000,-2.0398611247620470e-11,2.0398611247620470e-11,729,729,1,8,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+b,mode,mmn_pair,generic_forced_zero,0.50000000,6.6807869823322672e-10,6.6807869823322672e-10,729,729,1,8,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+b,mode,mmn_pair,generic_forced_zero,0.70000000,8.1571633828410024e-12,8.1571633828410024e-12,729,729,1,8,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+b,mode,mmn_pair,generic_forced_zero,1.00000000,-7.6904091516772049e-10,7.6904091516772049e-10,729,729,1,8,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+b,base,rdat_direct,max_generic,0.81500000,3.1918911957973251e-16,3.1918911957973251e-16,729,729,1,0,_r.dat,direct Wannier90 min|R|
+b,base,rdat_direct,max_mirror_kx_half,0.55000000,-5.9414279052205643e-16,5.9414279052205643e-16,729,729,1,0,_r.dat,direct Wannier90 min|R|
+b,mode,rdat_direct,max_generic,0.21000000,3.2043086939830337e-03,3.2043086939830337e-03,729,729,1,0,_r.dat,direct Wannier90 min|R|
+b,mode,rdat_direct,max_mirror_kx_half,0.50500000,-4.3725873616340394e-16,4.3725873616340394e-16,729,729,1,0,_r.dat,direct Wannier90 min|R|
+b,mode,rdat_direct,generic_forced_zero,0.00000000,8.1532003370909933e-17,8.1532003370909933e-17,729,729,1,0,_r.dat,direct Wannier90 min|R|
+b,mode,rdat_direct,generic_forced_zero,0.30000000,-1.2323224586930403e-16,1.2323224586930403e-16,729,729,1,0,_r.dat,direct Wannier90 min|R|
+b,mode,rdat_direct,generic_forced_zero,0.50000000,5.8980598183211441e-17,5.8980598183211441e-17,729,729,1,0,_r.dat,direct Wannier90 min|R|
+b,mode,rdat_direct,generic_forced_zero,0.70000000,0.0000000000000000e+00,0.0000000000000000e+00,729,729,1,0,_r.dat,direct Wannier90 min|R|
+b,mode,rdat_direct,generic_forced_zero,1.00000000,-7.1123662515049091e-17,7.1123662515049091e-17,729,729,1,0,_r.dat,direct Wannier90 min|R|
+b,base,rdat_pair,max_generic,0.35500000,-2.6714741530042829e-16,2.6714741530042829e-16,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+b,base,rdat_pair,max_mirror_kx_half,0.52000000,-5.2655633759474130e-16,5.2655633759474130e-16,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+b,mode,rdat_pair,max_generic,0.79000000,-3.2043086939831551e-03,3.2043086939831551e-03,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+b,mode,rdat_pair,max_mirror_kx_half,0.54000000,-3.4520997171938461e-16,3.4520997171938461e-16,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+b,mode,rdat_pair,generic_forced_zero,0.00000000,5.1174342541315809e-17,5.1174342541315809e-17,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+b,mode,rdat_pair,generic_forced_zero,0.30000000,-9.7777384252793574e-17,9.7777384252793574e-17,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+b,mode,rdat_pair,generic_forced_zero,0.50000000,-7.1123662515049091e-17,7.1123662515049091e-17,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+b,mode,rdat_pair,generic_forced_zero,0.70000000,-3.4694469519536142e-18,3.4694469519536142e-18,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+b,mode,rdat_pair,generic_forced_zero,1.00000000,7.8062556418956319e-17,7.8062556418956319e-17,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+b,base,rdat_pair_tau0,max_generic,0.78000000,1.2836953722228372e-15,1.2836953722228372e-15,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+b,base,rdat_pair_tau0,max_mirror_kx_half,0.49000000,5.1196026584765519e-16,5.1196026584765519e-16,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+b,mode,rdat_pair_tau0,max_generic,0.79000000,-3.2043086939835611e-03,3.2043086939835611e-03,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+b,mode,rdat_pair_tau0,max_mirror_kx_half,0.46500000,7.4755739792875531e-16,7.4755739792875531e-16,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+b,mode,rdat_pair_tau0,generic_forced_zero,0.00000000,3.3827107781547738e-17,3.3827107781547738e-17,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+b,mode,rdat_pair_tau0,generic_forced_zero,0.30000000,-9.7182462008465191e-17,9.7182462008465191e-17,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+b,mode,rdat_pair_tau0,generic_forced_zero,0.50000000,-4.5102810375396984e-16,4.5102810375396984e-16,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+b,mode,rdat_pair_tau0,generic_forced_zero,0.70000000,1.1449174941446927e-16,1.1449174941446927e-16,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+b,mode,rdat_pair_tau0,generic_forced_zero,1.00000000,7.1991024253037494e-17,7.1991024253037494e-17,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+b,base,rfull_pair,max_generic,0.55500000,1.2572168653357529e-10,1.2572168653357529e-10,729,729,1,8,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+b,base,rfull_pair,max_mirror_kx_half,0.57000000,2.9875938029923221e-10,2.9875938029923221e-10,729,729,1,8,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+b,mode,rfull_pair,max_generic,0.19000000,2.9552339087214326e-03,2.9552339087214326e-03,729,729,1,8,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+b,mode,rfull_pair,max_mirror_kx_half,0.13500000,-9.1724684047145053e-11,9.1724684047145053e-11,729,729,1,8,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+b,mode,rfull_pair,generic_forced_zero,0.00000000,1.5807693233476414e-11,1.5807693233476414e-11,729,729,1,8,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+b,mode,rfull_pair,generic_forced_zero,0.30000000,6.5850571779570291e-12,6.5850571779570291e-12,729,729,1,8,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+b,mode,rfull_pair,generic_forced_zero,0.50000000,5.5706045932742500e-11,5.5706045932742500e-11,729,729,1,8,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+b,mode,rfull_pair,generic_forced_zero,0.70000000,-8.4120122996672759e-11,8.4120122996672759e-11,729,729,1,8,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+b,mode,rfull_pair,generic_forced_zero,1.00000000,1.5807698181382495e-11,1.5807698181382495e-11,729,729,1,8,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+c,base,mmn_pair,max_generic,0.75000000,-7.3055598271169406e-09,7.3055598271169406e-09,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+c,base,mmn_pair,max_mirror_kx_half,0.22500000,-3.7002404887148069e-09,3.7002404887148069e-09,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+c,mode,mmn_pair,max_generic,0.92500000,-6.8121228214120776e-03,6.8121228214120776e-03,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+c,mode,mmn_pair,max_mirror_kx_half,0.09500000,-8.0302738996654690e-08,8.0302738996654690e-08,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+c,mode,mmn_pair,generic_forced_zero,0.00000000,4.6701189997729518e-08,4.6701189997729518e-08,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+c,mode,mmn_pair,generic_forced_zero,0.30000000,5.4133423143686042e-08,5.4133423143686042e-08,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+c,mode,mmn_pair,generic_forced_zero,0.50000000,-5.1265647428802271e-08,5.1265647428802271e-08,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+c,mode,mmn_pair,generic_forced_zero,0.70000000,4.8489121845580233e-08,4.8489121845580233e-08,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+c,mode,mmn_pair,generic_forced_zero,1.00000000,4.6701190407177410e-08,4.6701190407177410e-08,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+c,base,rdat_direct,max_generic,0.71500000,4.0573815039238327e-02,4.0573815039238327e-02,729,729,1,0,_r.dat,direct Wannier90 min|R|
+c,base,rdat_direct,max_mirror_kx_half,0.71000000,-1.9106712173341034e-02,1.9106712173341034e-02,729,729,1,0,_r.dat,direct Wannier90 min|R|
+c,mode,rdat_direct,max_generic,0.70500000,4.0226243491749851e-02,4.0226243491749851e-02,729,729,1,0,_r.dat,direct Wannier90 min|R|
+c,mode,rdat_direct,max_mirror_kx_half,0.29000000,1.9221303545476826e-02,1.9221303545476826e-02,729,729,1,0,_r.dat,direct Wannier90 min|R|
+c,mode,rdat_direct,generic_forced_zero,0.00000000,-3.5135178400470830e-03,3.5135178400470830e-03,729,729,1,0,_r.dat,direct Wannier90 min|R|
+c,mode,rdat_direct,generic_forced_zero,0.30000000,5.4725121170798745e-08,5.4725121170798745e-08,729,729,1,0,_r.dat,direct Wannier90 min|R|
+c,mode,rdat_direct,generic_forced_zero,0.50000000,1.9183695698583053e-02,1.9183695698583053e-02,729,729,1,0,_r.dat,direct Wannier90 min|R|
+c,mode,rdat_direct,generic_forced_zero,0.70000000,4.0144055304511692e-02,4.0144055304511692e-02,729,729,1,0,_r.dat,direct Wannier90 min|R|
+c,mode,rdat_direct,generic_forced_zero,1.00000000,-3.5135178400460465e-03,3.5135178400460465e-03,729,729,1,0,_r.dat,direct Wannier90 min|R|
+c,base,rdat_pair,max_generic,0.70000000,3.9712918172596021e-02,3.9712918172596021e-02,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+c,base,rdat_pair,max_mirror_kx_half,0.67000000,-1.6505465510603452e-02,1.6505465510603452e-02,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+c,mode,rdat_pair,max_generic,0.72000000,4.0079701629382777e-02,4.0079701629382777e-02,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+c,mode,rdat_pair,max_mirror_kx_half,0.67000000,-1.6531030091677924e-02,1.6531030091677924e-02,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+c,mode,rdat_pair,generic_forced_zero,0.00000000,-4.6492434409889458e-03,4.6492434409889458e-03,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+c,mode,rdat_pair,generic_forced_zero,0.30000000,5.4648596148624675e-08,5.4648596148624675e-08,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+c,mode,rdat_pair,generic_forced_zero,0.50000000,1.6103808121117606e-02,1.6103808121117606e-02,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+c,mode,rdat_pair,generic_forced_zero,0.70000000,3.9628507428837938e-02,3.9628507428837938e-02,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+c,mode,rdat_pair,generic_forced_zero,1.00000000,-4.6492434409885642e-03,4.6492434409885642e-03,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+c,base,rdat_pair_tau0,max_generic,0.70000000,3.9712918172593613e-02,3.9712918172593613e-02,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+c,base,rdat_pair_tau0,max_mirror_kx_half,0.33000000,1.6505465510605281e-02,1.6505465510605281e-02,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+c,mode,rdat_pair_tau0,max_generic,0.72000000,4.0079701629381896e-02,4.0079701629381896e-02,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+c,mode,rdat_pair_tau0,max_mirror_kx_half,0.67000000,-1.6531030091675922e-02,1.6531030091675922e-02,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+c,mode,rdat_pair_tau0,generic_forced_zero,0.00000000,-4.6492434409899979e-03,4.6492434409899979e-03,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+c,mode,rdat_pair_tau0,generic_forced_zero,0.30000000,5.4648595656703951e-08,5.4648595656703951e-08,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+c,mode,rdat_pair_tau0,generic_forced_zero,0.50000000,1.6103808121119563e-02,1.6103808121119563e-02,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+c,mode,rdat_pair_tau0,generic_forced_zero,0.70000000,3.9628507428835828e-02,3.9628507428835828e-02,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+c,mode,rdat_pair_tau0,generic_forced_zero,1.00000000,-4.6492434409868043e-03,4.6492434409868043e-03,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+c,base,rfull_pair,max_generic,0.75500000,-1.2298542337524712e-09,1.2298542337524712e-09,729,729,1,0,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+c,base,rfull_pair,max_mirror_kx_half,0.20000000,-8.1054916649544138e-10,8.1054916649544138e-10,729,729,1,0,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+c,mode,rfull_pair,max_generic,0.93000000,-8.3349753683056044e-03,8.3349753683056044e-03,729,729,1,0,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+c,mode,rfull_pair,max_mirror_kx_half,0.07500000,-7.9337573585312517e-08,7.9337573585312517e-08,729,729,1,0,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+c,mode,rfull_pair,generic_forced_zero,0.00000000,4.7552928688359436e-08,4.7552928688359436e-08,729,729,1,0,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+c,mode,rfull_pair,generic_forced_zero,0.30000000,5.4226691502827911e-08,5.4226691502827911e-08,729,729,1,0,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+c,mode,rfull_pair,generic_forced_zero,0.50000000,-4.8642775624830065e-08,4.8642775624830065e-08,729,729,1,0,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+c,mode,rfull_pair,generic_forced_zero,0.70000000,5.4320013261620976e-08,5.4320013261620976e-08,729,729,1,0,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+c,mode,rfull_pair,generic_forced_zero,1.00000000,4.7552929088681394e-08,4.7552929088681394e-08,729,729,1,0,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+sr_b,base,mmn_pair,max_generic,0.11000000,-1.1702437205038385e-09,1.1702437205038385e-09,729,729,1,8,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+sr_b,base,mmn_pair,max_mirror_kx_half,0.30000000,6.9542367995894735e-10,6.9542367995894735e-10,729,729,1,8,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+sr_b,mode,mmn_pair,max_generic,0.86000000,-2.7874043373223769e-03,2.7874043373223769e-03,729,729,1,8,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+sr_b,mode,mmn_pair,max_mirror_kx_half,0.30500000,7.8080927990431734e-10,7.8080927990431734e-10,729,729,1,8,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+sr_b,mode,mmn_pair,generic_forced_zero,0.00000000,-7.7051480328053383e-10,7.7051480328053383e-10,729,729,1,8,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+sr_b,mode,mmn_pair,generic_forced_zero,0.30000000,-8.5048176048142248e-11,8.5048176048142248e-11,729,729,1,8,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+sr_b,mode,mmn_pair,generic_forced_zero,0.50000000,7.7883936352209298e-10,7.7883936352209298e-10,729,729,1,8,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+sr_b,mode,mmn_pair,generic_forced_zero,0.70000000,4.9498507676278087e-11,4.9498507676278087e-11,729,729,1,8,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+sr_b,mode,mmn_pair,generic_forced_zero,1.00000000,-7.7051489579492827e-10,7.7051489579492827e-10,729,729,1,8,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+sr_b,base,rdat_direct,max_generic,0.81500000,3.1918911957973251e-16,3.1918911957973251e-16,729,729,1,0,_r.dat,direct Wannier90 min|R|
+sr_b,base,rdat_direct,max_mirror_kx_half,0.55000000,-5.9414279052205643e-16,5.9414279052205643e-16,729,729,1,0,_r.dat,direct Wannier90 min|R|
+sr_b,mode,rdat_direct,max_generic,0.87500000,-3.1608886521247706e-03,3.1608886521247706e-03,729,729,1,0,_r.dat,direct Wannier90 min|R|
+sr_b,mode,rdat_direct,max_mirror_kx_half,0.46000000,-4.0462425077159025e-16,4.0462425077159025e-16,729,729,1,0,_r.dat,direct Wannier90 min|R|
+sr_b,mode,rdat_direct,generic_forced_zero,0.00000000,6.9388939039072284e-17,6.9388939039072284e-17,729,729,1,0,_r.dat,direct Wannier90 min|R|
+sr_b,mode,rdat_direct,generic_forced_zero,0.30000000,3.7787383980298521e-17,3.7787383980298521e-17,729,729,1,0,_r.dat,direct Wannier90 min|R|
+sr_b,mode,rdat_direct,generic_forced_zero,0.50000000,-9.8879238130678004e-17,9.8879238130678004e-17,729,729,1,0,_r.dat,direct Wannier90 min|R|
+sr_b,mode,rdat_direct,generic_forced_zero,0.70000000,6.9388939039072284e-17,6.9388939039072284e-17,729,729,1,0,_r.dat,direct Wannier90 min|R|
+sr_b,mode,rdat_direct,generic_forced_zero,1.00000000,-2.6020852139652106e-17,2.6020852139652106e-17,729,729,1,0,_r.dat,direct Wannier90 min|R|
+sr_b,base,rdat_pair,max_generic,0.35500000,-2.6714741530042829e-16,2.6714741530042829e-16,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_b,base,rdat_pair,max_mirror_kx_half,0.52000000,-5.2655633759474130e-16,5.2655633759474130e-16,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_b,mode,rdat_pair,max_generic,0.12500000,3.1608886521245850e-03,3.1608886521245850e-03,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_b,mode,rdat_pair,max_mirror_kx_half,0.51500000,5.0111824412280015e-16,5.0111824412280015e-16,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_b,mode,rdat_pair,generic_forced_zero,0.00000000,7.0256300777060687e-17,7.0256300777060687e-17,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_b,mode,rdat_pair,generic_forced_zero,0.30000000,7.0460692042667592e-17,7.0460692042667592e-17,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_b,mode,rdat_pair,generic_forced_zero,0.50000000,0.0000000000000000e+00,0.0000000000000000e+00,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_b,mode,rdat_pair,generic_forced_zero,0.70000000,6.5919492087118670e-17,6.5919492087118670e-17,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_b,mode,rdat_pair,generic_forced_zero,1.00000000,-4.3368086899420177e-18,4.3368086899420177e-18,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_b,base,rdat_pair_tau0,max_generic,0.78000000,1.2836953722228372e-15,1.2836953722228372e-15,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_b,base,rdat_pair_tau0,max_mirror_kx_half,0.49000000,5.1196026584765519e-16,5.1196026584765519e-16,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_b,mode,rdat_pair_tau0,max_generic,0.12500000,3.1608886521247324e-03,3.1608886521247324e-03,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_b,mode,rdat_pair_tau0,max_mirror_kx_half,0.31500000,5.6378512969246231e-16,5.6378512969246231e-16,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_b,mode,rdat_pair_tau0,generic_forced_zero,0.00000000,-1.0928757898653885e-16,1.0928757898653885e-16,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_b,mode,rdat_pair_tau0,generic_forced_zero,0.30000000,-4.8790986573972720e-17,4.8790986573972720e-17,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_b,mode,rdat_pair_tau0,generic_forced_zero,0.50000000,2.1857515797307769e-16,2.1857515797307769e-16,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_b,mode,rdat_pair_tau0,generic_forced_zero,0.70000000,-1.1102230246251565e-16,1.1102230246251565e-16,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_b,mode,rdat_pair_tau0,generic_forced_zero,1.00000000,-4.7704895589362195e-17,4.7704895589362195e-17,727,727,1,6,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_b,base,rfull_pair,max_generic,0.55500000,1.2572168653357529e-10,1.2572168653357529e-10,729,729,1,8,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+sr_b,base,rfull_pair,max_mirror_kx_half,0.57000000,2.9875938029923221e-10,2.9875938029923221e-10,729,729,1,8,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+sr_b,mode,rfull_pair,max_generic,0.12500000,3.8483366034847686e-03,3.8483366034847686e-03,729,729,1,8,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+sr_b,mode,rfull_pair,max_mirror_kx_half,0.86500000,-2.4594824823487166e-10,2.4594824823487166e-10,729,729,1,8,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+sr_b,mode,rfull_pair,generic_forced_zero,0.00000000,1.4415301919281045e-11,1.4415301919281045e-11,729,729,1,8,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+sr_b,mode,rfull_pair,generic_forced_zero,0.30000000,-2.3065235219150698e-11,2.3065235219150698e-11,729,729,1,8,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+sr_b,mode,rfull_pair,generic_forced_zero,0.50000000,1.6178511866665916e-10,1.6178511866665916e-10,729,729,1,8,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+sr_b,mode,rfull_pair,generic_forced_zero,0.70000000,-1.0405583326984776e-10,1.0405583326984776e-10,729,729,1,8,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+sr_b,mode,rfull_pair,generic_forced_zero,1.00000000,1.4415208728225923e-11,1.4415208728225923e-11,729,729,1,8,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+sr_c,base,mmn_pair,max_generic,0.75000000,-7.3055598271169406e-09,7.3055598271169406e-09,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+sr_c,base,mmn_pair,max_mirror_kx_half,0.22500000,-3.7002404887148069e-09,3.7002404887148069e-09,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+sr_c,mode,mmn_pair,max_generic,0.92500000,-5.9328649894331998e-03,5.9328649894331998e-03,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+sr_c,mode,mmn_pair,max_mirror_kx_half,0.75500000,3.6911016041179602e-09,3.6911016041179602e-09,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+sr_c,mode,mmn_pair,generic_forced_zero,0.00000000,-8.8590059014736011e-10,8.8590059014736011e-10,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+sr_c,mode,mmn_pair,generic_forced_zero,0.30000000,-2.1578908900902394e-11,2.1578908900902394e-11,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+sr_c,mode,mmn_pair,generic_forced_zero,0.50000000,-3.1652885533909780e-09,3.1652885533909780e-09,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+sr_c,mode,mmn_pair,generic_forced_zero,0.70000000,-7.1056378640859036e-09,7.1056378640859036e-09,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+sr_c,mode,mmn_pair,generic_forced_zero,1.00000000,-8.8589929456168224e-10,8.8589929456168224e-10,729,729,1,0,.chk/.mmn,min|R+tau_j-tau_i| (links summed first)
+sr_c,base,rdat_direct,max_generic,0.71500000,4.0573815039238327e-02,4.0573815039238327e-02,729,729,1,0,_r.dat,direct Wannier90 min|R|
+sr_c,base,rdat_direct,max_mirror_kx_half,0.71000000,-1.9106712173341034e-02,1.9106712173341034e-02,729,729,1,0,_r.dat,direct Wannier90 min|R|
+sr_c,mode,rdat_direct,max_generic,0.71000000,4.0266569732702401e-02,4.0266569732702401e-02,729,729,1,0,_r.dat,direct Wannier90 min|R|
+sr_c,mode,rdat_direct,max_mirror_kx_half,0.29000000,1.9047039072598818e-02,1.9047039072598818e-02,729,729,1,0,_r.dat,direct Wannier90 min|R|
+sr_c,mode,rdat_direct,generic_forced_zero,0.00000000,-3.4614129871640828e-03,3.4614129871640828e-03,729,729,1,0,_r.dat,direct Wannier90 min|R|
+sr_c,mode,rdat_direct,generic_forced_zero,0.30000000,2.5638957482890976e-16,2.5638957482890976e-16,729,729,1,0,_r.dat,direct Wannier90 min|R|
+sr_c,mode,rdat_direct,generic_forced_zero,0.50000000,1.9000734610664104e-02,1.9000734610664104e-02,729,729,1,0,_r.dat,direct Wannier90 min|R|
+sr_c,mode,rdat_direct,generic_forced_zero,0.70000000,4.0090599157396281e-02,4.0090599157396281e-02,729,729,1,0,_r.dat,direct Wannier90 min|R|
+sr_c,mode,rdat_direct,generic_forced_zero,1.00000000,-3.4614129871643013e-03,3.4614129871643013e-03,729,729,1,0,_r.dat,direct Wannier90 min|R|
+sr_c,base,rdat_pair,max_generic,0.70000000,3.9712918172596021e-02,3.9712918172596021e-02,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_c,base,rdat_pair,max_mirror_kx_half,0.67000000,-1.6505465510603452e-02,1.6505465510603452e-02,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_c,mode,rdat_pair,max_generic,0.70500000,3.9609479333239793e-02,3.9609479333239793e-02,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_c,mode,rdat_pair,max_mirror_kx_half,0.67000000,-1.6495483223439762e-02,1.6495483223439762e-02,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_c,mode,rdat_pair,generic_forced_zero,0.00000000,-4.5619889700732087e-03,4.5619889700732087e-03,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_c,mode,rdat_pair,generic_forced_zero,0.30000000,1.7616787556893146e-16,1.7616787556893146e-16,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_c,mode,rdat_pair,generic_forced_zero,0.50000000,1.6032329329080584e-02,1.6032329329080584e-02,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_c,mode,rdat_pair,generic_forced_zero,0.70000000,3.9590911749148847e-02,3.9590911749148847e-02,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_c,mode,rdat_pair,generic_forced_zero,1.00000000,-4.5619889700718999e-03,4.5619889700718999e-03,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_c,base,rdat_pair_tau0,max_generic,0.70000000,3.9712918172593613e-02,3.9712918172593613e-02,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_c,base,rdat_pair_tau0,max_mirror_kx_half,0.33000000,1.6505465510605281e-02,1.6505465510605281e-02,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_c,mode,rdat_pair_tau0,max_generic,0.70500000,3.9609479333242194e-02,3.9609479333242194e-02,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_c,mode,rdat_pair_tau0,max_mirror_kx_half,0.33000000,1.6495483223441840e-02,1.6495483223441840e-02,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_c,mode,rdat_pair_tau0,generic_forced_zero,0.00000000,-4.5619889700712121e-03,4.5619889700712121e-03,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_c,mode,rdat_pair_tau0,generic_forced_zero,0.30000000,3.0204541768240456e-15,3.0204541768240456e-15,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_c,mode,rdat_pair_tau0,generic_forced_zero,0.50000000,1.6032329329083984e-02,1.6032329329083984e-02,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_c,mode,rdat_pair_tau0,generic_forced_zero,0.70000000,3.9590911749139729e-02,3.9590911749139729e-02,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_c,mode,rdat_pair_tau0,generic_forced_zero,1.00000000,-4.5619889700739772e-03,4.5619889700739772e-03,729,729,1,0,_r.dat,in-house min|R+tau_j-tau_i| (use_ws_distance rule)
+sr_c,base,rfull_pair,max_generic,0.75500000,-1.2298542337524712e-09,1.2298542337524712e-09,729,729,1,0,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+sr_c,base,rfull_pair,max_mirror_kx_half,0.20000000,-8.1054916649544138e-10,8.1054916649544138e-10,729,729,1,0,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+sr_c,mode,rfull_pair,max_generic,0.92500000,-7.6854405789140434e-03,7.6854405789140434e-03,729,729,1,0,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+sr_c,mode,rfull_pair,max_mirror_kx_half,0.72500000,8.2791587738672864e-10,8.2791587738672864e-10,729,729,1,0,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+sr_c,mode,rfull_pair,generic_forced_zero,0.00000000,5.9041475193623248e-11,5.9041475193623248e-11,729,729,1,0,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+sr_c,mode,rfull_pair,generic_forced_zero,0.30000000,1.0421133167248513e-11,1.0421133167248513e-11,729,729,1,0,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+sr_c,mode,rfull_pair,generic_forced_zero,0.50000000,-4.7698594060700957e-10,4.7698594060700957e-10,729,729,1,0,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+sr_c,mode,rfull_pair,generic_forced_zero,0.70000000,-1.3196083188810162e-09,1.3196083188810162e-09,729,729,1,0,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)
+sr_c,mode,rfull_pair,generic_forced_zero,1.00000000,5.9042751115574039e-11,5.9042751115574039e-11,729,729,1,0,_r_full.dat,postw90 min|R+tau_j-tau_i| (links kept separate)

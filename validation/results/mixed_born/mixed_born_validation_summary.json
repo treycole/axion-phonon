@@ -1,0 +1,111 @@
+{
+  "DFPT_acoustic_sum_rule": {
+    "asr_applied_max_abs_sum": 9.999999999621423e-06,
+    "asr_applied_passes_1e-4": true,
+    "raw_max_abs_sum": 0.0016400000000000858,
+    "raw_passes_5e-3": true
+  },
+  "DFPT_benchmarks": {
+    "Sr_trial03": {
+      "DFPT": 2.55488,
+      "max_abs_symmetry_forbidden_zx_zy": 8.799018423070761e-11,
+      "nk": 16,
+      "passes_one_percent_accuracy": true,
+      "passes_transverse_symmetry_1e-7": true,
+      "relative_error": 0.0014394120130372184,
+      "signed_error": -0.003677524963868528,
+      "wannier": 2.5512024750361313
+    },
+    "Ti_trial03": {
+      "DFPT": 7.28829,
+      "max_abs_symmetry_forbidden_zx_zy": 2.750648185477129e-10,
+      "nk": 16,
+      "passes_one_percent_accuracy": true,
+      "passes_transverse_symmetry_1e-7": true,
+      "relative_error": 0.0017424868899653342,
+      "signed_error": 0.012699749775265445,
+      "wannier": 7.300989749775265
+    }
+  },
+  "all_locally_executable_checks_pass": true,
+  "embedding_covariance": {
+    "max_abs_redistribution_among_parts": 0.3280634728737577,
+    "max_abs_total_difference": 7.126147072289935e-15,
+    "nks": [
+      8,
+      12,
+      16
+    ],
+    "passes_total_1e-10": true
+  },
+  "interpolation_kmesh_convergence": {
+    "Sr_trial03": {
+      "absolute_change": 1.259524879859697e-05,
+      "nk_pair": [
+        12,
+        16
+      ],
+      "passes_5e-4_absolute": true,
+      "relative_change": 4.936985175360725e-06,
+      "values": [
+        2.55121507028493,
+        2.5512024750361313
+      ]
+    },
+    "Ti_trial03": {
+      "absolute_change": 0.00016706828319357214,
+      "nk_pair": [
+        12,
+        16
+      ],
+      "passes_5e-4_absolute": true,
+      "relative_change": 2.2882963669236042e-05,
+      "values": [
+        7.301156818058459,
+        7.300989749775265
+      ]
+    }
+  },
+  "occupied_only_exact_reductions": {
+    "Sr_curvature_vs_centre_max_abs": 2.8107521110598555e-06,
+    "Sr_mmn_vs_rfull_Zstar_difference": -2.015205957661692e-08,
+    "Ti_curvature_vs_centre_max_abs": 4.294751378086659e-06,
+    "Ti_mmn_vs_rfull_Zstar_difference": 1.244301017777616e-08,
+    "passes_centre_formula_5e-3": true,
+    "passes_position_scheme_cancellation_1e-6": true
+  },
+  "position_discretization_sensitivity": {
+    "Sr_trial03_rfull_minus_mmn_Zstar": 0.00034858031137030565,
+    "Ti_trial03_rfull_minus_mmn_Zstar": 0.03196215962321958,
+    "interpretation": "diagnostic, not a pass/fail check; the two finite-8^3 connection discretizations need not coincide"
+  },
+  "production_accuracy_gate_complete": false,
+  "semicore_null": {
+    "max_abs": 0.38134626278259787,
+    "nk": 4,
+    "passes_calibrated_0p5_tolerance": true,
+    "z_el": [
+      -2.571702804242459e-08,
+      -2.580205055655834e-08,
+      0.38134626278259787
+    ]
+  },
+  "unavailable_accuracy_gates": {
+    "interpolated_acoustic_sum_rule_with_O_displacement": {
+      "reason": "no O-displaced Wannier endpoint is present locally",
+      "status": "NOT_RUN"
+    },
+    "non_frozen_Lambda_R": {
+      "reason": "all stored responses use the explicitly frozen projection gauge; no independently computed Lambda(R) is present",
+      "status": "NOT_RUN"
+    },
+    "second_Ti_displacement_0p005A": {
+      "reason": "needed to remove/check the O(delta_u) forward-difference error",
+      "status": "NOT_RUN"
+    }
+  },
+  "zero_displacement": {
+    "max_abs_electronic_response": 0.0,
+    "passes_1e-12": true
+  }
+}

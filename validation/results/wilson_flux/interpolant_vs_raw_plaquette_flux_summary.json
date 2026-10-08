@@ -1,0 +1,463 @@
+{
+  "conventions": {
+    "integrated_quantity": "I_mn = integral_plaquette Tr Omega_mn dk_m dk_n in reduced coordinates",
+    "interpolant_vs_raw_residual": "wrap((-I_native) - phi_raw); this is not expected to vanish at finite 1/8 link length",
+    "trial_residual": "I_trial04 - I_trial03 under identical quadrature",
+    "wilson_relation": "arg det W_mn = -I_mn plus finite-link/discretization corrections"
+  },
+  "input": {
+    "H_and_A_mapping": "same orbital-dependent min|R+tau_right-tau_left| mapping",
+    "batch_size": 256,
+    "mesh": [
+      8,
+      8,
+      8
+    ],
+    "orientations": [
+      "xy",
+      "yz",
+      "zx"
+    ],
+    "plaquettes_per_orientation": 512,
+    "position_source": "MMN-derived pair-distance A(R)",
+    "quadrature_orders": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "raw_wilson_csv": "/Users/treycole/Repos/axion-phonon/calculations/SrTiO3/Ti_Q_2A/raw_mmn_wilson_comparison/raw_mmn_wilson_plaquettes.csv"
+  },
+  "orders": {
+    "1": {
+      "interpolant_vs_raw": {
+        "trial03": {
+          "xy": {
+            "maximum_absolute": 0.00035434980969499606,
+            "mean_absolute": 5.17215838806295e-05,
+            "relative_l2": 0.17970476687063003,
+            "rms": 9.24005133653311e-05
+          },
+          "yz": {
+            "maximum_absolute": 0.00829288508820581,
+            "mean_absolute": 0.001020457404929165,
+            "relative_l2": 0.07803670778037487,
+            "rms": 0.002223428695679099
+          },
+          "zx": {
+            "maximum_absolute": 0.008292885085370988,
+            "mean_absolute": 0.0010204574050904553,
+            "relative_l2": 0.07803670777797053,
+            "rms": 0.002223428695605568
+          }
+        },
+        "trial04": {
+          "xy": {
+            "maximum_absolute": 0.0007044000100607505,
+            "mean_absolute": 8.55765524473385e-05,
+            "relative_l2": 0.3324159657716664,
+            "rms": 0.00017092148651931096
+          },
+          "yz": {
+            "maximum_absolute": 0.0037086244926723966,
+            "mean_absolute": 0.0013379903022502028,
+            "relative_l2": 0.060233967550356954,
+            "rms": 0.0017161914657264383
+          },
+          "zx": {
+            "maximum_absolute": 0.0037086244902459066,
+            "mean_absolute": 0.001337990302395926,
+            "relative_l2": 0.0602339675536185,
+            "rms": 0.0017161914658154877
+          }
+        }
+      },
+      "points_per_plaquette": 1,
+      "total_quadrature_points_per_trial": 1536,
+      "trial03_vs_trial04": {
+        "xy": {
+          "maximum_absolute": 0.0008756966647173363,
+          "mean_absolute": 0.00012847255082142135,
+          "relative_l2": 0.40472905047334706,
+          "rms": 0.00023404666846971747
+        },
+        "yz": {
+          "maximum_absolute": 0.009924922551022682,
+          "mean_absolute": 0.0020111362629834303,
+          "relative_l2": 0.11370523148639639,
+          "rms": 0.003430162087858723
+        },
+        "zx": {
+          "maximum_absolute": 0.009924922552526125,
+          "mean_absolute": 0.002011136262955184,
+          "relative_l2": 0.11370523148576014,
+          "rms": 0.003430162087829281
+        }
+      }
+    },
+    "2": {
+      "interpolant_vs_raw": {
+        "trial03": {
+          "xy": {
+            "maximum_absolute": 9.023338918835896e-05,
+            "mean_absolute": 2.0301064398537014e-05,
+            "relative_l2": 0.06448057302350503,
+            "rms": 3.315459101734231e-05
+          },
+          "yz": {
+            "maximum_absolute": 0.0019017486688255728,
+            "mean_absolute": 0.00029315372657519925,
+            "relative_l2": 0.017225058401655266,
+            "rms": 0.0004907778688303436
+          },
+          "zx": {
+            "maximum_absolute": 0.0019017486707702397,
+            "mean_absolute": 0.0002931537265239791,
+            "relative_l2": 0.017225058398756658,
+            "rms": 0.0004907778687466467
+          }
+        },
+        "trial04": {
+          "xy": {
+            "maximum_absolute": 0.0007620107149536149,
+            "mean_absolute": 0.00011883226853055377,
+            "relative_l2": 0.4090548469406687,
+            "rms": 0.00021032763075842504
+          },
+          "yz": {
+            "maximum_absolute": 0.007396177295819047,
+            "mean_absolute": 0.0015854858113774051,
+            "relative_l2": 0.09335796170050151,
+            "rms": 0.0026599632008977117
+          },
+          "zx": {
+            "maximum_absolute": 0.007396177294411853,
+            "mean_absolute": 0.0015854858117441534,
+            "relative_l2": 0.09335796170495507,
+            "rms": 0.0026599632010185902
+          }
+        }
+      },
+      "points_per_plaquette": 4,
+      "total_quadrature_points_per_trial": 6144,
+      "trial03_vs_trial04": {
+        "xy": {
+          "maximum_absolute": 0.0007074790078445325,
+          "mean_absolute": 0.00010908205267661314,
+          "relative_l2": 0.3928916770004268,
+          "rms": 0.00019501344003548663
+        },
+        "yz": {
+          "maximum_absolute": 0.00852387384470489,
+          "mean_absolute": 0.0017875143672456792,
+          "relative_l2": 0.10742975934290645,
+          "rms": 0.003098756958728115
+        },
+        "zx": {
+          "maximum_absolute": 0.008523873843710963,
+          "mean_absolute": 0.0017875143672287162,
+          "relative_l2": 0.107429759342121,
+          "rms": 0.0030987569586938954
+        }
+      }
+    },
+    "3": {
+      "interpolant_vs_raw": {
+        "trial03": {
+          "xy": {
+            "maximum_absolute": 9.270383299020196e-05,
+            "mean_absolute": 2.0669012531553786e-05,
+            "relative_l2": 0.06588659534335511,
+            "rms": 3.387753891916835e-05
+          },
+          "yz": {
+            "maximum_absolute": 0.0018458493348814525,
+            "mean_absolute": 0.0002936710673876946,
+            "relative_l2": 0.01732640003991922,
+            "rms": 0.0004936653036413732
+          },
+          "zx": {
+            "maximum_absolute": 0.0018458493368452428,
+            "mean_absolute": 0.000293671067354742,
+            "relative_l2": 0.017326400036875193,
+            "rms": 0.0004936653035535267
+          }
+        },
+        "trial04": {
+          "xy": {
+            "maximum_absolute": 0.0007635313932094409,
+            "mean_absolute": 0.00011825655321310246,
+            "relative_l2": 0.40803026075296883,
+            "rms": 0.00020980080950944478
+          },
+          "yz": {
+            "maximum_absolute": 0.007378913075666224,
+            "mean_absolute": 0.0015835028923406264,
+            "relative_l2": 0.09288181652503084,
+            "rms": 0.002646396830960244
+          },
+          "zx": {
+            "maximum_absolute": 0.0073789130741992726,
+            "mean_absolute": 0.0015835028927083045,
+            "relative_l2": 0.09288181652944859,
+            "rms": 0.0026463968310801327
+          }
+        }
+      },
+      "points_per_plaquette": 9,
+      "total_quadrature_points_per_trial": 13824,
+      "trial03_vs_trial04": {
+        "xy": {
+          "maximum_absolute": 0.0007117995410230847,
+          "mean_absolute": 0.00010933797267223712,
+          "relative_l2": 0.3932879269756711,
+          "rms": 0.0001956432729427143
+        },
+        "yz": {
+          "maximum_absolute": 0.00847849206072579,
+          "mean_absolute": 0.0017861964809632847,
+          "relative_l2": 0.10712562843171151,
+          "rms": 0.0030900944225262543
+        },
+        "zx": {
+          "maximum_absolute": 0.008478492059726915,
+          "mean_absolute": 0.0017861964809460637,
+          "relative_l2": 0.10712562843094332,
+          "rms": 0.0030900944224926514
+        }
+      }
+    },
+    "4": {
+      "interpolant_vs_raw": {
+        "trial03": {
+          "xy": {
+            "maximum_absolute": 9.263759232233284e-05,
+            "mean_absolute": 2.065643761678826e-05,
+            "relative_l2": 0.06583946809417421,
+            "rms": 3.3853307052125305e-05
+          },
+          "yz": {
+            "maximum_absolute": 0.0018492280060314475,
+            "mean_absolute": 0.00029392856668381673,
+            "relative_l2": 0.017351867078733475,
+            "rms": 0.000494390912736172
+          },
+          "zx": {
+            "maximum_absolute": 0.001849228007994863,
+            "mean_absolute": 0.0002939285666508449,
+            "relative_l2": 0.017351867075688716,
+            "rms": 0.0004943909126483028
+          }
+        },
+        "trial04": {
+          "xy": {
+            "maximum_absolute": 0.0007634755147765671,
+            "mean_absolute": 0.00011826345950255839,
+            "relative_l2": 0.4080352395140743,
+            "rms": 0.00020980336948651205
+          },
+          "yz": {
+            "maximum_absolute": 0.00737874574986036,
+            "mean_absolute": 0.001583523654437359,
+            "relative_l2": 0.09288506323616186,
+            "rms": 0.0026464893365374343
+          },
+          "zx": {
+            "maximum_absolute": 0.007378745748394859,
+            "mean_absolute": 0.0015835236548049966,
+            "relative_l2": 0.09288506324058018,
+            "rms": 0.00264648933665734
+          }
+        }
+      },
+      "points_per_plaquette": 16,
+      "total_quadrature_points_per_trial": 24576,
+      "trial03_vs_trial04": {
+        "xy": {
+          "maximum_absolute": 0.000711744486638288,
+          "mean_absolute": 0.00010934085488660158,
+          "relative_l2": 0.39328978619973637,
+          "rms": 0.00019564416633075554
+        },
+        "yz": {
+          "maximum_absolute": 0.008481355166702176,
+          "mean_absolute": 0.001786482529442371,
+          "relative_l2": 0.10715171067316263,
+          "rms": 0.003090911002469827
+        },
+        "zx": {
+          "maximum_absolute": 0.008481355165702906,
+          "mean_absolute": 0.0017864825294251596,
+          "relative_l2": 0.10715171067239407,
+          "rms": 0.0030909110024362058
+        }
+      }
+    }
+  },
+  "quadrature_convergence": {
+    "trial03": {
+      "1": {
+        "xy": {
+          "maximum_absolute": 0.00031430880599368424,
+          "mean_absolute": 4.840662264963368e-05,
+          "relative_l2": 0.1815742759615772,
+          "rms": 9.032512181633951e-05
+        },
+        "yz": {
+          "maximum_absolute": 0.006835295264129848,
+          "mean_absolute": 0.0008750775914337229,
+          "relative_l2": 0.062116957068527025,
+          "rms": 0.001791833138611236
+        },
+        "zx": {
+          "maximum_absolute": 0.006835295265150296,
+          "mean_absolute": 0.0008750775913513358,
+          "relative_l2": 0.06211695707040628,
+          "rms": 0.0017918331386588074
+        }
+      },
+      "2": {
+        "xy": {
+          "maximum_absolute": 9.148126138323908e-06,
+          "mean_absolute": 1.240527575280948e-06,
+          "relative_l2": 0.004610513837355001,
+          "rms": 2.2935254555724243e-06
+        },
+        "yz": {
+          "maximum_absolute": 0.00011843691986427457,
+          "mean_absolute": 1.209223614820887e-05,
+          "relative_l2": 0.0007809874843629005,
+          "rms": 2.2528457950351e-05
+        },
+        "zx": {
+          "maximum_absolute": 0.0001184369199278626,
+          "mean_absolute": 1.2092236148246979e-05,
+          "relative_l2": 0.0007809874845775372,
+          "rms": 2.2528457956458984e-05
+        }
+      },
+      "3": {
+        "xy": {
+          "maximum_absolute": 1.0592404616404857e-07,
+          "mean_absolute": 2.1100756028239575e-08,
+          "relative_l2": 7.508329976661207e-05,
+          "rms": 3.7350600253678486e-08
+        },
+        "yz": {
+          "maximum_absolute": 3.3786711604449904e-06,
+          "mean_absolute": 3.3657713571281724e-07,
+          "relative_l2": 2.9862690518266755e-05,
+          "rms": 8.614227258378284e-07
+        },
+        "zx": {
+          "maximum_absolute": 3.378671162027058e-06,
+          "mean_absolute": 3.365771356606485e-07,
+          "relative_l2": 2.986269052031142e-05,
+          "rms": 8.614227258936178e-07
+        }
+      },
+      "4": {
+        "xy": {
+          "maximum_absolute": 0.0,
+          "mean_absolute": 0.0,
+          "relative_l2": 0.0,
+          "rms": 0.0
+        },
+        "yz": {
+          "maximum_absolute": 0.0,
+          "mean_absolute": 0.0,
+          "relative_l2": 0.0,
+          "rms": 0.0
+        },
+        "zx": {
+          "maximum_absolute": 0.0,
+          "mean_absolute": 0.0,
+          "relative_l2": 0.0,
+          "rms": 0.0
+        }
+      }
+    },
+    "trial04": {
+      "1": {
+        "xy": {
+          "maximum_absolute": 0.00019125417765590092,
+          "mean_absolute": 3.2732648869700007e-05,
+          "relative_l2": 0.17544406665912093,
+          "rms": 5.54625984140219e-05
+        },
+        "yz": {
+          "maximum_absolute": 0.0052099617873183,
+          "mean_absolute": 0.0008264305938056185,
+          "relative_l2": 0.05583725200909381,
+          "rms": 0.001509488299360266
+        },
+        "zx": {
+          "maximum_absolute": 0.005209961787397431,
+          "mean_absolute": 0.0008264305937811932,
+          "relative_l2": 0.05583725201000146,
+          "rms": 0.0015094882993789906
+        }
+      },
+      "2": {
+        "xy": {
+          "maximum_absolute": 6.4045442599411535e-06,
+          "mean_absolute": 6.60359041879962e-07,
+          "relative_l2": 0.004568860318890666,
+          "rms": 1.44433989647959e-06
+        },
+        "yz": {
+          "maximum_absolute": 0.00010524914422736092,
+          "mean_absolute": 1.369955597768229e-05,
+          "relative_l2": 0.0008806624477381269,
+          "rms": 2.3807576711156425e-05
+        },
+        "zx": {
+          "maximum_absolute": 0.00010524914426001536,
+          "mean_absolute": 1.369955597857939e-05,
+          "relative_l2": 0.0008806624478437076,
+          "rms": 2.3807576713918992e-05
+        }
+      },
+      "3": {
+        "xy": {
+          "maximum_absolute": 1.1006169222749565e-07,
+          "mean_absolute": 1.2328466684582648e-08,
+          "relative_l2": 8.254747753301196e-05,
+          "rms": 2.6095482644045983e-08
+        },
+        "yz": {
+          "maximum_absolute": 1.2730858080095553e-06,
+          "mean_absolute": 1.7509600182794805e-07,
+          "relative_l2": 1.0469626545157144e-05,
+          "rms": 2.8303288933367467e-07
+        },
+        "zx": {
+          "maximum_absolute": 1.2730858090850838e-06,
+          "mean_absolute": 1.7509600194315808e-07,
+          "relative_l2": 1.0469626550061507e-05,
+          "rms": 2.83032889465168e-07
+        }
+      },
+      "4": {
+        "xy": {
+          "maximum_absolute": 0.0,
+          "mean_absolute": 0.0,
+          "relative_l2": 0.0,
+          "rms": 0.0
+        },
+        "yz": {
+          "maximum_absolute": 0.0,
+          "mean_absolute": 0.0,
+          "relative_l2": 0.0,
+          "rms": 0.0
+        },
+        "zx": {
+          "maximum_absolute": 0.0,
+          "mean_absolute": 0.0,
+          "relative_l2": 0.0,
+          "rms": 0.0
+        }
+      }
+    }
+  }
+}

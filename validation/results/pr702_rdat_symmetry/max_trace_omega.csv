@@ -1,0 +1,13 @@
+pipeline,structure,path,zero,max_abs_trace_omega_xy_A2,ratio_to_mmn_pair
+mmn_pair,base,generic,base generic (P+T),7.305560e-09,1.000000e+00
+mmn_pair,base,mirror_kx_half,base kx=1/2 mirror,3.700240e-09,1.000000e+00
+mmn_pair,mode,mirror_kx_half,mode kx=1/2 mirror,8.030274e-08,1.000000e+00
+rfull_pair,base,generic,base generic (P+T),1.229854e-09,1.683450e-01
+rfull_pair,base,mirror_kx_half,base kx=1/2 mirror,8.105492e-10,2.190531e-01
+rfull_pair,mode,mirror_kx_half,mode kx=1/2 mirror,7.933757e-08,9.879809e-01
+rdat_pair [stock],base,generic,base generic (P+T),3.971292e-02,5.435986e+06
+rdat_pair [stock],base,mirror_kx_half,base kx=1/2 mirror,1.650547e-02,4.460647e+06
+rdat_pair [stock],mode,mirror_kx_half,mode kx=1/2 mirror,1.653103e-02,2.058589e+05
+rdat_direct [stock],base,generic,base generic (P+T),4.057382e-02,5.553827e+06
+rdat_direct [stock],base,mirror_kx_half,base kx=1/2 mirror,1.910671e-02,5.163641e+06
+rdat_direct [stock],mode,mirror_kx_half,mode kx=1/2 mirror,1.922130e-02,2.393605e+05

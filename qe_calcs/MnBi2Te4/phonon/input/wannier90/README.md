@@ -1,1 +1,0 @@
-All calculations are done with Q=0.01

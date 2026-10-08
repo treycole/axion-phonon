@@ -1,0 +1,73 @@
+trial,structure,convention,diagnostic,t,value_A2,abs_value_A2,n_R_H,n_R_A,same_R_set,zero_H_blocks_added,position_source,ws_rule
+b,base,mmn_pair,max_generic,0.11000000,-1.1701757843957106e-09,1.1701757843957106e-09,721,721,1,0,.mmn/.chk,min|R+tau_t-tau_s|
+b,base,mmn_pair,max_mirror_kx_half,0.30000000,6.9535120489263441e-10,6.9535120489263441e-10,721,721,1,0,.mmn/.chk,min|R+tau_t-tau_s|
+b,mode,mmn_pair,max_generic,0.07000000,-3.3647788730541070e-03,3.3647788730541070e-03,721,721,1,0,.mmn/.chk,min|R+tau_t-tau_s|
+b,mode,mmn_pair,max_mirror_kx_half,0.29000000,6.7103521276727334e-10,6.7103521276727334e-10,721,721,1,0,.mmn/.chk,min|R+tau_t-tau_s|
+b,mode,mmn_pair,generic_forced_zero,0.00000000,-7.6904312516690129e-10,7.6904312516690129e-10,721,721,1,0,.mmn/.chk,min|R+tau_t-tau_s|
+b,mode,mmn_pair,generic_forced_zero,0.30000000,-2.0398508257208167e-11,2.0398508257208167e-11,721,721,1,0,.mmn/.chk,min|R+tau_t-tau_s|
+b,mode,mmn_pair,generic_forced_zero,0.50000000,6.6807661075542024e-10,6.6807661075542024e-10,721,721,1,0,.mmn/.chk,min|R+tau_t-tau_s|
+b,mode,mmn_pair,generic_forced_zero,0.70000000,8.1559476932199730e-12,8.1559476932199730e-12,721,721,1,0,.mmn/.chk,min|R+tau_t-tau_s|
+b,mode,mmn_pair,generic_forced_zero,1.00000000,-7.6904310394279673e-10,7.6904310394279673e-10,721,721,1,0,.mmn/.chk,min|R+tau_t-tau_s|
+b,base,rdat_direct,max_generic,0.89500000,3.2265856653168612e-16,3.2265856653168612e-16,729,729,1,0,_r.dat,direct Wannier90 min|R|
+b,base,rdat_direct,max_mirror_kx_half,0.55000000,8.5868812060851951e-16,8.5868812060851951e-16,729,729,1,0,_r.dat,direct Wannier90 min|R|
+b,mode,rdat_direct,max_generic,0.21000000,3.2043086939831864e-03,3.2043086939831864e-03,729,729,1,0,_r.dat,direct Wannier90 min|R|
+b,mode,rdat_direct,max_mirror_kx_half,0.48500000,-7.5839941965361035e-16,7.5839941965361035e-16,729,729,1,0,_r.dat,direct Wannier90 min|R|
+b,mode,rdat_direct,generic_forced_zero,0.00000000,-3.9898639947466563e-17,3.9898639947466563e-17,729,729,1,0,_r.dat,direct Wannier90 min|R|
+b,mode,rdat_direct,generic_forced_zero,0.30000000,-7.6626935265183861e-17,7.6626935265183861e-17,729,729,1,0,_r.dat,direct Wannier90 min|R|
+b,mode,rdat_direct,generic_forced_zero,0.50000000,2.2551405187698492e-17,2.2551405187698492e-17,729,729,1,0,_r.dat,direct Wannier90 min|R|
+b,mode,rdat_direct,generic_forced_zero,0.70000000,-1.3877787807814457e-17,1.3877787807814457e-17,729,729,1,0,_r.dat,direct Wannier90 min|R|
+b,mode,rdat_direct,generic_forced_zero,1.00000000,5.8980598183211441e-17,5.8980598183211441e-17,729,729,1,0,_r.dat,direct Wannier90 min|R|
+b,base,rdat_pair,max_generic,0.79500000,-2.4286128663675299e-16,2.4286128663675299e-16,727,727,1,6,_r.dat,in-house min|R+tau_t-tau_s| (use_ws_distance rule)
+b,base,rdat_pair,max_mirror_kx_half,0.53500000,-5.1158079508728527e-16,5.1158079508728527e-16,727,727,1,6,_r.dat,in-house min|R+tau_t-tau_s| (use_ws_distance rule)
+b,mode,rdat_pair,max_generic,0.79000000,-3.2043086939831950e-03,3.2043086939831950e-03,727,727,1,6,_r.dat,in-house min|R+tau_t-tau_s| (use_ws_distance rule)
+b,mode,rdat_pair,max_mirror_kx_half,0.48000000,-7.9970752242530807e-16,7.9970752242530807e-16,727,727,1,6,_r.dat,in-house min|R+tau_t-tau_s| (use_ws_distance rule)
+b,mode,rdat_pair,generic_forced_zero,0.00000000,-5.9847959921199845e-17,5.9847959921199845e-17,727,727,1,6,_r.dat,in-house min|R+tau_t-tau_s| (use_ws_distance rule)
+b,mode,rdat_pair,generic_forced_zero,0.30000000,2.5081632671036983e-17,2.5081632671036983e-17,727,727,1,6,_r.dat,in-house min|R+tau_t-tau_s| (use_ws_distance rule)
+b,mode,rdat_pair,generic_forced_zero,0.50000000,-1.2143064331837650e-17,1.2143064331837650e-17,727,727,1,6,_r.dat,in-house min|R+tau_t-tau_s| (use_ws_distance rule)
+b,mode,rdat_pair,generic_forced_zero,0.70000000,1.7347234759768071e-17,1.7347234759768071e-17,727,727,1,6,_r.dat,in-house min|R+tau_t-tau_s| (use_ws_distance rule)
+b,mode,rdat_pair,generic_forced_zero,1.00000000,-3.9898639947466563e-17,3.9898639947466563e-17,727,727,1,6,_r.dat,in-house min|R+tau_t-tau_s| (use_ws_distance rule)
+b,base,rfull_pair,max_generic,0.55500000,1.2572166224744663e-10,1.2572166224744663e-10,729,729,1,0,_r_full.dat,postw90 min|R+tau_t-tau_s| (effective weights)
+b,base,rfull_pair,max_mirror_kx_half,0.57000000,2.9875907200634447e-10,2.9875907200634447e-10,729,729,1,0,_r_full.dat,postw90 min|R+tau_t-tau_s| (effective weights)
+b,mode,rfull_pair,max_generic,0.19000000,2.9552339087212699e-03,2.9552339087212699e-03,729,729,1,0,_r_full.dat,postw90 min|R+tau_t-tau_s| (effective weights)
+b,mode,rfull_pair,max_mirror_kx_half,0.13500000,-9.1724707322180843e-11,9.1724707322180843e-11,729,729,1,0,_r_full.dat,postw90 min|R+tau_t-tau_s| (effective weights)
+b,mode,rfull_pair,generic_forced_zero,0.00000000,1.5807570657240745e-11,1.5807570657240745e-11,729,729,1,0,_r_full.dat,postw90 min|R+tau_t-tau_s| (effective weights)
+b,mode,rfull_pair,generic_forced_zero,0.30000000,6.5851613391844812e-12,6.5851613391844812e-12,729,729,1,0,_r_full.dat,postw90 min|R+tau_t-tau_s| (effective weights)
+b,mode,rfull_pair,generic_forced_zero,0.50000000,5.5706088980685557e-11,5.5706088980685557e-11,729,729,1,0,_r_full.dat,postw90 min|R+tau_t-tau_s| (effective weights)
+b,mode,rfull_pair,generic_forced_zero,0.70000000,-8.4120078183363578e-11,8.4120078183363578e-11,729,729,1,0,_r_full.dat,postw90 min|R+tau_t-tau_s| (effective weights)
+b,mode,rfull_pair,generic_forced_zero,1.00000000,1.5807592234021849e-11,1.5807592234021849e-11,729,729,1,0,_r_full.dat,postw90 min|R+tau_t-tau_s| (effective weights)
+c,base,mmn_pair,max_generic,0.75000000,-8.5696318287572203e-09,8.5696318287572203e-09,729,729,1,0,.mmn/.chk,min|R+tau_t-tau_s|
+c,base,mmn_pair,max_mirror_kx_half,0.22500000,-4.4185670093084941e-09,4.4185670093084941e-09,729,729,1,0,.mmn/.chk,min|R+tau_t-tau_s|
+c,mode,mmn_pair,max_generic,0.92500000,-6.8121233800206831e-03,6.8121233800206831e-03,729,729,1,0,.mmn/.chk,min|R+tau_t-tau_s|
+c,mode,mmn_pair,max_mirror_kx_half,0.10000000,-8.0715278250104247e-08,8.0715278250104247e-08,729,729,1,0,.mmn/.chk,min|R+tau_t-tau_s|
+c,mode,mmn_pair,generic_forced_zero,0.00000000,4.6637213922813280e-08,4.6637213922813280e-08,729,729,1,0,.mmn/.chk,min|R+tau_t-tau_s|
+c,mode,mmn_pair,generic_forced_zero,0.30000000,5.4133587082425383e-08,5.4133587082425383e-08,729,729,1,0,.mmn/.chk,min|R+tau_t-tau_s|
+c,mode,mmn_pair,generic_forced_zero,0.50000000,-5.1934092358816031e-08,5.1934092358816031e-08,729,729,1,0,.mmn/.chk,min|R+tau_t-tau_s|
+c,mode,mmn_pair,generic_forced_zero,0.70000000,4.7254599664992276e-08,4.7254599664992276e-08,729,729,1,0,.mmn/.chk,min|R+tau_t-tau_s|
+c,mode,mmn_pair,generic_forced_zero,1.00000000,4.6637214661434481e-08,4.6637214661434481e-08,729,729,1,0,.mmn/.chk,min|R+tau_t-tau_s|
+c,base,rdat_direct,max_generic,0.71500000,4.0573806477928395e-02,4.0573806477928395e-02,729,729,1,0,_r.dat,direct Wannier90 min|R|
+c,base,rdat_direct,max_mirror_kx_half,0.71000000,-1.9106707495251597e-02,1.9106707495251597e-02,729,729,1,0,_r.dat,direct Wannier90 min|R|
+c,mode,rdat_direct,max_generic,0.70500000,4.0226235013187235e-02,4.0226235013187235e-02,729,729,1,0,_r.dat,direct Wannier90 min|R|
+c,mode,rdat_direct,max_mirror_kx_half,0.29000000,1.9221298868759784e-02,1.9221298868759784e-02,729,729,1,0,_r.dat,direct Wannier90 min|R|
+c,mode,rdat_direct,generic_forced_zero,0.00000000,-3.5135182776038455e-03,3.5135182776038455e-03,729,729,1,0,_r.dat,direct Wannier90 min|R|
+c,mode,rdat_direct,generic_forced_zero,0.30000000,5.4725121740711947e-08,5.4725121740711947e-08,729,729,1,0,_r.dat,direct Wannier90 min|R|
+c,mode,rdat_direct,generic_forced_zero,0.50000000,1.9183691136139987e-02,1.9183691136139987e-02,729,729,1,0,_r.dat,direct Wannier90 min|R|
+c,mode,rdat_direct,generic_forced_zero,0.70000000,4.0144046875915947e-02,4.0144046875915947e-02,729,729,1,0,_r.dat,direct Wannier90 min|R|
+c,mode,rdat_direct,generic_forced_zero,1.00000000,-3.5135182776040146e-03,3.5135182776040146e-03,729,729,1,0,_r.dat,direct Wannier90 min|R|
+c,base,rdat_pair,max_generic,0.70000000,3.9712909744722184e-02,3.9712909744722184e-02,729,729,1,0,_r.dat,in-house min|R+tau_t-tau_s| (use_ws_distance rule)
+c,base,rdat_pair,max_mirror_kx_half,0.67000000,-1.6505461399566546e-02,1.6505461399566546e-02,729,729,1,0,_r.dat,in-house min|R+tau_t-tau_s| (use_ws_distance rule)
+c,mode,rdat_pair,max_generic,0.72000000,4.0079693039894629e-02,4.0079693039894629e-02,729,729,1,0,_r.dat,in-house min|R+tau_t-tau_s| (use_ws_distance rule)
+c,mode,rdat_pair,max_mirror_kx_half,0.67000000,-1.6531025981775808e-02,1.6531025981775808e-02,729,729,1,0,_r.dat,in-house min|R+tau_t-tau_s| (use_ws_distance rule)
+c,mode,rdat_pair,generic_forced_zero,0.00000000,-4.6492438788538707e-03,4.6492438788538707e-03,729,729,1,0,_r.dat,in-house min|R+tau_t-tau_s| (use_ws_distance rule)
+c,mode,rdat_pair,generic_forced_zero,0.30000000,5.4648596260614395e-08,5.4648596260614395e-08,729,729,1,0,_r.dat,in-house min|R+tau_t-tau_s| (use_ws_distance rule)
+c,mode,rdat_pair,generic_forced_zero,0.50000000,1.6103803557942907e-02,1.6103803557942907e-02,729,729,1,0,_r.dat,in-house min|R+tau_t-tau_s| (use_ws_distance rule)
+c,mode,rdat_pair,generic_forced_zero,0.70000000,3.9628499001983217e-02,3.9628499001983217e-02,729,729,1,0,_r.dat,in-house min|R+tau_t-tau_s| (use_ws_distance rule)
+c,mode,rdat_pair,generic_forced_zero,1.00000000,-4.6492438788531118e-03,4.6492438788531118e-03,729,729,1,0,_r.dat,in-house min|R+tau_t-tau_s| (use_ws_distance rule)
+c,base,rfull_pair,max_generic,0.74500000,-8.7200746511279827e-09,8.7200746511279827e-09,729,729,1,0,_r_full.dat,postw90 min|R+tau_t-tau_s| (effective weights)
+c,base,rfull_pair,max_mirror_kx_half,0.23000000,-5.0366016612473372e-09,5.0366016612473372e-09,729,729,1,0,_r_full.dat,postw90 min|R+tau_t-tau_s| (effective weights)
+c,mode,rfull_pair,max_generic,0.93000000,-8.3349784856411140e-03,8.3349784856411140e-03,729,729,1,0,_r_full.dat,postw90 min|R+tau_t-tau_s| (effective weights)
+c,mode,rfull_pair,max_mirror_kx_half,0.10000000,-8.1583860144241406e-08,8.1583860144241406e-08,729,729,1,0,_r_full.dat,postw90 min|R+tau_t-tau_s| (effective weights)
+c,mode,rfull_pair,generic_forced_zero,0.00000000,4.7173247327748379e-08,4.7173247327748379e-08,729,729,1,0,_r_full.dat,postw90 min|R+tau_t-tau_s| (effective weights)
+c,mode,rfull_pair,generic_forced_zero,0.30000000,5.4226858185544196e-08,5.4226858185544196e-08,729,729,1,0,_r_full.dat,postw90 min|R+tau_t-tau_s| (effective weights)
+c,mode,rfull_pair,generic_forced_zero,0.50000000,-5.2601336696664631e-08,5.2601336696664631e-08,729,729,1,0,_r_full.dat,postw90 min|R+tau_t-tau_s| (effective weights)
+c,mode,rfull_pair,generic_forced_zero,0.70000000,4.7009601990248316e-08,4.7009601990248316e-08,729,729,1,0,_r_full.dat,postw90 min|R+tau_t-tau_s| (effective weights)
+c,mode,rfull_pair,generic_forced_zero,1.00000000,4.7173248042031358e-08,4.7173248042031358e-08,729,729,1,0,_r_full.dat,postw90 min|R+tau_t-tau_s| (effective weights)

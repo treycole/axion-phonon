@@ -1,0 +1,73 @@
+{
+  "mesh": "8^3",
+  "n_kpoints": 512,
+  "metric": "peak-normalized maximum absolute difference",
+  "position_construction": {
+    "trial03": {
+      "definition": "100 * max_{k,c}|candidate-reference| / max_{k,c}|reference|",
+      "max_percent_difference": 0.7662775384414927,
+      "max_abs_difference_A2": 0.018461935873555824,
+      "reference_peak_abs_A2": 2.409301453766342,
+      "maximum_location": {
+        "k_reduced": [
+          0.875,
+          0.125,
+          0.0
+        ],
+        "component": "zx",
+        "reference_A2": 2.2732961229656192,
+        "candidate_A2": 2.291758058839175
+      }
+    },
+    "trial04": {
+      "definition": "100 * max_{k,c}|candidate-reference| / max_{k,c}|reference|",
+      "max_percent_difference": 8.973740191911842,
+      "max_abs_difference_A2": 0.19125528433712313,
+      "reference_peak_abs_A2": 2.131277262846368,
+      "maximum_location": {
+        "k_reduced": [
+          0.125,
+          0.5,
+          0.0
+        ],
+        "component": "zx",
+        "reference_A2": -2.00750535408633,
+        "candidate_A2": -1.816250069749207
+      }
+    }
+  },
+  "trial_set": {
+    "postw90_A": {
+      "definition": "100 * max_{k,c}|candidate-reference| / max_{k,c}|reference|",
+      "max_percent_difference": 12.020349862047548,
+      "max_abs_difference_A2": 0.28960646397411205,
+      "reference_peak_abs_A2": 2.409301453766342,
+      "maximum_location": {
+        "k_reduced": [
+          0.375,
+          0.875,
+          0.0
+        ],
+        "component": "yz",
+        "reference_A2": -2.2784128572290703,
+        "candidate_A2": -1.9888063932549582
+      }
+    },
+    "mmn_A": {
+      "definition": "100 * max_{k,c}|candidate-reference| / max_{k,c}|reference|",
+      "max_percent_difference": 20.1005340499958,
+      "max_abs_difference_A2": 0.4878133446513613,
+      "reference_peak_abs_A2": 2.426867581916129,
+      "maximum_location": {
+        "k_reduced": [
+          0.375,
+          0.125,
+          0.0
+        ],
+        "component": "yz",
+        "reference_A2": 2.2875482528688096,
+        "candidate_A2": 1.7997349082174483
+      }
+    }
+  }
+}

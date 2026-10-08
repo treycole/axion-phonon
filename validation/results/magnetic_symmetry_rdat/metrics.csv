@@ -1,0 +1,38 @@
+test,structure,part,max_residual_A2,curvature_scale_A2,relative_residual,expectation
+base_inversion,base,internal,0.030820137360800803,0.6864007880980411,0.04490108096495754,magnetic-symmetry covariance
+base_inversion,base,cross,0.18332856057021774,0.09317557503962971,1.9675602806019055,magnetic-symmetry covariance
+base_inversion,base,external,2.002890256445295,1.016427215065197,1.9705200989889111,magnetic-symmetry covariance
+base_inversion,base,total,2.102878862277335,1.709069023279648,1.2304236011732157,magnetic-symmetry covariance
+base_inversion_bands,base,eigenvalues,nan,nan,nan,max band residual = 3.364111397e-03 eV
+base_mirror_intersection,base,internal,0.016029882792957265,0.6864007880980411,0.023353532033922517,omega_x = omega_y = omega_z = 0
+base_mirror_intersection,base,cross,0.08357260876063258,0.09317557503962971,0.8969368713322909,omega_x = omega_y = omega_z = 0
+base_mirror_intersection,base,external,0.3440201933959514,1.016427215065197,0.3384602343355051,omega_x = omega_y = omega_z = 0
+base_mirror_intersection,base,total,0.381364711499164,1.709069023279648,0.22314178438933818,omega_x = omega_y = omega_z = 0
+mode1_C2z,mode1,internal,0.03664316432794584,0.6976159290531185,0.052526272411356774,magnetic-symmetry covariance
+mode1_C2z,mode1,cross,0.1501433199042071,0.15309148695512179,0.9807424494362712,magnetic-symmetry covariance
+mode1_C2z,mode1,external,2.3401429085234566,1.37449556065997,1.702546720048937,magnetic-symmetry covariance
+mode1_C2z,mode1,total,2.4303394852880116,1.9048787505900795,1.2758499639597316,magnetic-symmetry covariance
+mode1_C2z_bands,mode1,eigenvalues,nan,nan,nan,max band residual = 1.612395300e-02 eV
+mode1_C3_111,mode1,internal,0.02773820025847118,0.6867024065635088,0.04039333486143222,magnetic-symmetry covariance
+mode1_C3_111,mode1,cross,0.02628909440399175,0.09537107732005211,0.27565059704389405,magnetic-symmetry covariance
+mode1_C3_111,mode1,external,0.30380343049589287,1.1625529466607842,0.2613243821440661,magnetic-symmetry covariance
+mode1_C3_111,mode1,total,0.32409867980160584,1.8585999558265787,0.1743778583366364,magnetic-symmetry covariance
+mode1_C3_111_bands,mode1,eigenvalues,nan,nan,nan,max band residual = 8.729752252e-03 eV
+mode1_MxyT,mode1,internal,0.021125112089311227,0.6885283549958048,0.03068154264967046,magnetic-symmetry covariance
+mode1_MxyT,mode1,cross,0.0031948421318221815,0.09008596466137303,0.03546437165690987,magnetic-symmetry covariance
+mode1_MxyT,mode1,external,0.07175482119630805,1.1631006075244732,0.061692703736979375,magnetic-symmetry covariance
+mode1_MxyT,mode1,total,0.062196180334901784,1.8642200353374285,0.033363111197141554,magnetic-symmetry covariance
+mode1_MxyT_bands,mode1,eigenvalues,nan,nan,nan,max band residual = 3.485776877e-03 eV
+mode1_C2z_axis,mode1,internal,0.01591403648376022,0.008149330108570566,1.9528030245116212,omega_x = omega_y = 0; omega_z allowed
+mode1_C3_111_axis,mode1,internal,0.031231891936023826,0.7043285801888546,0.04434278661196666,omega_x = omega_y = omega_z
+mode1_MxyT_fixed_line,mode1,internal,0.0070774843933715335,0.5840749162980513,0.012117425686125371,omega_x = omega_y
+mode1_C2z_axis,mode1,cross,0.08066583292754222,0.009555353149060595,8.441952031408974,omega_x = omega_y = 0; omega_z allowed
+mode1_C3_111_axis,mode1,cross,0.033437622389211774,0.02633880240850707,1.2695194667777256,omega_x = omega_y = omega_z
+mode1_MxyT_fixed_line,mode1,cross,0.0010274639989169415,0.12437346644914841,0.008261118936787314,omega_x = omega_y
+mode1_C2z_axis,mode1,external,0.27981961997891364,0.13310335046344193,2.1022733011951393,omega_x = omega_y = 0; omega_z allowed
+mode1_C3_111_axis,mode1,external,0.35976380109802847,0.20585644281941476,1.7476441163108372,omega_x = omega_y = omega_z
+mode1_MxyT_fixed_line,mode1,external,0.03262804183186565,0.6819508375886199,0.047845152514569084,omega_x = omega_y
+mode1_C2z_axis,mode1,total,0.36003041947799413,0.13803193489594318,2.6083124876095294,omega_x = omega_y = 0; omega_z allowed
+mode1_C3_111_axis,mode1,total,0.3909327951856844,0.8778791167800313,0.445315064128174,omega_x = omega_y = omega_z
+mode1_MxyT_fixed_line,mode1,total,0.029635485410651027,1.1444981844406108,0.025893868433819994,omega_x = omega_y
+mode1_Gamma,mode1,total,0.026624364845844153,0.36003041947799413,0.07395032032139577,all components vanish

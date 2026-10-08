@@ -1,0 +1,58 @@
+test,structure,part,max_residual_A2,curvature_scale_A2,relative_residual,expectation
+base_inversion,base,internal,0.030820137360787536,0.6864007880980881,0.04490108096493513,magnetic-symmetry covariance
+base_inversion,base,cross,0.006719874376207861,0.036927839792155706,0.18197312418029152,magnetic-symmetry covariance
+base_inversion,base,external,0.054821468245544194,0.08300998813579503,0.6604201431261792,magnetic-symmetry covariance
+base_inversion,base,total,0.05725212849188749,0.726598889179926,0.07879468210652642,magnetic-symmetry covariance
+base_inversion_bands,base,eigenvalues,nan,nan,nan,max band residual = 3.364111397e-03 eV
+base_S4z_control,base,internal,1.3677772981232046,0.6864007880980881,1.9926802559669357,control: S4z without T is NOT a symmetry; expect a residual of order the curvature
+base_S4z_control,base,cross,0.07420341788283624,0.03846147711897789,1.9292919419941454,control: S4z without T is NOT a symmetry; expect a residual of order the curvature
+base_S4z_control,base,external,0.1227286706487169,0.08300998813579503,1.4784807636395099,control: S4z without T is NOT a symmetry; expect a residual of order the curvature
+base_S4z_control,base,total,1.4039197904831473,0.726598889179926,1.9321799295174782,control: S4z without T is NOT a symmetry; expect a residual of order the curvature
+base_S4z_control_bands,base,eigenvalues,nan,nan,nan,max band residual = 1.444819840e-02 eV
+base_mirror_intersection,base,internal,0.016764443876116766,0.6864007880980881,0.02442369555339306,omega_x = omega_y = omega_z = 0
+base_mirror_intersection,base,cross,0.003889680480908379,0.036927839792155706,0.1053319257990995,omega_x = omega_y = omega_z = 0
+base_mirror_intersection,base,external,0.044381109961598754,0.08300998813579503,0.5346478292346727,omega_x = omega_y = omega_z = 0
+base_mirror_intersection,base,total,0.03585490602579727,0.726598889179926,0.04934621640595243,omega_x = omega_y = omega_z = 0
+mode1_C2z,mode1,internal,0.0366431643279089,0.6976159290530937,0.05252627241130569,magnetic-symmetry covariance
+mode1_C2z,mode1,cross,0.007068498246472533,0.04089153436619784,0.17285969714835556,magnetic-symmetry covariance
+mode1_C2z,mode1,external,0.062751368472622,0.0913965566723515,0.6865835077089398,magnetic-symmetry covariance
+mode1_C2z,mode1,total,0.09958443879428172,0.7495378156977662,0.13286112682863868,magnetic-symmetry covariance
+mode1_C2z_bands,mode1,eigenvalues,nan,nan,nan,max band residual = 1.612395300e-02 eV
+mode1_C3_111,mode1,internal,0.02773820025841886,0.6867024065636266,0.0403933348613491,magnetic-symmetry covariance
+mode1_C3_111,mode1,cross,0.009529798196135371,0.04099346487875445,0.23247115666659218,magnetic-symmetry covariance
+mode1_C3_111,mode1,external,0.07656278232957962,0.09109368994724035,0.8404839278540946,magnetic-symmetry covariance
+mode1_C3_111,mode1,total,0.09673065778034128,0.7382857762685723,0.13102061679859964,magnetic-symmetry covariance
+mode1_C3_111_bands,mode1,eigenvalues,nan,nan,nan,max band residual = 8.729752252e-03 eV
+mode1_MxyT,mode1,internal,0.021125112089337317,0.6885283549957599,0.03068154264971035,magnetic-symmetry covariance
+mode1_MxyT,mode1,cross,0.004251998969806596,0.042128046019096234,0.10093036282478438,magnetic-symmetry covariance
+mode1_MxyT,mode1,external,0.029351733743541993,0.08848761583958854,0.3317044251339214,magnetic-symmetry covariance
+mode1_MxyT,mode1,total,0.03559653686694642,0.7210387861572624,0.04936840784482103,magnetic-symmetry covariance
+mode1_MxyT_bands,mode1,eigenvalues,nan,nan,nan,max band residual = 3.485776877e-03 eV
+mode1_S4zT,mode1,internal,0.02605936063397779,0.6866441959031572,0.037951767144410765,magnetic-symmetry covariance
+mode1_S4zT,mode1,cross,0.006750518478686466,0.04442023635218772,0.15196944080091548,magnetic-symmetry covariance
+mode1_S4zT,mode1,external,0.055880890892836155,0.09664286168796485,0.5782205733234732,magnetic-symmetry covariance
+mode1_S4zT,mode1,total,0.0453143830815287,0.7210387861572624,0.06284597160581233,magnetic-symmetry covariance
+mode1_S4zT_bands,mode1,eigenvalues,nan,nan,nan,max band residual = 1.871740500e-02 eV
+mode1_inversion,mode1,internal,0.02240387499736951,0.692049385212909,0.03237323155843417,"not a symmetry of mode 1, but broken only at O(Q): at 0.01 A it sits at the floor"
+mode1_inversion,mode1,cross,0.01000009726985579,0.04336300045364938,0.23061359143136032,"not a symmetry of mode 1, but broken only at O(Q): at 0.01 A it sits at the floor"
+mode1_inversion,mode1,external,0.06954630017461312,0.09619000115434469,0.7230096615033866,"not a symmetry of mode 1, but broken only at O(Q): at 0.01 A it sits at the floor"
+mode1_inversion,mode1,total,0.07361258570148212,0.7210387861572624,0.10209240766893617,"not a symmetry of mode 1, but broken only at O(Q): at 0.01 A it sits at the floor"
+mode1_inversion_bands,mode1,eigenvalues,nan,nan,nan,max band residual = 7.818219544e-03 eV
+mode1_S4z_control,mode1,internal,1.3780066351767406,0.6954711682805714,1.981400089645149,control: S4z without T is NOT a symmetry; expect a residual of order the curvature
+mode1_S4z_control,mode1,cross,0.08566099440828945,0.04539849414488286,1.8868686290544026,control: S4z without T is NOT a symmetry; expect a residual of order the curvature
+mode1_S4z_control,mode1,external,0.1597712956437477,0.08848761583958854,1.8055780362913507,control: S4z without T is NOT a symmetry; expect a residual of order the curvature
+mode1_S4z_control,mode1,total,1.4161102618356483,0.7210387861572624,1.9639862501471415,control: S4z without T is NOT a symmetry; expect a residual of order the curvature
+mode1_S4z_control_bands,mode1,eigenvalues,nan,nan,nan,max band residual = 1.908028039e-02 eV
+mode1_z_axis,mode1,internal,0.01639185479804526,0.6825354668961691,0.024016121642128345,omega = 0 (C2z: omega_x = omega_y = 0; S4z T: no allowed direction)
+mode1_C3_111_axis,mode1,internal,0.03123189193602638,0.7043285801887621,0.044342786611976104,omega_x = omega_y = omega_z
+mode1_MxyT_fixed_line,mode1,internal,0.007554600648094267,0.584074916298017,0.012934300784524063,omega_x = omega_y
+mode1_z_axis,mode1,cross,0.0024500954079521397,0.04089153436619784,0.05991693503136095,omega = 0 (C2z: omega_x = omega_y = 0; S4z T: no allowed direction)
+mode1_C3_111_axis,mode1,cross,0.003176440031338346,0.027203599661943217,0.11676543070813024,omega_x = omega_y = omega_z
+mode1_MxyT_fixed_line,mode1,cross,0.0012619905251406772,0.025196414678129456,0.050086115078749195,omega_x = omega_y
+mode1_z_axis,mode1,external,0.04258197040082931,0.08848761583958854,0.48121954690272634,omega = 0 (C2z: omega_x = omega_y = 0; S4z T: no allowed direction)
+mode1_C3_111_axis,mode1,external,0.053332460473224506,0.1040380832088757,0.5126244047206227,omega_x = omega_y = omega_z
+mode1_MxyT_fixed_line,mode1,external,0.025231054073865306,0.08892817752025213,0.28372395316568016,omega_x = omega_y
+mode1_z_axis,mode1,total,0.04667130927590916,0.7210387861572624,0.06472787618630255,omega = 0 (C2z: omega_x = omega_y = 0; S4z T: no allowed direction)
+mode1_C3_111_axis,mode1,total,0.06264346697254153,0.7358568808282662,0.08512996019284519,omega_x = omega_y = omega_z
+mode1_MxyT_fixed_line,mode1,total,0.023846788724412454,0.6208794034774198,0.038408084711542084,omega_x = omega_y
+mode1_Gamma,mode1,total,0.03659460621899395,0.7210387861572624,0.05075261819689749,all components vanish

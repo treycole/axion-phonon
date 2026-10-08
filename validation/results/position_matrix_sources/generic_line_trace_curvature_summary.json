@@ -1,0 +1,53 @@
+{
+  "n_occupied": 38,
+  "rdat_ndegen_applied_vs_rfull": {
+    "components": {
+      "xy": {
+        "relative_l2_difference": 5.460532507868832e-09
+      },
+      "yz": {
+        "relative_l2_difference": 1.1481778049396617e-08
+      },
+      "zx": {
+        "relative_l2_difference": 1.0168195568810669e-08
+      }
+    },
+    "max_abs_energy_difference_eV": 0.0
+  },
+  "sources": {
+    "rdat_ndegen_applied": {
+      "components": {
+        "xy": {
+          "max_abs_difference_A2": 0.01353336917208077,
+          "relative_l2_difference": 0.501539242448461
+        },
+        "yz": {
+          "max_abs_difference_A2": 0.0030695338448279985,
+          "relative_l2_difference": 0.0020594176513933607
+        },
+        "zx": {
+          "max_abs_difference_A2": 0.003028552166818299,
+          "relative_l2_difference": 0.0023000864313413123
+        }
+      },
+      "max_abs_energy_difference_eV": 0.0
+    },
+    "rfull": {
+      "components": {
+        "xy": {
+          "max_abs_difference_A2": 0.013533369307298843,
+          "relative_l2_difference": 0.5015392492436348
+        },
+        "yz": {
+          "max_abs_difference_A2": 0.0030695286860177307,
+          "relative_l2_difference": 0.002059420806723423
+        },
+        "zx": {
+          "max_abs_difference_A2": 0.0030285636354607792,
+          "relative_l2_difference": 0.0023000932313257207
+        }
+      },
+      "max_abs_energy_difference_eV": 0.0
+    }
+  }
+}

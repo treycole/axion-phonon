@@ -1,0 +1,164 @@
+{
+  "description": "Raw occupied-link and Wilson-plaquette comparison; no A(R), H(R), derivatives, or off-grid interpolation",
+  "gauge_handling": {
+    "frame_alignment": "Q(k) = polar[C_3(k)^dagger C_4(k)]; compare Q(k)L_4(k,b)Q(k+b)^dagger with L_3(k,b)",
+    "gauge_invariant_flux": "phi_mn(k) = arg det W_mn(k)",
+    "occupied_link": "L_a(k,b) = C_a(k)^dagger M(k,b) C_a(k+b)",
+    "polar_link": "U_a(k,b) = polar[L_a(k,b)]",
+    "wilson_loop": "W_mn(k)=U_m(k)U_n(k+m)U_m(k+n)^daggerU_n(k)^dagger"
+  },
+  "input": {
+    "mesh": [
+      8,
+      8,
+      8
+    ],
+    "num_ab_initio_bands": 100,
+    "num_kpts": 512,
+    "num_mmn_neighbors": 6,
+    "num_occupied": 38,
+    "shared_mmn": "/Users/treycole/Repos/axion-phonon/data/SrTiO3/Ti_Q_2A/output/188914bc889/trial_03_Sr_sp_Ti_pd_O_sp/proj_gauge/SrTiO3.mmn",
+    "trial03_checkpoint": "/Users/treycole/Repos/axion-phonon/data/SrTiO3/Ti_Q_2A/output/188914bc889/trial_03_Sr_sp_Ti_pd_O_sp/proj_gauge/SrTiO3.chk",
+    "trial03_num_wann": 48,
+    "trial04_checkpoint": "/Users/treycole/Repos/axion-phonon/data/SrTiO3/Ti_Q_2A/output/188914bc889/trial_04_Sr_sp_Ti_p_O_sp/proj_gauge/188927bc889/SrTiO3.chk",
+    "trial04_num_wann": 38
+  },
+  "links": {
+    "gauge_aligned_polar_link_relative_frobenius": {
+      "global_l2": 3.782182504527394e-15,
+      "maximum": 4.578811686113913e-15,
+      "rms_over_links": 3.782182504527395e-15
+    },
+    "gauge_aligned_raw_link_relative_frobenius": {
+      "global_l2": 4.055972525330774e-15,
+      "maximum": 4.692144661981016e-15,
+      "rms_over_links": 4.0559701820711325e-15
+    },
+    "link_reversal_relative_frobenius": {
+      "trial03": {
+        "raw": {
+          "maximum": 2.305400407733022e-13,
+          "rms": 3.2989214847634226e-14
+        },
+        "unitary": {
+          "maximum": 1.610217372099104e-13,
+          "rms": 2.3043865228186193e-14
+        }
+      },
+      "trial04": {
+        "raw": {
+          "maximum": 2.3054110389073643e-13,
+          "rms": 3.299177888446265e-14
+        },
+        "unitary": {
+          "maximum": 1.610382382954404e-13,
+          "rms": 2.3044851301607225e-14
+        }
+      }
+    },
+    "maximum_raw_link_singular_value_difference": 7.882583474838611e-15
+  },
+  "plaquettes": {
+    "xy": {
+      "directed_polar_flux_difference_rad": {
+        "maximum_absolute": 1.3558438438886045e-14,
+        "rms": 4.369509843648257e-15
+      },
+      "gauge_aligned_polar_loop_relative_frobenius": {
+        "maximum": 5.755362669520258e-15,
+        "rms": 4.958074720960273e-15
+      },
+      "gauge_aligned_raw_loop_relative_frobenius": {
+        "maximum": 1.0513385558446635e-14,
+        "rms": 7.973663023252896e-15
+      },
+      "maximum_absolute_polar_trace_difference": 5.688820829519848e-14,
+      "maximum_absolute_raw_trace_difference": 2.4158453141207495e-13,
+      "maximum_forward_dagger_vs_directed_flux_difference_rad": {
+        "trial03": 3.026920077434103e-13,
+        "trial04": 3.0880755851753205e-13
+      },
+      "number_of_plaquettes": 512,
+      "polar_flux_difference_rad": {
+        "maximum_absolute": 1.761958634549643e-14,
+        "rms": 4.186657857572706e-15
+      },
+      "raw_flux_difference_rad": {
+        "maximum_absolute": 6.9338260076958564e-15,
+        "rms": 2.0578706386655766e-15
+      },
+      "trial03_maximum_absolute_polar_flux_rad": 0.001415565240805476,
+      "trial04_maximum_absolute_polar_flux_rad": 0.0014155652408121837
+    },
+    "yz": {
+      "directed_polar_flux_difference_rad": {
+        "maximum_absolute": 1.6753959330984003e-14,
+        "rms": 4.3778027430147224e-15
+      },
+      "gauge_aligned_polar_loop_relative_frobenius": {
+        "maximum": 5.5928254554514365e-15,
+        "rms": 4.913299544613472e-15
+      },
+      "gauge_aligned_raw_loop_relative_frobenius": {
+        "maximum": 9.972798420115882e-15,
+        "rms": 7.946011678763149e-15
+      },
+      "maximum_absolute_polar_trace_difference": 6.403852668795993e-14,
+      "maximum_absolute_raw_trace_difference": 1.9184949537348887e-13,
+      "maximum_forward_dagger_vs_directed_flux_difference_rad": {
+        "trial03": 9.572828640891373e-13,
+        "trial04": 9.612588502960762e-13
+      },
+      "number_of_plaquettes": 512,
+      "polar_flux_difference_rad": {
+        "maximum_absolute": 1.5215259607792575e-14,
+        "rms": 4.367139820727507e-15
+      },
+      "raw_flux_difference_rad": {
+        "maximum_absolute": 6.841749389252527e-15,
+        "rms": 2.126702068238242e-15
+      },
+      "trial03_maximum_absolute_polar_flux_rad": 0.07303309485329393,
+      "trial04_maximum_absolute_polar_flux_rad": 0.07303309485330009
+    },
+    "zx": {
+      "directed_polar_flux_difference_rad": {
+        "maximum_absolute": 1.5796391972244805e-14,
+        "rms": 4.261600499937741e-15
+      },
+      "gauge_aligned_polar_loop_relative_frobenius": {
+        "maximum": 5.72384995106064e-15,
+        "rms": 4.91156831560612e-15
+      },
+      "gauge_aligned_raw_loop_relative_frobenius": {
+        "maximum": 9.92557422411677e-15,
+        "rms": 7.95317280947121e-15
+      },
+      "maximum_absolute_polar_trace_difference": 5.707783998415243e-14,
+      "maximum_absolute_raw_trace_difference": 1.8474440570516596e-13,
+      "maximum_forward_dagger_vs_directed_flux_difference_rad": {
+        "trial03": 9.59555351842667e-13,
+        "trial04": 9.59180651571856e-13
+      },
+      "number_of_plaquettes": 512,
+      "polar_flux_difference_rad": {
+        "maximum_absolute": 1.5458120894429328e-14,
+        "rms": 4.286514958148084e-15
+      },
+      "raw_flux_difference_rad": {
+        "maximum_absolute": 6.7307270867900115e-15,
+        "rms": 2.141839342143073e-15
+      },
+      "trial03_maximum_absolute_polar_flux_rad": 0.07303309486093736,
+      "trial04_maximum_absolute_polar_flux_rad": 0.07303309486093966
+    }
+  },
+  "projector": {
+    "maximum_C03_orthonormality_entry_error": 6.106228898935428e-15,
+    "maximum_C04_orthonormality_entry_error": 4.440894214914905e-15,
+    "maximum_frame_alignment_relative_frobenius": 3.6547680054342336e-15,
+    "maximum_projector_entry_difference": 7.660539370905888e-15,
+    "maximum_projector_frobenius_difference": 3.463431049470585e-14,
+    "minimum_principal_overlap_singular_value": 0.9999999999999963
+  }
+}

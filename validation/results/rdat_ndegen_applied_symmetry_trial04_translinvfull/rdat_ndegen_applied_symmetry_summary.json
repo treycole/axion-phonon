@@ -1,0 +1,74 @@
+{
+  "directory": "data/SrTiO3/Ti_Q_2A/output/188914bc889/trial_04_Sr_sp_Ti_p_O_sp/proj_gauge/191583bc889",
+  "mmn_directory": "data/SrTiO3/Ti_Q_2A/output/188914bc889/trial_03_Sr_sp_Ti_pd_O_sp/proj_gauge/191509bc889",
+  "offgrid_symmetry": {
+    "mmn": {
+      "C4z": {
+        "max_abs_A2": 8.311521471071615e-10,
+        "relative_l2": 5.950308568893194e-10,
+        "rms_A2": 2.935414700311987e-10
+      },
+      "Mx": {
+        "max_abs_A2": 8.370845266947313e-10,
+        "relative_l2": 5.597642252404015e-10,
+        "rms_A2": 2.7614368506355665e-10
+      },
+      "time_reversal": {
+        "max_abs_A2": 3.8771741373011537e-10,
+        "relative_l2": 2.5939929188829607e-10,
+        "rms_A2": 1.2796722822746976e-10
+      }
+    },
+    "rdat_ndegen_applied": {
+      "C4z": {
+        "max_abs_A2": 5.795640634076449e-10,
+        "relative_l2": 5.234509422759673e-10,
+        "rms_A2": 2.588379756339569e-10
+      },
+      "Mx": {
+        "max_abs_A2": 8.859364630797728e-10,
+        "relative_l2": 5.131024311078866e-10,
+        "rms_A2": 2.537208052073933e-10
+      },
+      "time_reversal": {
+        "max_abs_A2": 3.429285744260824e-10,
+        "relative_l2": 3.1853311352645136e-10,
+        "rms_A2": 1.575094428507124e-10
+      }
+    }
+  },
+  "source_mesh_comparison": {
+    "components": {
+      "xy": {
+        "max_abs_difference_A2": 0.01134097131482173,
+        "mmn_max_abs_A2": 0.0260634718977025,
+        "rdat_ndegen_applied_max_abs_A2": 0.037404442261945225,
+        "relative_l2_difference": 0.37962764872119276,
+        "rms_difference_A2": 0.0034051424127734737
+      },
+      "yz": {
+        "max_abs_difference_A2": 0.19125526975842289,
+        "mmn_max_abs_A2": 1.9604825311365675,
+        "rdat_ndegen_applied_max_abs_A2": 2.131277249114744,
+        "relative_l2_difference": 0.058261703976586095,
+        "rms_difference_A2": 0.04057438882081625
+      },
+      "zx": {
+        "max_abs_difference_A2": 0.1912552693869567,
+        "mmn_max_abs_A2": 1.9604825312059333,
+        "rdat_ndegen_applied_max_abs_A2": 2.1312772495635373,
+        "relative_l2_difference": 0.05826170393063393,
+        "rms_difference_A2": 0.04057438878866443
+      }
+    },
+    "max_abs_energy_difference_eV": 0.0,
+    "n_occupied": 38,
+    "point_set": "all 512 source checkpoint nodes on 8x8x8"
+  },
+  "symmetry_conventions": {
+    "curvature_vector": "(Tr Omega_yz, Tr Omega_zx, Tr Omega_xy)",
+    "generic_points": 24,
+    "spatial_rule": "omega(O k) = det(O) O omega(k)",
+    "time_reversal_rule": "omega(-k) = -omega(k)"
+  }
+}

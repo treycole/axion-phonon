@@ -1,287 +1,427 @@
-from pythtb import Wannier, Mesh, WFArray
-from pythtb.utils import levi_civita, finite_diff_coeffs
+#!/usr/bin/env python3
+r"""Axion response d(theta)/d(beta): finite difference in beta, c2, BZ integral.
+
+Stage 3 of three (see ``modules/curvature.py`` for the map).  Sections 8 and 9 of
+``notes/berry_curvature_derivation.md`` (the "note"); equation numbers are its.
+
+What it does
+------------
+
+The note's section 8.3 lists the three new ingredients of the phonon direction:
+``dH/dbeta`` and ``dX/dbeta`` are **finite differences of two structures**
+(two ``_hr.dat`` and two ``_r.dat``), and ``Lambda(R)`` is optional.  So:
+
+1. ``fields`` (from ``curvature.py``) for the base and the displaced structure,
+   at the *same* k-points and with the *same* nominal ``tau`` (assumption A3);
+2. ``beta_terms``: ``dH/dbeta = (H_mode - H_base)/dbeta``, ``dA/dbeta`` likewise,
+   and the mixed curl ``Omega_{l,beta} = -dA_l/dbeta`` in the frozen Wannier
+   gauge (8.5), or ``dA_beta,l/dk - dA_l/dbeta`` when ``Lambda(R)`` is given (35);
+3. ``curvature.connection`` and ``curvature.omega`` build the four-dimensional
+   curvature ``B_{mu nu}`` (kx, ky, kz, beta);
+4. ``c2_density``: ``c2 = (1/16 pi) eps^{mu nu rho sigma} tr[B_mu nu B_rho sigma]``
+   (38); ``integrate_c2``: ``d(theta)/d(beta) = integral_BZ c2 d^3k``.
+
+Two estimates, not an error bar
+-------------------------------
+
+The result has two entries, ``dtheta[0]`` and ``dtheta[1]``.  Both use the
+**same** secant ``dH/dbeta`` and ``dA/dbeta``; they differ only in whether the
+spatial fields (``H``, ``dH/dk``, ``A``, curl) are evaluated at beta = 0 (the
+base) or at beta = dbeta (the mode).  There is no "right" endpoint: they agree
+only if ``c2`` is linear in beta, and their spread measures how much ``c2``
+varies across the step.  It is not a validity criterion.  The secant is the
+derivative at the midpoint to O(dbeta^2), so the **mean** of the two is the
+natural O(dbeta^2) estimate and half their difference is the leading curvature
+term d2theta/dbeta2.  Only a sign flip between them is diagnostic: dtheta/dbeta
+cannot reverse within one small step.
+
+Use it yourself
+---------------
+
+::
+
+    from pythtb import W90
+    from modules.axion import dtheta
+
+    base, mode = W90("base_dir", "seed"), W90("mode_dir", "seed")
+    tau = base.lattice.orb_vecs                       # one fixed tau for both (A3)
+    opts = dict(min_hopping_norm=1e-5)
+    model_base = base.model(orb_vecs=tau, **opts)
+    model_mode = mode.model(orb_vecs=tau, **opts)
+
+    result = dtheta(model_base, model_mode, nk=12, dbeta=0.01, n_occ=156)
+    result["dtheta"]          # (2,)  base-end and mode-end estimates, rad / Angstrom
+    result["c2_density"]      # (nk, nk, nk, 2)
+"""
+
+from __future__ import annotations
+
+import csv
+import itertools
+from collections.abc import Mapping, Sequence
+from pathlib import Path
+
 import numpy as np
+from scipy.integrate import simpson
 
-def fin_diff(U_k, mu, dk_mu, order_eps, mode='central'):
-    coeffs, stencil = finite_diff_coeffs(order=order_eps, mode=mode)
+from modules.curvature import (
+    BetaTerms,
+    Fields,
+    PositionTerms,
+    connection,
+    fields,
+    omega,
+    position_terms,
+)
 
-    fd_sum = np.zeros_like(U_k)
+__all__ = [
+    "beta_terms",
+    "c2_density",
+    "dtheta",
+    "integrate_c2",
+    "parametric_connection",
+    "prepare_lambda",
+    "save_dtheta_results",
+]
 
-    for s, c in zip(stencil, coeffs):
-        fd_sum += c * np.roll(U_k, shift=-s, axis=mu)
 
-    v = fd_sum / (dk_mu)
-    return v
+def _levi_civita_4() -> np.ndarray:
+    """The rank-4 Levi-Civita symbol with eps[0, 1, 2, 3] = +1 (eps^{xyz beta} = +1)."""
+    eps = np.zeros((4, 4, 4, 4))
+    for perm in itertools.permutations(range(4)):
+        inversions = sum(
+            perm[i] > perm[j] for i in range(4) for j in range(i + 1, 4)
+        )
+        eps[perm] = -1.0 if inversions % 2 else 1.0
+    return eps
 
-def axion_angle_3form(
-        model, 
-        tf_list,
-        nks: tuple, 
-        use_curv=True, 
-        return_both=False, 
-        order_fd=3,
-        use_tf_speedup=True
+
+_EPS4 = _levi_civita_4()
+
+
+# --------------------------------------------------------------------------- #
+# The fourth direction                                                        #
+# --------------------------------------------------------------------------- #
+def beta_terms(
+    f_base: Fields,
+    f_mode: Fields,
+    dbeta: float,
+    A_beta: np.ndarray | None = None,
+    dA_beta: np.ndarray | None = None,
+) -> BetaTerms:
+    r"""``dH/dbeta``, ``dA/dbeta`` and the mixed curl from two structures (8.3).
+
+    ``dH/dbeta = (H_mode - H_base)/dbeta`` and ``dA/dbeta`` likewise are the
+    finite differences of two ``_hr.dat`` and two ``_r.dat``.
+
+    Frozen Wannier gauge (default, section 8.5, ``A_beta = 0``): the mixed curl is
+    ``Omega_{l,beta} = -dA_l/dbeta``.  Given the parametric connection ``A_beta``
+    (33) and its k-derivative ``dA_beta`` (both ``(3, nk, J, J)`` for the
+    derivative), the curl is ``d_l A_beta - d_beta A_l`` (35).
+    """
+
+    dA = (f_mode.A - f_base.A) / dbeta
+    dH = (f_mode.H - f_base.H) / dbeta
+    if A_beta is None:
+        return BetaTerms(dH=dH, curl=-dA, A=None)
+    return BetaTerms(dH=dH, curl=dA_beta - dA, A=A_beta)
+
+
+def prepare_lambda(Lambda_R, dtype):
+    """Impose Lambda(R) = -Lambda(-R)^dag (34) and flatten for the Bloch sum.
+
+    ``Lambda_R`` is ``{R: Lambda(R)}``.  Pass the result to ``parametric_connection``.
+    """
+    raw = {}
+    for vector, block in Lambda_R.items():
+        raw[tuple(int(value) for value in vector)] = np.asarray(block, dtype=dtype)
+    if not raw:
+        raise ValueError("Lambda_R is empty; pass None for the frozen gauge.")
+    for R in list(raw):
+        raw.setdefault(tuple(-value for value in R), -raw[R].conj().T)
+    ordered = sorted(raw)
+    stack = np.stack(
+        [
+            0.5 * (raw[R] - raw[tuple(-value for value in R)].conj().T)
+            for R in ordered
+        ]
+    )
+    return np.asarray(ordered, dtype=float), stack.reshape(len(ordered), -1).astype(dtype)
+
+
+def parametric_connection(pos: PositionTerms, prepared, k: np.ndarray):
+    r"""``A_beta(k) = i sum_R e^{i k.b} Lambda(R)`` (33) and its k-derivative.
+
+    ``prepared`` is the output of ``prepare_lambda``.  Returns ``(A_beta, dA_beta)``
+    with shapes ``(nk, J, J)`` and ``(3, nk, J, J)``, ready for ``beta_terms``.
+    """
+    R, Lambda = prepared
+    dtype = pos.dtype
+    nk, J = len(k), pos.tau.shape[0]
+    cell = np.exp(2j * np.pi * (k @ R.T)).astype(dtype)
+    orbital = np.exp(2j * np.pi * (k @ pos.tau.T))
+    bond = (np.conj(orbital)[:, :, None] * orbital[:, None, :]).astype(dtype)
+    Lambda_k = (cell @ Lambda).reshape(nk, J, J)
+    A_beta = 1j * Lambda_k * bond
+    dA_beta = np.empty((3, nk, J, J), dtype=dtype)
+    for axis in range(3):
+        R_term = ((cell * R[None, :, axis]) @ Lambda).reshape(nk, J, J)
+        tau_difference = pos.tau[None, :, axis] - pos.tau[:, None, axis]  # tau_t - tau_s
+        dA_beta[axis] = -2.0 * np.pi * (R_term + tau_difference * Lambda_k) * bond
+    return A_beta.astype(dtype, copy=False), dA_beta
+
+
+# --------------------------------------------------------------------------- #
+# c2 and its integral                                                         #
+# --------------------------------------------------------------------------- #
+def c2_density(Omega: np.ndarray) -> np.ndarray:
+    r"""``c2 = (1/16 pi) eps^{mu nu rho sigma} tr[B_{mu nu} B_{rho sigma}]``, eq (38).
+
+    ``Omega`` is ``(4, 4, nk, Nv, Nv)`` from ``curvature.omega``.  The full
+    ``M x M`` matrix is kept until after the product: ``tr(BB) != tr(B) tr(B)``.
+    Every surviving term has exactly one beta leg, so this equals the reduced
+    form (39), ``(1/2 pi) sum_l tr[B~_l B_{l beta}]`` with ``B~_l = eps^{lij} B_ij / 2``.
+    """
+    return np.einsum("ijkl,ij...mn,kl...nm->...", _EPS4, Omega, Omega) / (16.0 * np.pi)
+
+
+def integrate_c2(c2: np.ndarray, include_endpoint: bool = False):
+    r"""``d(theta)/d(beta) = integral_BZ c2 d^3k`` on a uniform mesh.
+
+    ``c2`` is ``(nk, nk, nk, ...)``.  Returns ``(sum rule, Simpson, d3k)``: the
+    plain mesh sum times ``d3k`` (exact for a periodic integrand up to the
+    aliasing of the mesh), and Simpson with the periodic endpoint appended.  The
+    BZ is the unit cube of reduced coordinates, so the volume is 1.
+    """
+    nk = c2.shape[0]
+    if include_endpoint:  # the mesh already contains the k = 1 face
+        integration_grid = c2[:-1, :-1, :-1]
+        d3k = 1.0 / (nk - 1) ** 3
+        simpson_grid, dk = c2, 1.0 / (nk - 1)
+    else:
+        integration_grid = c2
+        d3k = 1.0 / nk**3
+        simpson_grid = np.concatenate([c2, c2[:1]], axis=0)
+        simpson_grid = np.concatenate([simpson_grid, simpson_grid[:, :1]], axis=1)
+        simpson_grid = np.concatenate([simpson_grid, simpson_grid[:, :, :1]], axis=2)
+        dk = 1.0 / nk
+    total = np.sum(integration_grid, axis=(0, 1, 2)) * d3k
+    simpson_total = simpson(simpson_grid, dx=dk, axis=0)
+    simpson_total = simpson(simpson_total, dx=dk, axis=0)
+    simpson_total = simpson(simpson_total, dx=dk, axis=0)
+    return total, simpson_total, d3k
+
+
+# --------------------------------------------------------------------------- #
+# The whole calculation                                                       #
+# --------------------------------------------------------------------------- #
+def dtheta(
+    model_base,
+    model_mode,
+    nk: int,
+    dbeta: float,
+    n_occ: int,
+    *,
+    Lambda_R=None,
+    positions: tuple[PositionTerms, PositionTerms] | None = None,
+    include_endpoint: bool = False,
+    batch: int = 100,
+    progress=None,
+) -> dict:
+    r"""``d(theta)/d(beta)`` from a base and a displaced structure.
+
+    Parameters
+    ----------
+    model_base, model_mode :
+        PythTB models built with ``W90.model(orb_vecs=tau)`` from the base and
+        displaced Wannier90 runs.  **``tau`` must be the same array** (A3); this
+        is checked.
+    nk :
+        The k-mesh is ``nk x nk x nk`` in reduced coordinates.
+    dbeta :
+        The phonon amplitude between the two structures (Angstrom).
+    n_occ :
+        Number of occupied bands (bands ``0 .. n_occ-1``).
+    Lambda_R :
+        Optional ``{R: Lambda(R)}`` (section 8.4).  ``None`` selects the frozen
+        Wannier gauge ``A_beta = 0`` -- an explicit choice; know which one a run
+        is using.
+    positions :
+        Optional precomputed ``(position_terms(base), position_terms(mode))``,
+        to reuse across a sweep in ``nk`` (each holds about 1.6 GB for J = 176).
+    progress :
+        Optional callable taking a message string.
+
+    Returns
+    -------
+    dict with ``dtheta`` and ``dtheta_simpson`` (each ``(2,)``: base-end and
+    mode-end estimates sharing one secant, see the module docstring),
+    ``c2_density (nk,nk,nk,2)``, ``minimum_gap (2,)``, ``minimum_gap_kpoint
+    (2,3)``, ``d3k`` and ``nk``.
+    """
+
+    log = progress if progress is not None else (lambda message: None)
+    pos_base, pos_mode = (
+        positions
+        if positions is not None
+        else (position_terms(model_base), position_terms(model_mode))
+    )
+    if pos_base.tau.shape != pos_mode.tau.shape or not np.allclose(
+        pos_base.tau, pos_mode.tau, atol=1e-12
     ):
-        r"""Compute the axion angle from the Berry curvature.
+        raise ValueError(
+            "Base and mode use different nominal tau.  Assumption A3 needs one "
+            "fixed tau: build both models with W90.model(orb_vecs=tau)."
+        )
+    prepared = None if Lambda_R is None else prepare_lambda(Lambda_R, pos_base.dtype)
 
-        .. versionadded:: 2.0.0
+    k_mesh = model_base.k_uniform_mesh([nk, nk, nk], include_endpoints=include_endpoint)
+    n_k = len(k_mesh)
+    c2 = np.zeros((n_k, 2), dtype=np.complex64)
+    minimum_gap = np.full(2, np.inf)
+    minimum_gap_kpoint = np.full((2, 3), np.nan)
 
-        The axion angle is a topological invariant in three-dimensional insulators,
-        related to the magnetoelectric response. It is defined as 
+    for start in range(0, n_k, batch):
+        stop = min(start + batch, n_k)
+        k = k_mesh[start:stop]
+        log(f"  k points {start} to {stop} of {n_k}")
 
-        .. math::
-
-            \theta = -\frac{1}{4\pi} \epsilon^{\mu\nu\rho} 
-            \int d^3k \, \text{Tr} 
-            \left[ \mathcal{A}_{\mu} \partial_{\nu} \mathcal{A}_{\rho} 
-            - \frac{2i}{3} \mathcal{A}_{\mu} \mathcal{A}_{\nu} \mathcal{A}_{\rho} \right]
-
-        Alternatively, it may be expressed 
-
-        .. math::
-
-            \theta = -\frac{1}{4\pi} \epsilon^{\mu\nu\rho} 
-            \int d^3k \, \text{Tr} 
-            \left[ \frac{1}{2} \mathcal{A}_{\mu} \hat{\Omega}_{\nu\rho} 
-            + \frac{i}{3} \mathcal{A}_{\mu} \mathcal{A}_{\nu} \mathcal{A}_{\rho} \right]
-
-        The latter form has the benefit that errors introduced by finite difference approximations
-        of :math:`\partial_{\nu} \mathcal{A}_{\rho}` can be avoided by using the Kubo formula for
-        computing the Berry curvature :math:`\hat{\Omega}_{\nu\rho}` directly.
-
-        The axion angle is only gauge-invariant modulo :math:`2\pi`, and its precise value can depend 
-        on the choice of gauge. Because of this, we must fix the gauge
-        choice by using the projection method, often used in the context of Wannier functions. This
-        involves projecting the occupied (and conduction) states onto a set of trial wavefunctions to 
-        obtain a smooth gauge. The trial wavefunctions should be chosen to have the same symmetry
-        properties as the occupied states, and should be linearly independent to ensure a well-defined
-        projection. They should be chosen to capture the essential features of the occupied subspace,
-        such as the orbital character and spatial localization.
-
-        Parameters
-        ----------
-        tf_list : list
-            List of trial wavefunctions for projection.
-        use_curv : bool, optional
-            Whether to use the Berry curvature in the calculation. Default is True.
-        return_both : bool, optional
-            Whether to return both the Berry curvature and the axion angle. Default is False.
-        order_fd : int, optional
-            Order of the finite difference used in the calculation. Default is 3.
-        use_tf_speedup : bool, optional
-            Whether to use TensorFlow for speedup. Default is True.
-
-        Returns
-        -------
-        theta : float
-            The computed axion angle.
-
-        Notes
-        ------
-        The axion angle is only defined for three-dimensional k-space models. It must be ensured by the user
-        that the `WFArray` is defined on a 3D k-space mesh, and the underlying model is also 3D. It must also
-        be ensured that the `WFArray` is populated by energy eigenstates on the mesh.
-
-        If the system has a non-trivial :math:`\mathbb{Z}_2` index, there is an obstruction to choosing a smooth
-        and periodic gauge choice. In this case, one must pick a set of trial wavefunctions that break time-reversal
-        symmetry. 
-
-        """
-        mesh = Mesh(dim_k=3, axis_types=["k", "k", "k"])
-        mesh.build_grid(shape=nks)
-        wfa = WFArray(model.lattice, mesh, spinful=model.spinful)
-        wfa.solve_model(model, use_tensorflow=True)
-
-        flat_mesh = mesh.flat
-
-        if wfa.dim_k != 3:
-            raise ValueError("Axion angle is only defined for 3D k-space models.")
-        if wfa.dim_lambda != 0:
-            raise ValueError("Adiabatic dimensions not yet supported for axion angle.")
-
-        E_nk = wfa.energies
-        n_states = wfa.nstates   # Total number of states
-        n_occ = n_states // 2    # Number of occupied states
-        occ_idxs = np.arange(n_occ) # Identify occupied bands
-        cond_idxs = np.setdiff1d(np.arange(n_states), occ_idxs)  # Identify conduction bands
-
-        # Energy eigensates (flattened spin and unflattened)
-        u_nk_flat, psi_nk_flat = wfa.states(flatten_spin_axis=True, return_psi=True)  
-
-        # Getting spin flattened occupied and conduction states and energies
-        psi_occ_flat = psi_nk_flat[..., :n_occ, :]
-        psi_con_flat = psi_nk_flat[..., n_occ:, :]
-
-        # --------- Projection ---------
-        WF = Wannier(wfa)
-        twfs = WF._get_trial_wfs(tf_list) # trial wavefunctions
-        twfs_flat = twfs.reshape((*twfs.shape[:1], -1)) # Flatten spin axis
-
-        # Overlap matrix S_nm = <psi_nk| g_m> with occupied bands
-        S_occ = np.einsum("...nj, mj -> ...nm", psi_occ_flat.conj(), twfs_flat)
-        # Overlap matrix S_nm = <psi_nk| g_m> with conduction bands
-        S_con = np.einsum("...nj, mj -> ...nm", psi_con_flat.conj(), twfs_flat)
-
-        if use_tf_speedup:
-            import tensorflow as tf
-
-            S_tf = tf.convert_to_tensor(S_occ, dtype=tf.complex64)
-
-            # batched SVD on Metal
-            D, W, V = tf.linalg.svd(S_tf, full_matrices=True)
-
-            # back to NumPy for the rest
-            W, D, V = W.numpy(), D.numpy(), V.numpy()
-            Vh = V.conj().swapaxes(-1,-2)
-
+        f_base = fields(model_base, pos_base, k)
+        f_mode = fields(model_mode, pos_mode, k)
+        if prepared is None:
+            beta = beta_terms(f_base, f_mode, dbeta)
         else:
-            # Use NumPy SVD
-            W, D, Vh = np.linalg.svd(S_occ, full_matrices=True)
-            V = Vh.conj().swapaxes(-1, -2)
+            A_beta, dA_beta = parametric_connection(pos_base, prepared, k)
+            beta = beta_terms(f_base, f_mode, dbeta, A_beta, dA_beta)
 
-        # Diagonal matrix Sigma from singular values
-        eye_trial = np.eye(V.shape[-1], dtype=complex)
-        Sigma = np.einsum("...i,ij->...ij", D, eye_trial)   # (..., n_trial, n_trial)
-        print("Min singular value of S_occ:", np.min(D))
+        for endpoint, f in enumerate((f_base, f_mode)):
+            c = connection(f, n_occ, beta)  # same secant at both endpoints
+            c2[start:stop, endpoint] = c2_density(omega(c))
+            gap = c.E[:, n_occ] - c.E[:, n_occ - 1]
+            local = int(np.argmin(gap))
+            if gap[local] < minimum_gap[endpoint]:
+                minimum_gap[endpoint] = float(gap[local])
+                minimum_gap_kpoint[endpoint] = k[local]
 
-        U_SVD = W @ Vh  # Unitary part of SVD
-        P = V @ Sigma @ Vh  # Semi-positive definite Hermitian part
+    c2_grid = c2.reshape((nk, nk, nk, 2))
+    total, simpson_total, d3k = integrate_c2(c2_grid, include_endpoint)
+    return {
+        "nk": nk,
+        "d3k": d3k,
+        "dtheta": total,
+        "dtheta_simpson": simpson_total,
+        "minimum_gap": minimum_gap,
+        "minimum_gap_kpoint": minimum_gap_kpoint,
+        "c2_density": c2_grid,
+    }
 
-        # ----- Build V_mu (Kubo numerator / energy denominator), R_mu -----
-        # Velocity operator in ORBITAL basis and rotate to eigenbasis:
-        # v_k_rot[mu]_{nm} = <u_n| partial_mu H |u_m>
 
-        # Velocity operator in energy eigenbasis
-        evecs_conj = u_nk_flat.conj()
-        evecs_T = u_nk_flat.swapaxes(-1,-2)  # (n_kpts, n_beta, n_state, n_state)
+# --------------------------------------------------------------------------- #
+# Saving                                                                      #
+# --------------------------------------------------------------------------- #
 
-        
-        # ------- V_mu -------
 
-        # velocity operator
-        v_k_flat = model.velocity(flat_mesh, flatten_spin_axis=True)  # shape: (dim_k, n_kpts, n_states, n_states)
-        # axes for each k-dimension, expand k-dimensions
-        v_k = v_k_flat.reshape(model.dim_r, *nks, n_states, n_states)
+def save_dtheta_results(
+    output_directory: str | Path,
+    results: Sequence[Mapping[str, object]],
+    metadata: Mapping[str, object],
+) -> tuple[Path, Path]:
+    """Save completed mesh results and rebuild the NPZ/CSV sweep summaries."""
 
-        # Rotate velocity operator to energy eigenbasis
-        if use_tf_speedup:
-            v_k_tf = tf.convert_to_tensor(v_k, dtype=tf.complex64)
-            evecs_conj_tf = tf.convert_to_tensor(evecs_conj, dtype=tf.complex64)
-            evecs_T_tf = tf.convert_to_tensor(evecs_T, dtype=tf.complex64)
+    output_directory = Path(output_directory)
+    output_directory.mkdir(parents=True, exist_ok=True)
+    ordered = sorted(results, key=lambda result: int(result["nk"]))
+    if not ordered:
+        raise ValueError("No dtheta results to save.")
 
-            v_k_rot = tf.matmul(
-                evecs_conj_tf[None, ...],  # (1, n_kpts, n_state, n_state)
-                tf.matmul(
-                    v_k_tf,  # (dim_k, n_kpts, n_state, n_state)
-                    evecs_T_tf[None, ...],  # (1, n_kpts, n_state, n_state)
-                ),
-            ).numpy()  # (dim_k, n_kpts, n_state, n_state)
-        else:
-            v_k_rot = np.matmul(
-                    evecs_conj[None, ...],  # (1, n_kpts, n_state, n_state)
-                    np.matmul(
-                        v_k,                # (dim_k, n_kpts, n_state, n_state)
-                        evecs_T[None, ...]  # (1, n_kpts, n_beta, n_state, n_state)
-                    )
-                )
-            
-        # Occupied and conduction energies
-        E_occ = np.take(E_nk, occ_idxs, axis=-1)
-        E_cond = np.take(E_nk, cond_idxs, axis=-1)
-        # Delta_{nm} = E_n - E_m (occ - cond)
-        delta_occ_cond = E_occ[..., np.newaxis] - E_cond[..., np.newaxis, :]
-        if np.any(np.isclose(delta_occ_cond, 0.0)):
-            raise ZeroDivisionError(
-                "Degenerate occupied/conduction bands encountered."
+    for result in ordered:
+        nk = int(result["nk"])
+        np.savez_compressed(
+            output_directory / f"nk_{nk}.npz",
+            nk=np.int32(nk),
+            d3k=np.float64(result["d3k"]),
+            dtheta=result["dtheta"],
+            dtheta_simpson=result["dtheta_simpson"],
+            minimum_gap=result["minimum_gap"],
+            minimum_gap_kpoint=result["minimum_gap_kpoint"],
+            c2_density=result["c2_density"],
+            # File-level aliases keep existing analysis notebooks readable.
+            min_gap=result["minimum_gap"],
+            min_gap_k=result["minimum_gap_kpoint"],
+            chern2_density=result["c2_density"],
+            **metadata,
+        )
+
+    nks = np.array([int(result["nk"]) for result in ordered], dtype=np.int32)
+    dtheta = np.array([result["dtheta"] for result in ordered], dtype=np.complex64)
+    dtheta_simpson = np.array(
+        [result["dtheta_simpson"] for result in ordered], dtype=np.complex64
+    )
+    minimum_gap = np.array(
+        [result["minimum_gap"] for result in ordered], dtype=np.float64
+    )
+    minimum_gap_kpoint = np.array(
+        [result["minimum_gap_kpoint"] for result in ordered], dtype=np.float64
+    )
+    d3k = np.array([result["d3k"] for result in ordered], dtype=np.float64)
+
+    summary_npz = output_directory / "summary.npz"
+    np.savez_compressed(
+        summary_npz,
+        nks=nks,
+        dtheta=dtheta,
+        dtheta_simpson=dtheta_simpson,
+        minimum_gap=minimum_gap,
+        minimum_gap_kpoint=minimum_gap_kpoint,
+        d3k=d3k,
+        min_gap=minimum_gap,
+        min_gap_k=minimum_gap_kpoint,
+        **metadata,
+    )
+
+    summary_csv = output_directory / "summary.csv"
+    with summary_csv.open("w", newline="") as handle:
+        writer = csv.writer(handle)
+        writer.writerow(
+            [
+                "nk",
+                "dtheta_base_real",
+                "dtheta_base_imag",
+                "dtheta_mode_real",
+                "dtheta_mode_imag",
+                "dtheta_simpson_base_real",
+                "dtheta_simpson_mode_real",
+                "minimum_gap_base",
+                "minimum_gap_mode",
+                "minimum_gap_kpoint_base_x",
+                "minimum_gap_kpoint_base_y",
+                "minimum_gap_kpoint_base_z",
+                "minimum_gap_kpoint_mode_x",
+                "minimum_gap_kpoint_mode_y",
+                "minimum_gap_kpoint_mode_z",
+                "d3k",
+            ]
+        )
+        for result in ordered:
+            dtheta_endpoint = np.asarray(result["dtheta"])
+            dtheta_simp = np.asarray(result["dtheta_simpson"])
+            gaps = np.asarray(result["minimum_gap"])
+            gap_k = np.asarray(result["minimum_gap_kpoint"])
+            writer.writerow(
+                [
+                    int(result["nk"]),
+                    dtheta_endpoint[0].real,
+                    dtheta_endpoint[0].imag,
+                    dtheta_endpoint[1].real,
+                    dtheta_endpoint[1].imag,
+                    dtheta_simp[0].real,
+                    dtheta_simp[1].real,
+                    gaps[0],
+                    gaps[1],
+                    *gap_k[0].tolist(),
+                    *gap_k[1].tolist(),
+                    result["d3k"],
+                ]
             )
-        
-        # Compute energy denominators
-        inv_delta_E_occ_cond = np.divide(1.0, delta_occ_cond)  # (..., n_occ, n_cond)
-        inv_delta_E_cond_occ = np.swapaxes(inv_delta_E_occ_cond, -2, -1)  # (..., n_cond, n_occ)
 
-        v_occ_cond = np.take(np.take(v_k_rot, occ_idxs, axis=-2), cond_idxs, axis=-1)
-        v_cond_occ = np.take(np.take(v_k_rot, cond_idxs, axis=-2), occ_idxs, axis=-1)
-
-        V_mu = v_occ_cond * inv_delta_E_occ_cond
-
-        # ------- R_mu --------
-
-        orb_vecs = model.orb_vecs
-        r_mu_twfs = 2*np.pi * (orb_vecs.T[:, None, :, None] * twfs).reshape(3, 2, 4)
-        R_mu = np.einsum("...nj, amj -> a...nm", psi_occ_flat.conj(), r_mu_twfs)
-
-        # ------- X_mu --------
-
-        X_mu = -1j * R_mu + V_mu @ S_con
-
-        # ------- A_til --------
-
-        term = Vh @ S_occ.conj().swapaxes(-1,-2) @ X_mu @ Vh.conj().swapaxes(-1,-2)
-        term +=  term.conj().swapaxes(-1,-2)  # h.c.
-
-        for a in range(term.shape[-2]):
-            for b in range(term.shape[-1]):
-                term[..., a, b] *= (1 / (D[..., a] + D[..., b]))
-
-        # Berry connection in projection gauge
-        A_til = 1j * (
-            U_SVD.conj().swapaxes(-1,-2) @ X_mu
-            -  Vh.conj().swapaxes(-1,-2) @ term @ Vh
-        ) @ np.linalg.inv(P)
-
-        # CS Axion angle
-        dks = [1/nk for nk in nks]
-        epsilon = levi_civita(3, 3)
-
-        if use_curv or return_both:
-            Q = np.matmul(
-                v_occ_cond[:, None]*inv_delta_E_occ_cond,
-                v_cond_occ[None, :]*inv_delta_E_cond_occ
-                )
-        
-            omega_kubo = 1j * (Q - np.swapaxes(Q, -1, -2).conj())
-            omega_kubo = omega_kubo.reshape(*omega_kubo.shape[:2], *nks, *omega_kubo.shape[-2:])
-            #wfa.berry_curv(non_abelian=True, Kubo=True)
-            omega_til = np.swapaxes(U_SVD.conj(), -1,-2) @ omega_kubo @ U_SVD
-
-            if use_tf_speedup:
-                A_til_tf = tf.convert_to_tensor(A_til, tf.complex64)
-                Omega_til_tf = tf.convert_to_tensor(omega_til, tf.complex64)
-
-                AOmega = tf.einsum('i...ab,jk...ba->ijk...', A_til_tf, Omega_til_tf)
-                AAA = tf.einsum('i...ab,j...bc,k...ca->ijk...', A_til_tf, A_til_tf, A_til_tf)
-                integrand = tf.einsum("ijk, ijk... -> ...", epsilon, (1/2) * AOmega + (1j/3) * AAA).numpy()
-            else:
-                AOmega = np.einsum('i...ab,jk...ba->ijk...', A_til, omega_til)
-                AAA = np.einsum('i...ab,j...bc,k...ca->ijk...', A_til, A_til, A_til)
-                integrand = np.einsum("ijk, ijk... -> ...", epsilon, (1/2) * AOmega + (1j/3) * AAA)
-
-            theta = -(4*np.pi)**(-1) * np.sum(integrand) * np.prod(dks)
-
-            if not return_both:
-                return theta.real
-
-        A_til_par = A_til
-        # Finite difference of A
-        parx_A = fin_diff(A_til_par, mu=1, dk_mu=dks[0], order_eps=order_fd)
-        pary_A = fin_diff(A_til_par, mu=2, dk_mu=dks[1], order_eps=order_fd)
-        parz_A = fin_diff(A_til_par, mu=3, dk_mu=dks[2], order_eps=order_fd)
-        par_A = np.array([parx_A, pary_A, parz_A])
-
-        if use_tf_speedup:
-            A_til_tf = tf.convert_to_tensor(A_til_par, tf.complex64)
-            AdA = tf.einsum('i...ab,jk...ba->ijk...', A_til_tf, par_A)
-            AAA = tf.einsum('i...ab,j...bc,k...ca->ijk...', A_til_tf, A_til_tf, A_til_tf)
-            integrand = tf.einsum("ijk, ijk... -> ...", epsilon, AdA - (2j/3) * AAA).numpy()
-        else:
-            AdA = np.einsum('i...ab,jk...ba->ijk...', A_til_par, par_A)
-            AAA = np.einsum('i...ab,j...bc,k...ca->ijk...', A_til_par, A_til_par, A_til_par)
-            integrand = np.einsum("ijk, ijk... -> ...", epsilon, AdA - (2j/3) * AAA)
-
-        theta2 = -(4*np.pi)**(-1) * np.sum(integrand) * np.prod(dks)
-
-        if return_both:
-            return theta.real, theta2.real
-        else:
-            return theta2.real
-
+    return summary_npz, summary_csv

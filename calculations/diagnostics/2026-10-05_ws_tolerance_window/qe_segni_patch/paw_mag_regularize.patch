@@ -1,0 +1,125 @@
+--- a/PW/src/paw_onecenter.f90	2026-10-07 09:03:56
++++ b/PW/src/paw_onecenter.f90	2026-10-07 09:04:13
+@@ -46,6 +46,9 @@
+     !! potential density as lm components
+     !
+     LOGICAL :: with_small_so = .FALSE.
++    REAL(DP), SAVE :: paw_mag_delta = -1.0_DP
++    !! regularization of |m| in the local-frame noncollinear GGA (e/bohr^3), from the
++    !! environment variable QE_PAW_MAG_DELTA (default 0: no regularization). See init_paw_mag_delta.
+     !
+     ! the following global variable controls the use of several fine-grained clocks
+     ! set it to .false. in order to disable them, set it to .true. to enable them.
+@@ -2262,6 +2265,27 @@
+     IF (TIMING) CALL stop_clock( 'PAW_dgcxc_v' )
+     !
+   END SUBROUTINE PAW_dgcxc_potential
++  !
++  !------------------------------------------------------------------------
++  SUBROUTINE init_paw_mag_delta()
++    !------------------------------------------------------------------------
++    !! Reads QE_PAW_MAG_DELTA (e/bohr^3) once. With delta > 0 the local-frame
++    !! noncollinear PAW GGA uses |m|**2/SQRT(|m|**2+delta**2) instead of |m|, which
++    !! removes the kink of |m| at m = 0 (error ~ delta**2/(2|m|) where |m| >> delta).
++    !
++    USE io_global, ONLY : stdout
++    !
++    CHARACTER(LEN=64) :: val
++    INTEGER :: ln, st
++    !
++    IF (paw_mag_delta >= 0.0_DP) RETURN
++    paw_mag_delta = 0.0_DP
++    CALL GET_ENVIRONMENT_VARIABLE( 'QE_PAW_MAG_DELTA', val, ln, st )
++    IF (st == 0 .AND. ln > 0) READ( val, * ) paw_mag_delta
++    WRITE( stdout, '(5x,"PAW noncollinear GGA: |m| regularization delta = ",ES10.3," e/bohr^3")' ) &
++         paw_mag_delta
++    !
++  END SUBROUTINE init_paw_mag_delta
+   !
+   !-------------------------------------------------------------------------
+   SUBROUTINE compute_rho_spin_lm( i, rho_lm, rhoout_lm, segni_rad )
+@@ -2297,6 +2321,7 @@
+     REAL(DP) :: rhoout_rad(i%m,nx_loc,nspin_gga) ! auxiliary: rho up and down along a line
+     REAL(DP) :: mag                    ! modulus of the magnetization
+     REAL(DP) :: m(3)                   
++    REAL(DP) :: magr, d2               ! regularized modulus, delta**2
+     INTEGER :: ix, ix0, k, ixk, ipol, kpol ! counter on mesh points
+     INTEGER :: im_sum
+     !
+@@ -2318,8 +2343,11 @@
+     IF (with_small_so) CALL add_small_mag( i, rho_rad )
+     !
+     use_ux = lsign
++    CALL init_paw_mag_delta()
++    d2 = 0.0_DP
++    IF (.NOT. use_ux) d2 = paw_mag_delta**2
+     !
+-    !$acc parallel loop collapse(2) present(g(i%t:i%t)) firstprivate(ux,use_ux) private(m)
++    !$acc parallel loop collapse(2) present(g(i%t:i%t)) firstprivate(ux,use_ux,d2) private(m,magr)
+     DO ix = ix_s, ix_e
+        DO k = 1, i%m
+           !
+@@ -2348,9 +2376,15 @@
+              ENDIF
+           ENDIF
+           !
+-          rhoout_rad(k,ix0,1) = 0.5d0*( rho_rad(ixk,1) + segni_rad(k,ix)*mag )* &
++          ! ... Local frame (no common axis): |m| has a kink where m = 0. With d2 > 0 it is
++          ! ... replaced by the smooth |m|**2/SQRT(|m|**2+delta**2) (compute_pot_nonc uses
++          ! ... its derivative, so energy and potential stay consistent).
++          magr = mag
++          IF (d2 > 0.0_DP) magr = mag*mag / SQRT( mag*mag + d2 )
++          !
++          rhoout_rad(k,ix0,1) = 0.5d0*( rho_rad(ixk,1) + segni_rad(k,ix)*magr )* &
+                                          g(i%t)%r2(k)
+-          rhoout_rad(k,ix0,2) = 0.5d0*( rho_rad(ixk,1) - segni_rad(k,ix)*mag )* &
++          rhoout_rad(k,ix0,2) = 0.5d0*( rho_rad(ixk,1) - segni_rad(k,ix)*magr )* &
+                                          g(i%t)%r2(k)
+        ENDDO
+     ENDDO
+@@ -2383,7 +2417,7 @@
+     USE kinds,            ONLY : DP
+     USE constants,        ONLY : eps12
+     USE lsda_mod,         ONLY : nspin
+-    USE noncollin_module, ONLY : nspin_gga, nspin_mag
++    USE noncollin_module, ONLY : lsign, nspin_gga, nspin_mag
+     USE uspp_param,       ONLY : upf
+     USE atom,             ONLY : g => rgrid
+     USE io_global,        ONLY : stdout
+@@ -2408,6 +2442,7 @@
+     REAL(DP), ALLOCATABLE :: v_rad(:,:,:)     ! auxiliary: rho up and down along a line
+     REAL(DP), ALLOCATABLE :: g_rad(:,:,:)     ! auxiliary: rho up and down along a line
+     REAL(DP) :: mag                           ! modulus of the magnetization
++    REAL(DP) :: fac, d2                       ! d|m~|/d|m| / |m| for the regularized modulus, delta**2
+     INTEGER :: k, ix, ix0, ixk, ipol, kpol    ! counters on mesh points, directions, polarization
+     INTEGER :: im_sum              ! number of directions, directions x mesh
+     !
+@@ -2429,7 +2464,12 @@
+     CALL PAW_lm2rad( i, rho_lm,  rho_rad,  nspin_mag )
+     IF (with_small_so) CALL add_small_mag( i, rho_rad )
+     !
+-    !$acc parallel loop collapse(2) present(g(i%t:i%t))
++    ! ... must match compute_rho_spin_lm: there |m| -> |m|**2/SQRT(|m|**2+d2) in the local frame
++    CALL init_paw_mag_delta()
++    d2 = 0.0_DP
++    IF (.NOT. lsign) d2 = paw_mag_delta**2
++    !
++    !$acc parallel loop collapse(2) present(g(i%t:i%t)) firstprivate(d2) private(fac)
+     DO ix = ix_s, ix_e
+        DO k = 1, i%m
+           ix0 = ix-ix_s+1
+@@ -2442,10 +2482,13 @@
+           ! ... Choose rhoup and rhodw depending on the projection of the magnetization
+           ! ... on the chosen direction
+           IF (mag > eps12) THEN
++             ! ... B = vs * d|m~|/dm = vs * (m/|m|) * d|m~|/d|m|
++             fac = 1.0_DP / mag
++             IF (d2 > 0.0_DP) fac = ( mag*mag + 2.0_DP*d2 ) / ( mag*mag + d2 )**1.5_DP
+              !$acc loop seq
+              DO ipol = 2, 4
+                 v_rad(k,ix0,ipol) = vs_rad(k,ix,i%a) * segni_rad(k,ix) * & 
+-                                                      rho_rad(ixk,ipol) / mag
++                                                      rho_rad(ixk,ipol) * fac
+              ENDDO
+           ENDIF
+        ENDDO

@@ -1,3 +1,5 @@
+.claude/
+
 # ignore tmp directories, too big for GitHub
 tmp/
 tmp/*
@@ -11,6 +13,9 @@ tmp.*
 .DS_Store
 
 */data/
+
+# QE / Wannier90 runs and everything computed from them (tens of GB); list them with python calculations/runs.py
+/data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -186,14 +191,25 @@ cython_debug/
 *.mmn*
 *.amn*
 *.chk*
-*_hr.dat
 *.save/
 out/
 scratch/
 *.mmn*
 *.amn*
 *.chk*
-*_hr.dat
 *.save/
 out/
 scratch/
+
+# WannierBerri A(R) extraction cache (derived from .chk+.mmn, ~60 MB each)
+_AA_cache/
+
+# postw90 transl_inv_full position matrix export (~300 MB each)
+*_r_full.dat
+*_r.dat
+*_hr.dat
+*_tb.dat*
+*_wsvec.dat
+
+# over GitHub's 100 MB file limit
+calculations/diagnostics/2026-09-29_centre_symmetrization/yio_wberri_symmetrize_result.npz

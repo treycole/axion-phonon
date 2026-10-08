@@ -1,0 +1,86 @@
+--- a/PW/src/paw_onecenter.f90	2026-10-06 07:34:37
++++ b/PW/src/paw_onecenter.f90	2026-10-06 07:34:48
+@@ -2276,7 +2276,7 @@
+     USE kinds,             ONLY : DP
+     USE constants,         ONLY : eps12
+     USE lsda_mod,          ONLY : nspin
+-    USE noncollin_module,  ONLY : ux, nspin_gga, nspin_mag
++    USE noncollin_module,  ONLY : ux, lsign, nspin_gga, nspin_mag
+     USE atom,              ONLY : g => rgrid
+     USE io_global,         ONLY : stdout
+     !
+@@ -2288,6 +2288,8 @@
+     !! the spin up and spin down charge
+     REAL(DP), INTENT(OUT) :: segni_rad(i%m,rad(i%t)%nx)
+     !! keep track of the spin direction
++    LOGICAL :: use_ux
++    !! .TRUE. only if a common quantization axis ux was set (lsign), as in compute_rho
+     !
+     ! ... local variables
+     !
+@@ -2315,7 +2317,9 @@
+     CALL PAW_lm2rad( i, rho_lm, rho_rad, nspin )
+     IF (with_small_so) CALL add_small_mag( i, rho_rad )
+     !
+-    !$acc parallel loop collapse(2) present(g(i%t:i%t)) firstprivate(ux) private(m)
++    use_ux = lsign
++    !
++    !$acc parallel loop collapse(2) present(g(i%t:i%t)) firstprivate(ux,use_ux) private(m)
+     DO ix = ix_s, ix_e
+        DO k = 1, i%m
+           !
+@@ -2337,7 +2341,11 @@
+              !
+              ! ... The axis ux is chosen in the corresponding routine in real space.
+              !
+-             segni_rad(k,ix) = SIGN(1.0_DP, m(1)*ux(1)+m(2)*ux(2)+m(3)*ux(3))
++             IF (use_ux) THEN
++                segni_rad(k,ix) = SIGN(1.0_DP, m(1)*ux(1)+m(2)*ux(2)+m(3)*ux(3))
++             ELSE
++                segni_rad(k,ix) = 1.0_DP
++             ENDIF
+           ENDIF
+           !
+           rhoout_rad(k,ix0,1) = 0.5d0*( rho_rad(ixk,1) + segni_rad(k,ix)*mag )* &
+@@ -2484,7 +2492,7 @@
+     USE kinds,            ONLY : DP
+     USE constants,        ONLY : eps12
+     USE lsda_mod,         ONLY : nspin
+-    USE noncollin_module, ONLY : ux, nspin_gga
++    USE noncollin_module, ONLY : ux, lsign, nspin_gga
+     USE atom,             ONLY : g => rgrid
+     USE io_global,        ONLY : stdout
+     !
+@@ -2500,6 +2508,8 @@
+     !! the induced spin-up and spin-down charge
+     REAL(DP), INTENT(OUT) :: segni_rad(i%m,rad(i%t)%nx)
+     !! keep track of the magnetization direction
++    LOGICAL :: use_ux
++    !! .TRUE. only if a common quantization axis ux was set (lsign), as in compute_rho
+     !
+     ! ... local variables
+     !
+@@ -2529,7 +2539,9 @@
+     !
+     ! ... Qui manca il pezzo della small component
+     !
+-    !$acc parallel loop collapse(2) present(g(i%t:i%t)) firstprivate(ux) private(m,prod)
++    use_ux = lsign
++    !
++    !$acc parallel loop collapse(2) present(g(i%t:i%t)) firstprivate(ux,use_ux) private(m,prod)
+     DO ix = ix_s, ix_e
+        DO k = 1, i%m
+           !
+@@ -2551,7 +2563,11 @@
+              !
+              ! ... The axis ux is chosen in the corresponding routine in real space.
+              !
+-             segni_rad(k,ix) = SIGN(1.0_DP, m(1)*ux(1)+m(2)*ux(2)+m(3)*ux(3))
++             IF (use_ux) THEN
++                segni_rad(k,ix) = SIGN(1.0_DP, m(1)*ux(1)+m(2)*ux(2)+m(3)*ux(3))
++             ELSE
++                segni_rad(k,ix) = 1.0_DP
++             ENDIF
+           ENDIF
+           !
+           rhoout_rad(k,ix0,1) = 0.5d0*( rho_rad(ixk,1) + segni_rad(k,ix)*mag )

@@ -1,0 +1,80 @@
+{
+  "offgrid_symmetry": {
+    "trial03": {
+      "C4z": {
+        "max_abs_A2": 1.0491981894400482e-08,
+        "relative_l2": 8.62858758423473e-09,
+        "rms_A2": 4.293218635514644e-09
+      },
+      "Mx": {
+        "max_abs_A2": 9.617986476695428e-09,
+        "relative_l2": 8.280756720856433e-09,
+        "rms_A2": 4.120152773913924e-09
+      },
+      "time_reversal": {
+        "max_abs_A2": 8.295882591990988e-10,
+        "relative_l2": 7.664083792384768e-10,
+        "rms_A2": 3.813322521258299e-10
+      }
+    },
+    "trial04": {
+      "C4z": {
+        "max_abs_A2": 1.243271818829328e-09,
+        "relative_l2": 9.049499432265617e-10,
+        "rms_A2": 4.498018639503749e-10
+      },
+      "Mx": {
+        "max_abs_A2": 1.0804040995182618e-09,
+        "relative_l2": 8.6529215937393e-10,
+        "rms_A2": 4.3009011610114723e-10
+      },
+      "time_reversal": {
+        "max_abs_A2": 7.752560537976905e-10,
+        "relative_l2": 7.44040583328004e-10,
+        "rms_A2": 3.6982248989640834e-10
+      }
+    }
+  },
+  "source_mesh_trial_comparison": {
+    "all_components_max_abs_difference_A2": 0.21852826804307957,
+    "all_components_relative_l2_difference": 0.05764855298833,
+    "components": {
+      "xy": {
+        "max_abs_difference_A2": 0.010669001494648611,
+        "max_difference_over_trial03_peak": 0.22769093557598585,
+        "pearson_correlation": 0.995383307887536,
+        "relative_l2_difference": 0.19696794053921368,
+        "rms_difference_A2": 0.002906588309744885,
+        "trial03_max_abs_A2": 0.04685738353026404,
+        "trial04_max_abs_A2": 0.036616857666681144
+      },
+      "yz": {
+        "max_abs_difference_A2": 0.21852826801558756,
+        "max_difference_over_trial03_peak": 0.09670208082180223,
+        "pearson_correlation": 0.9988585692480041,
+        "relative_l2_difference": 0.05758837493400195,
+        "rms_difference_A2": 0.042977578840415843,
+        "trial03_max_abs_A2": 2.259809366649313,
+        "trial04_max_abs_A2": 2.115207292614426
+      },
+      "zx": {
+        "max_abs_difference_A2": 0.21852826804307957,
+        "max_difference_over_trial03_peak": 0.09670208082390021,
+        "pearson_correlation": 0.9988585692479091,
+        "relative_l2_difference": 0.05758837493611208,
+        "rms_difference_A2": 0.042977578842132574,
+        "trial03_max_abs_A2": 2.2598093668845816,
+        "trial04_max_abs_A2": 2.1152072928451178
+      }
+    },
+    "max_abs_energy_difference_eV": 0.0001257040821904809,
+    "n_occupied": 38,
+    "point_set": "all 1728 source checkpoint nodes on 12x12x12"
+  },
+  "symmetry_conventions": {
+    "curvature_vector": "(Tr Omega_yz, Tr Omega_zx, Tr Omega_xy)",
+    "generic_points": 24,
+    "spatial_rule": "omega(O k) = det(O) O omega(k)",
+    "time_reversal_rule": "omega(-k) = -omega(k)"
+  }
+}

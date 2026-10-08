@@ -1,0 +1,73 @@
+{
+  "mesh": "12^3",
+  "n_kpoints": 1728,
+  "metric": "peak-normalized maximum absolute difference",
+  "position_construction": {
+    "trial03": {
+      "definition": "100 * max_{k,c}|candidate-reference| / max_{k,c}|reference|",
+      "max_percent_difference": 0.5785606032277827,
+      "max_abs_difference_A2": 0.013010818423010218,
+      "reference_peak_abs_A2": 2.248825507720888,
+      "maximum_location": {
+        "k_reduced": [
+          0.083333333333,
+          0.083333333333,
+          0.0
+        ],
+        "component": "yz",
+        "reference_A2": 1.9347541535123338,
+        "candidate_A2": 1.947764971935344
+      }
+    },
+    "trial04": {
+      "definition": "100 * max_{k,c}|candidate-reference| / max_{k,c}|reference|",
+      "max_percent_difference": 4.706152480464452,
+      "max_abs_difference_A2": 0.10262036738079727,
+      "reference_peak_abs_A2": 2.1805576382571785,
+      "maximum_location": {
+        "k_reduced": [
+          0.916666666667,
+          0.416666666667,
+          0.0
+        ],
+        "component": "zx",
+        "reference_A2": 1.7992194964589807,
+        "candidate_A2": 1.6965991290781834
+      }
+    }
+  },
+  "trial_set": {
+    "postw90_A": {
+      "definition": "100 * max_{k,c}|candidate-reference| / max_{k,c}|reference|",
+      "max_percent_difference": 4.942426859417468,
+      "max_abs_difference_A2": 0.11114655591502842,
+      "reference_peak_abs_A2": 2.248825507720888,
+      "maximum_location": {
+        "k_reduced": [
+          0.916666666667,
+          0.25,
+          0.0
+        ],
+        "component": "zx",
+        "reference_A2": 1.8582730480956147,
+        "candidate_A2": 1.7471264921805862
+      }
+    },
+    "mmn_A": {
+      "definition": "100 * max_{k,c}|candidate-reference| / max_{k,c}|reference|",
+      "max_percent_difference": 9.67020808239002,
+      "max_abs_difference_A2": 0.21852826804307957,
+      "reference_peak_abs_A2": 2.2598093668845816,
+      "maximum_location": {
+        "k_reduced": [
+          0.916666666667,
+          0.25,
+          0.0
+        ],
+        "component": "zx",
+        "reference_A2": 1.8653167319884276,
+        "candidate_A2": 1.646788463945348
+      }
+    }
+  }
+}

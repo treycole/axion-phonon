@@ -1,0 +1,7 @@
+
+=== diamond, JaeMo write_ndegen_applied, use_ws_distance=T ===
+  candidate rows 2256  reference rows 2256  common keys 2256  (only-candidate 0, only-reference 0)
+  bit-exact after 6-decimal rounding  100.000000%
+  max |candidate - reference| over common keys  4.829e-07
+  max rel. diff, |ref|>1e-5  1.369e-02
+  Hermiticity, candidate (keyed)  0.000e+00  (0 rows with no -R partner)

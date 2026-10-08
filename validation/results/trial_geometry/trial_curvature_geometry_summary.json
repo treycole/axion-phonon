@@ -1,0 +1,80 @@
+{
+  "offgrid_symmetry": {
+    "trial03": {
+      "C4z": {
+        "max_abs_A2": 9.91263795352415e-09,
+        "relative_l2": 8.43940250237056e-09,
+        "rms_A2": 4.217008931117871e-09
+      },
+      "Mx": {
+        "max_abs_A2": 9.189869854681065e-09,
+        "relative_l2": 8.037327711728286e-09,
+        "rms_A2": 4.0160998048332136e-09
+      },
+      "time_reversal": {
+        "max_abs_A2": 3.202853902234404e-10,
+        "relative_l2": 2.6729444366915533e-10,
+        "rms_A2": 1.3356195013502372e-10
+      }
+    },
+    "trial04": {
+      "C4z": {
+        "max_abs_A2": 1.6273414837897349e-09,
+        "relative_l2": 1.033679193012519e-09,
+        "rms_A2": 5.159860336477047e-10
+      },
+      "Mx": {
+        "max_abs_A2": 1.4887588210832359e-09,
+        "relative_l2": 1.1014275906229865e-09,
+        "rms_A2": 5.498042890651662e-10
+      },
+      "time_reversal": {
+        "max_abs_A2": 3.01813827402464e-10,
+        "relative_l2": 2.3523565035795395e-10,
+        "rms_A2": 1.1742357882526218e-10
+      }
+    }
+  },
+  "source_mesh_trial_comparison": {
+    "all_components_max_abs_difference_A2": 0.4878133446513613,
+    "all_components_relative_l2_difference": 0.12716864533454786,
+    "components": {
+      "xy": {
+        "max_abs_difference_A2": 0.018011998339659843,
+        "max_difference_over_trial03_peak": 0.40866264840511046,
+        "pearson_correlation": 0.9865588558898657,
+        "relative_l2_difference": 0.38370386425019704,
+        "rms_difference_A2": 0.005382804137857157,
+        "trial03_max_abs_A2": 0.044075470097292596,
+        "trial04_max_abs_A2": 0.026063472568164395
+      },
+      "yz": {
+        "max_abs_difference_A2": 0.4878133446513613,
+        "max_difference_over_trial03_peak": 0.201005340499958,
+        "pearson_correlation": 0.9941159840226148,
+        "relative_l2_difference": 0.12707864505156408,
+        "rms_difference_A2": 0.09540027786444144,
+        "trial03_max_abs_A2": 2.426867581916129,
+        "trial04_max_abs_A2": 1.9604825318327133
+      },
+      "zx": {
+        "max_abs_difference_A2": 0.4878133445843116,
+        "max_difference_over_trial03_peak": 0.20100534048559868,
+        "pearson_correlation": 0.994115984023029,
+        "relative_l2_difference": 0.12707864504847083,
+        "rms_difference_A2": 0.09540027786174725,
+        "trial03_max_abs_A2": 2.426867581755927,
+        "trial04_max_abs_A2": 1.9604825319022534
+      }
+    },
+    "max_abs_energy_difference_eV": 7.289297471668732e-05,
+    "n_occupied": 38,
+    "point_set": "all 512 original 8^3 checkpoint nodes"
+  },
+  "symmetry_conventions": {
+    "curvature_vector": "(Tr Omega_yz, Tr Omega_zx, Tr Omega_xy)",
+    "generic_points": 24,
+    "spatial_rule": "omega(O k) = det(O) O omega(k)",
+    "time_reversal_rule": "omega(-k) = -omega(k)"
+  }
+}
