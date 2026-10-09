@@ -2,7 +2,7 @@
 r"""Axion response d(theta)/d(beta): finite difference in beta, c2, BZ integral.
 
 Stage 3 of three (see ``modules/curvature.py`` for the map).  Sections 8 and 9 of
-``notes/berry_curvature_derivation.md`` (the "note"); equation numbers are its.
+``notes/theory/derivation.md`` (the "note"); equation numbers are its.
 
 What it does
 ------------

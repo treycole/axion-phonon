@@ -44,7 +44,7 @@ STO = DATA / "SrTiO3"
 STO_PREFIX = "SrTiO3"
 
 #: Shared ``A(R)`` archive.  Replaces the ``.mmn`` as stored input; see
-#: notes/progress/2026-08-27_rfull_vs_mmn_position_matrix.md.
+#: notes/log/2026-08-27_rfull_vs_mmn_position_matrix.md.
 STO_AA_CACHE = STO / "_AA_cache"
 
 #: Undisplaced cubic reference (also holds SrTiO3.ph.out, the DFPT Z* source).

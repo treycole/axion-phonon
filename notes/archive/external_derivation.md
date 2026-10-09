@@ -1,7 +1,7 @@
 > ⚠ **Superseded.** This is an intermediate revision of the derivation now
-> canonical in [`berry_curvature_derivation.md`](../berry_curvature_derivation.md)
+> canonical in [`theory/derivation.md`](../theory/derivation.md)
 > (2026-08-04, one day after this file). Kept for provenance only — nothing in
-> the codebase should cite this version. See [`notes/INDEX.md`](../INDEX.md).
+> the codebase should cite this version. See [`notes/README.md`](../README.md).
 
 # Wannier90, PythTB, and external Berry-curvature terms
 

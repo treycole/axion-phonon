@@ -16,7 +16,7 @@ open upstream draft MR !2512, which does NOT restore the symmetry on these opera
     python qe_ns_symmetriser_check.py PATH/TO/Y2Ir2O7.scf.out
 
 The atomic layout (four Ir species, AIAO angles, fcc lattice) is that of the pyrochlore run and is set below;
-adapt AXIS_ANGLES / IR / at for another structure.  See notes/progress/2026-09-21_qe_new_ns_nc_bug.md.
+adapt AXIS_ANGLES / IR / at for another structure.  See notes/log/2026-09-21_qe_new_ns_nc_bug.md.
 """
 import io, re, sys
 import numpy as np

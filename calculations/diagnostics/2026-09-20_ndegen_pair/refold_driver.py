@@ -3,7 +3,7 @@ refolded onto ONE Wigner-Seitz selection rule, the base's centres.
 
 **H(R) only by default.**  Refolding A(R) from class sums is INVALID: under
 transl_inv_full the images of an A(R) class are not copies (exp(-i b.R/2) is
-applied per b at the image vector), see notes/progress/2026-09-20_jaemo_ndegen_yio_mode1.md
+applied per b at the image vector), see notes/log/2026-09-20_jaemo_ndegen_yio_mode1.md
 and image_structure_check.py.  REFOLD_A=1 reproduces the retracted experiment;
 its dtheta means nothing.  The H-only path is untested.
 

@@ -9,7 +9,7 @@ reads only file headers (seconds); without it the files are loaded through PythT
 (a minute or two, several GB of memory for 176 Wannier functions).
 
 Exit status is non-zero if any check fails.  The pair consistency number is
-information, not a pass/fail check (see notes/progress/2026-09-20_jaemo_ndegen_yio_mode1.md).
+information, not a pass/fail check (see notes/log/2026-09-20_jaemo_ndegen_yio_mode1.md).
 """
 
 from __future__ import annotations

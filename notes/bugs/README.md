@@ -1,8 +1,9 @@
 # Bugs
 
-One file per bug found in this project, numbered as in the dated log
-[`../progress/README.md`](../progress/README.md). Each file opens with its **status**, then describes the symptom,
-the root cause, why it was a bug, the fix, how the fix was verified, and what remains.
+One file per bug found in this project, numbered in the order found. Each file opens with its **status**, then
+describes the symptom, the root cause, why it was a bug, the fix, how the fix was verified, and what remains. The
+evidence is in the dated notes in [`../log/`](../log/). The old date-by-date bug log (through 2026-10-08, with the
+milestones between bugs) is kept in [`../archive/bug_log_to_2026-10-08.md`](../archive/bug_log_to_2026-10-08.md).
 
 | # | Status | Found | Bug |
 |---|---|---|---|

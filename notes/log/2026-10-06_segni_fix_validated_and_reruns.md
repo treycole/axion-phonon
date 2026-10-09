@@ -1,7 +1,7 @@
 # The PAW `segni` fix, validated; how the bug works; production reruns (2026-10-06)
 
 Follows [`2026-10-05_yio_symmetry_floor_dft_origin.md`](2026-10-05_yio_symmetry_floor_dft_origin.md), which found
-bug #16 (numbering of [`README.md`](README.md)): QE's PAW one-centre noncollinear GGA uses a stale `ux` without
+bug #16 (numbering of [`../bugs/README.md`](../bugs/README.md)): QE's PAW one-centre noncollinear GGA uses a stale `ux` without
 the `lsign` guard. This note covers four things:
 - the fix and its validation (§1);
 - a plain-language explanation of the bug, with worked examples (§2);

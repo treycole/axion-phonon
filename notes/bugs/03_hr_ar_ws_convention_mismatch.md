@@ -42,5 +42,5 @@ symmetry violations disappeared: they were this convention bug, not the Wannier 
 ## Related
 #10 is a later, much smaller instance: the two folds used slightly different *centre arrays*.
 
-**Sources:** [`../progress/2026-08-20_handoff_wannier_conventions.md`](../progress/2026-08-20_handoff_wannier_conventions.md)
+**Sources:** [`../log/2026-08-20_handoff_wannier_conventions.md`](../log/2026-08-20_handoff_wannier_conventions.md)
 §1, §3b.

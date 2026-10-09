@@ -2,7 +2,7 @@
 
 Follows [2026-09-20_jaemo_ndegen_yio_mode1.md](2026-09-20_jaemo_ndegen_yio_mode1.md) ("base and mode do not
 share a Wigner-Seitz rule"). Equation numbers are those of
-[berry_curvature_derivation.md](../berry_curvature_derivation.md). Rendered version with the worked example:
+[theory/derivation.md](../theory/derivation.md). Rendered version with the worked example:
 https://claude.ai/artifact/9FEMzkP6fMjTtBwDXX3hup
 
 ## 1. What X subtracts

@@ -28,7 +28,7 @@ The dated notes up to 2026-09-23 give older forms of the same run (environment v
 
 Nothing in `modules/curvature.py` or `modules/axion.py` reads a `.chk`, `.mmn`,
 `.amn` or a Wannier90 file; they see a PythTB model. Everything they compute is
-a transcription of `berry_curvature_derivation.md` (the "note"), with the
+a transcription of `theory/derivation.md` (the "note"), with the
 note's equation numbers in the docstrings.
 
 ## Using it yourself
@@ -98,7 +98,7 @@ no right endpoint and their spread is not a validity check.
   (`wannier/README.md`). `wannier/check_outputs.py` verifies it.
 * **Base and mode choose their Wigner-Seitz images separately** (each from its own
   centres). Measured, effect on dtheta not yet known:
-  `progress/2026-09-20_jaemo_ndegen_yio_mode1.md`.
+  `log/2026-09-20_jaemo_ndegen_yio_mode1.md`.
 
 ## Verification
 
@@ -110,7 +110,7 @@ no right endpoint and their spread is not a validity check.
   WannierBerri's non-Abelian `Omega.nn` block (SrTiO3 trial04, <= 3e-8, internal and
   cross + external separately): `validation/external_curvature/check_curvature_vs_*.py`.
 * Data regression: `run_axion.py` on the YIO pair reproduces the saved results
-  of the older driver (see the regression note in `progress/2026-09-20_jaemo_ndegen_yio_mode1.md`).
+  of the older driver (see the regression note in `log/2026-09-20_jaemo_ndegen_yio_mode1.md`).
 
 ## Kept, not used by the new path
 
@@ -129,14 +129,14 @@ Import as `from wannier.wannier_io import ...` and
 The earlier pipeline (`modules/berry_curvature.py`, `modules/axion_angle.py`, the
 old Y2Ir2O7 driver `axion_response_vs_nk.py`) is gone. The validation libs,
 notebooks and unit tests were ported to `curvature.py` / `axion.py`; see
-[`progress/2026-09-20_legacy_removal.md`](progress/2026-09-20_legacy_removal.md) for the old-versus-new
+[`log/2026-09-20_legacy_removal.md`](log/2026-09-20_legacy_removal.md) for the old-versus-new
 regression and for which notebooks could be rerun.
 
 **The frozen MnBi2Te4 driver is gone too (2026-09-24).** `calculations/MnBi2Te4/phonon/axion_response_nk_sweep.py`
 and its copy of the old module (`frozen_legacy/`) were deleted, together with their outputs
 (`data/MnBi2Te4/phonon/T2-/mode*/Q_0p01/symmetrized/nk_sweep_shared_embedding*`). They existed only to
 reproduce the paper's `d_Q theta ~ 10 rad/A`, which
-[`progress/2026-08-20_handoff_wannier_conventions.md`](progress/2026-08-20_handoff_wannier_conventions.md) (3a) already flagged as wrong. **The
+[`log/2026-08-20_handoff_wannier_conventions.md`](log/2026-08-20_handoff_wannier_conventions.md) (3a) already flagged as wrong. **The
 paper's numbers are in flux:** every MnBi2Te4 and Y2Ir2O7 value will be recomputed on the new pipeline, so
 keeping code to reproduce an old number is no longer a reason to keep it. A copy (code and outputs) is in
 `tmp/calculations_archive_2026-09-24/deleted_frozen_mbt_driver/` (git-ignored).

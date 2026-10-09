@@ -120,6 +120,6 @@ the accurate ones. Nothing in the YIO symmetry conclusions moves (residuals 1e-2
 
 ## Where things are now
 
-`notes/implementation_map.md` (function to equation table), `validation/README.md` (rewritten pipeline
-diagram and unit-test table), `notes/external_terms.md` and `berry_curvature_decomposition.md` (code
+`notes/code.md` (function to equation table), `validation/README.md` (rewritten pipeline
+diagram and unit-test table), `notes/theory/external_terms.md` and `berry_curvature_decomposition.md` (code
 references moved to `curvature.py`/`axion.py`; the math is unchanged).

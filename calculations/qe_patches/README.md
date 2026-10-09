@@ -9,7 +9,7 @@ symmetrised occupation of atom `na` from the atom that `isym` maps *into* `na`, 
     make pw
 
 The full explanation, the evidence and the verification are in
-[`notes/progress/2026-09-21_qe_new_ns_nc_bug.md`](../../notes/progress/2026-09-21_qe_new_ns_nc_bug.md);
+[`notes/log/2026-09-21_qe_new_ns_nc_bug.md`](../../notes/log/2026-09-21_qe_new_ns_nc_bug.md);
 the check script that reproduces it from any `verbosity = 'high'` `pw.x` output is
 [`diagnostics/2026-09-21_qe_new_ns_nc/qe_ns_symmetriser_check.py`](../diagnostics/2026-09-21_qe_new_ns_nc/qe_ns_symmetriser_check.py).
 

@@ -1,9 +1,9 @@
 > ⚠ **Superseded.** This is the earliest draft of the derivation now canonical
-> in [`berry_curvature_derivation.md`](../berry_curvature_derivation.md)
+> in [`theory/derivation.md`](../theory/derivation.md)
 > (2026-08-04). A cleaned-up intermediate revision is
 > [`external_derivation.md`](external_derivation.md) (2026-08-03). Kept for
 > provenance only — nothing in the codebase should cite this version. See
-> [`notes/INDEX.md`](../INDEX.md).
+> [`notes/README.md`](../README.md).
 
 # Wannier90, PythTB, and the gauge-covariant non-Abelian Berry curvature
 

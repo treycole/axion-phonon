@@ -20,7 +20,7 @@ and v kept each run's own Wannier centres.
 ## Why it was a bug
 - **Within one model:** the curvature pieces mixed two different embeddings, which gives an error linear in τ.
 - **In the β finite difference:** base and mode used different embeddings, violating assumption A3 of the
-  derivation (`notes/berry_curvature_derivation.md`). `v_β = (h_mode − h_base)/dβ` then contained an embedding
+  derivation (`notes/theory/derivation.md`). `v_β = (h_mode − h_base)/dβ` then contained an embedding
   change, not just ∂H/∂Q.
 
 ## Fix
@@ -39,5 +39,5 @@ non-collinear τ, all give identical totals. The int/cross/ext *split* still shi
 The MnBi2Te4 driver behind the paper's ~10 rad/Å (`axion_response_nk_sweep.py`) still had the bug and used no
 external terms. It was deleted on 2026-09-24; MBT will be recomputed on the new pipeline.
 
-**Sources:** [`../progress/2026-08-20_handoff_wannier_conventions.md`](../progress/2026-08-20_handoff_wannier_conventions.md)
+**Sources:** [`../log/2026-08-20_handoff_wannier_conventions.md`](../log/2026-08-20_handoff_wannier_conventions.md)
 §3a; memory `dtheta-dq-gauge-pitfall`; CLAUDE.md pitfall 3.

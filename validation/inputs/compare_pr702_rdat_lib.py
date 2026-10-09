@@ -19,7 +19,7 @@ If the two are the same matrix, then every component of ``_r.dat`` must be
 That is the test: not "agrees to tolerance" but bit-exact after rounding, which
 distinguishes an algebraic identity from two formulas that merely happen to be
 close. Also reports what the ``6F12.6`` format costs, since PR #702 does not
-change it -- see notes/progress/2026-08-27_rfull_vs_mmn_position_matrix.md section 0.
+change it -- see notes/log/2026-08-27_rfull_vs_mmn_position_matrix.md section 0.
 
 Pure library: no argparse, no ``__main__``. Used directly by
 ``compare_pr702_rdat.ipynb`` and imported by ``inputs/compare_jaemo_ndegen_rdat.ipynb``

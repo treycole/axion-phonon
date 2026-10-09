@@ -39,7 +39,7 @@ silently ignored, so a user setting `use_ws_distance = T` gets the wrong matrix 
   (`plot.F90:198`).
 - **6-decimal print still costs ~3% of dθ** (#11).
 
-**Sources:** [`../progress/2026-09-10_pr702_transl_inv_full_rdat.md`](../progress/2026-09-10_pr702_transl_inv_full_rdat.md),
-[`../progress/2026-09-13_jaemo_transl_inv_full_ws_distance.md`](../progress/2026-09-13_jaemo_transl_inv_full_ws_distance.md),
-[`../progress/2026-09-16_jaemo_rdat_production_closure.md`](../progress/2026-09-16_jaemo_rdat_production_closure.md);
+**Sources:** [`../log/2026-09-10_pr702_transl_inv_full_rdat.md`](../log/2026-09-10_pr702_transl_inv_full_rdat.md),
+[`../log/2026-09-13_jaemo_transl_inv_full_ws_distance.md`](../log/2026-09-13_jaemo_transl_inv_full_ws_distance.md),
+[`../log/2026-09-16_jaemo_rdat_production_closure.md`](../log/2026-09-16_jaemo_rdat_production_closure.md);
 CLAUDE.md pitfall 2.

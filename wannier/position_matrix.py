@@ -31,7 +31,7 @@ Every source below reproduces the ab-initio data *exactly* on the source
 k-mesh.  They differ only *between* mesh points, because a finite ``N1 x N2 x
 N3`` mesh fixes ``A(R)`` only up to its aliasing class.  That makes the choice
 a choice of **interpolating function**, not a gauge -- see
-``notes/progress/2026-08-20_handoff_wannier_conventions.md``.  Two consequences run through this
+``notes/log/2026-08-20_handoff_wannier_conventions.md``.  Two consequences run through this
 whole module:
 
 1. ``H(R)`` and ``A(R)`` must use the **same** R-set and the same
@@ -87,7 +87,7 @@ source             reads                      character
 
 ``mmn`` and ``rfull`` do not commute at finite mesh density: summing the links
 before mapping is not the same as mapping before summing.  Both are defensible;
-``notes/progress/2026-08-27_rfull_vs_mmn_position_matrix.md`` records why production keeps ``mmn``
+``notes/log/2026-08-27_rfull_vs_mmn_position_matrix.md`` records why production keeps ``mmn``
 (closer to DFPT, and its cache is 4.7x smaller than the ``_r_full.dat``
 export).
 
@@ -170,7 +170,7 @@ def _postw90_header_logical(header: str, keyword: str) -> bool:
 def _wsvec_write_ndegen_applied(directory: Path, prefix: str) -> bool | None:
     """Read the ``write_ndegen_applied=`` token Wannier90 stamps into
     ``seedname_wsvec.dat``'s header (added alongside the ``.win`` flag of the
-    same name; see notes/jaemo-wannier90-fork).
+    same name; see notes/log/2026-09-13_jaemo_transl_inv_full_ws_distance.md).
 
     Returns ``None`` -- "unknown", not "false" -- when the file is absent or
     predates the flag (a plain ``... with use_ws_distance=.true.`` header,
@@ -774,7 +774,7 @@ def ws_pair_consistency(
     another, so class sums are the mesh-determined invariant.  The images of a
     ``transl_inv_full`` ``A(R)`` class are *not*: ``exp(-i b.R/2)`` is applied
     per b at the final lattice vector, so images differ by ``(-1)**n_i`` and a
-    class sum is not meaningful (notes/progress/2026-09-20_jaemo_ndegen_yio_mode1.md).
+    class sum is not meaningful (notes/log/2026-09-20_jaemo_ndegen_yio_mode1.md).
     Do not pass ``A(R)`` here, and do not redistribute ``A(R)`` from class sums.
 
     Key-set equality of the two ``R`` lists is *not* the right test: the sets
@@ -1642,7 +1642,7 @@ def _build_rdat_ndegen_applied(
     """``_r.dat``/``_hr.dat`` written with the ``write_ndegen_applied`` .win flag.
 
     Upstream (jaemolihm/wannier90, branch ``plan5-write-ndegen-applied``; see
-    notes/jaemo-wannier90-fork), this flag makes wannier90.x divide every
+    notes/log/2026-09-13_jaemo_transl_inv_full_ws_distance.md), this flag makes wannier90.x divide every
     Wigner-Seitz weight out *before* writing: ``_hr.dat``'s and ``_tb.dat``'s
     ndegen block becomes all 1s, and ``_r.dat`` -- which never had a ndegen
     block of its own -- becomes self-contained. ``O_mn(k) = sum_R exp(i
@@ -1654,7 +1654,7 @@ def _build_rdat_ndegen_applied(
 
     Validated on SrTiO3 Ti_Q_2A trial04 with ``use_ws_distance``,
     ``transl_inv_full`` and ``write_ndegen_applied`` all set
-    (notes/progress/2026-09-16_jaemo_rdat_production_closure.md): C4z/Mx covariance of
+    (notes/log/2026-09-16_jaemo_rdat_production_closure.md): C4z/Mx covariance of
     Tr Omega at the ``mmn`` level, A(R) Hermiticity ~1e-12, and agreement with
     an independently built postw90 ``rfull`` export to ~1e-8.  It differs from
     ``mmn`` by the known rfull-vs-mmn interpolant gap (~6%/38%), which is a
@@ -1766,7 +1766,7 @@ POSITION_SOURCES: dict[str, dict] = {
         "requires": ("{prefix}_r.dat", "{prefix}_hr.dat", "{prefix}_wsvec.dat"),
         "summary": (
             "_r.dat/_hr.dat from a write_ndegen_applied=T run; no .mmn, "
-            "no Python remap needed -- see notes/jaemo-wannier90-fork"
+            "no Python remap needed -- see notes/log/2026-09-13_jaemo_transl_inv_full_ws_distance.md"
         ),
     },
 }

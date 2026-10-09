@@ -50,6 +50,6 @@ The derivation's β derivative (§8.2) differentiates at fixed bond vectors b_st
 - **Not a fix for the family gap:** it doesn't settle the `.mmn` vs `rfull` interpolant-family gap (factor ~2 in
   dθ). It only makes each family consistent across β.
 
-**Sources:** [`../progress/2026-09-20_jaemo_ndegen_yio_mode1.md`](../progress/2026-09-20_jaemo_ndegen_yio_mode1.md),
-[`../progress/2026-09-23_ws_ties_in_beta_derivative.md`](../progress/2026-09-23_ws_ties_in_beta_derivative.md);
+**Sources:** [`../log/2026-09-20_jaemo_ndegen_yio_mode1.md`](../log/2026-09-20_jaemo_ndegen_yio_mode1.md),
+[`../log/2026-09-23_ws_ties_in_beta_derivative.md`](../log/2026-09-23_ws_ties_in_beta_derivative.md);
 unit test `validation/unit/test_shared_ws_centres.py`.

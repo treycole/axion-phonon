@@ -43,7 +43,7 @@ NKS = [4, 6, 8, 10, 12]
 #   "transl_inv_full_from_chk"  Jae-Mo's formula, rebuilt from the .chk m_matrix (production since 2026-10-07)
 #   "right_centre_from_chk"     the .mmn formula, from the same .chk (used 2026-09-30 to 2026-10-06)
 SOURCE = "transl_inv_full_from_chk"
-# Fold both structures on the base centres (assumption A3', notes/progress/2026-09-23_ws_ties_in_beta_derivative.md).
+# Fold both structures on the base centres (assumption A3', notes/log/2026-09-23_ws_ties_in_beta_derivative.md).
 # Needs one of the last three sources; Jae-Mo's files cannot be refolded.
 SHARED_WS = True
 OUT = None          # None: <MODE>/nk_sweep_<source>_<own|shared>_ws; or any folder

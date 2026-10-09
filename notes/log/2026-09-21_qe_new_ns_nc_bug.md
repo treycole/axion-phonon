@@ -5,7 +5,7 @@
 vanishes for any operation that is its own inverse (E, inversion, 2-fold rotations, mirrors) and is present for
 every operation of order 3, 4 or 6 that permutes Hubbard atoms. **Effect on our runs:** every Y2Ir2O7 SCF (base
 and displaced) with `symmetry_with_labels = .true.` and four Ir species. This is the source of the 4 to 14%
-symmetry floor of `notes/progress/2026-09-21_yio_symmetry.md`, and it also shrinks the Ir Hubbard moment.
+symmetry floor of `notes/log/2026-09-21_yio_symmetry.md`, and it also shrinks the Ir Hubbard moment.
 
 ## How the operations reach `new_ns_nc`
 

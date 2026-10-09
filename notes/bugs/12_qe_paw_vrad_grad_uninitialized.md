@@ -47,4 +47,4 @@ magnetization 0.00, absolute 10.43). The new `~/q-e` build reproduces that to 2e
 `md5sum` the pw.x first when a run misbehaves: known-good `c41c409…`, known-bad `1541022…` (#14).
 
 **Sources:** memory `qe-paw-nc-uninit-vrad`;
-[`../progress/2026-10-05_yio_symmetry_floor_dft_origin.md`](../progress/2026-10-05_yio_symmetry_floor_dft_origin.md) §4.
+[`../log/2026-10-05_yio_symmetry_floor_dft_origin.md`](../log/2026-10-05_yio_symmetry_floor_dft_origin.md) §4.

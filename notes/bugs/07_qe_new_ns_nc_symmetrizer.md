@@ -45,6 +45,6 @@ exact projector (1e-15).
 - **Workarounds at the time:** `nosym = .true.`, or dropping `symmetry_with_labels`. The user prefers the patch,
   keeping symmetry on.
 
-**Sources:** [`../progress/2026-09-21_qe_new_ns_nc_bug.md`](../progress/2026-09-21_qe_new_ns_nc_bug.md),
-[`../progress/2026-09-29_yio_qe76_new_ns_nc_pair.md`](../progress/2026-09-29_yio_qe76_new_ns_nc_pair.md);
+**Sources:** [`../log/2026-09-21_qe_new_ns_nc_bug.md`](../log/2026-09-21_qe_new_ns_nc_bug.md),
+[`../log/2026-09-29_yio_qe76_new_ns_nc_pair.md`](../log/2026-09-29_yio_qe76_new_ns_nc_pair.md);
 memory `qe-new-ns-nc-bug`; CLAUDE.md pitfall 7.

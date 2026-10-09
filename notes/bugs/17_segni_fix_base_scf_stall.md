@@ -84,12 +84,50 @@ Depends only on |m|, so it stays exactly rotation-invariant and keeps #16's symm
 
 | run | result |
 |---|---|
-| YP (PBE control) | still wandering 2e-7 to 1.5e-5 Ry at 72+ iterations, \|m\|abs 3.32 → 3.40 |
+| YP (PBE control, fresh start, Davidson, plain β 0.1) | **converged in 80 iterations** (−4624.80821 Ry, \|m\|abs 3.39), hovering near 1e-6 for ~30 iterations first |
 | YL1 (`input_dft = 'pz'`, `rel-pbe` PAW) | converged in 21 iterations |
 | YL2 (`rel-pz` PAW) | converged in 22 iterations |
 
 Under LDA: Ir moments 0.283 μB, four equal, exactly along ⟨111⟩; gap 0.68 eV on the SCF mesh.
 
-This matches MnBi2Te4's noncollinear-GGA problem (bug #18, `../progress/2026-10-08_mbt_noncollinear_gga_lda.md`
-§12). **Open:** whether YIO moves to LDA+U (check the full-mesh gap at U = 3 first).
+**So the stall is not universal.** A fresh PBE start converges; the stall is in restarts from 207546's state, and
+PBE convergence is slow. YIO has no spurious state like MBT's #18. YP is a converged segni-fixed base and can
+replace 207546 for production once its NSCF has run. **Open:** use YP (PBE), or switch YIO to LDA.
+
+### Why YP converged and the others didn't (2026-10-08 evening)
+
+Every stalled patched run descends from 207546's cold start (CG, plain β 0.03). 209024, 209042, 209049, T1c and
+R1-R3 all restart from its state. YP is an independent cold start (Davidson, plain β 0.1). Last state of each:
+
+| run | start | diag, mixing | E (Ry) | \|m\|abs | Ir \|m\| | O \|m\| max | Ir1 ns (up, dn) |
+|---|---|---|---|---|---|---|---|
+| 207546 | atomic | CG, plain 0.03 | −4624.80726 (3.1e-5) | 3.36 | 0.30790 | 0.01442 | 3.33339, 3.58545 |
+| 209024 | file ← 207546 | CG, local-TF 0.05 | −4624.80753 (3.1e-5) | 3.35 | 0.30776 | 0.01411 | 3.33339, 3.58535 |
+| 209042 | file ← 209024 | Davidson, local-TF 0.05 | −4624.80758 (4.9e-5) | 3.36 | 0.30814 | 0.01395 | 3.33327, 3.58545 |
+| 209049 | file ← 209042 | Davidson, plain 0.1 | −4624.80735 (4.8e-5) | 3.35 | 0.30822 | 0.01449 | 3.33323, 3.58557 |
+| T1c | file ← 207546 | CG, plain 0.03 | −4624.80718 (1.0e-4) | 3.37 | 0.30797 | 0.01445 | 3.33327, 3.58535 |
+| R2 (δ 1e-4) | file ← 207546 | CG, plain 0.03 | −4624.80751 (3.3e-5) | 3.35 | 0.30767 | 0.01408 | 3.33341, 3.58533 |
+| **YP** | **atomic** | **Davidson, plain 0.1** | **−4624.80821 (converged)** | 3.39 | 0.31021 | **0.01316** | 3.33300, 3.58517 |
+| T1 (unpatched binary) | file ← 207546 | CG, plain 0.03 | −4624.80688 (converged, different functional) | 3.32 | 0.30415 | 0.01303 | 3.33495, 3.58432 |
+
+**Reading it:**
+- **YP lies 0.6-1.0 mRy below every stalled state.** That is much larger than their 3e-5 to 1e-4 Ry accuracy.
+- **The O(48f) moment differs:** 0.0132 in YP against 0.0140-0.0145 in the stalled runs (the "slow O mode" seen
+  earlier).
+- **So the stalled lineage sits in a different, higher-energy region** where the PBE SCF map doesn't contract.
+  YIO's DFT+U has several near-degenerate minima (`notes/materials/Y2Ir2O7.md`). Restarts and the |m| regularization
+  never left that region.
+- **The two cold starts took different paths.** 207546 (CG, β 0.03) bounced up to 2-4e-2 between iterations 10
+  and 26 and reached 1e-3 only by about iteration 30. YP (Davidson, β 0.1) was at 3.6e-3 by iteration 7 and 1e-4
+  by about 20.
+- **Not separated:** whether CG or the small β sent 207546 there. That would need a cold start with CG and β 0.1,
+  or with Davidson and β 0.03.
+
+**Symmetry of YP's SCF:**
+- **Enforced:** 48 operations, 36 with fractional translations.
+- **Ir:** four identical moments, exactly along ⟨111⟩ (±0.17910 each component), identical charges.
+- **Y and O:** Y all equal. O falls into its two Wyckoff classes as expected.
+
+The SCF symmetrizes ρ, m, ns, becsum and D_ij every iteration, so this is guaranteed and not a test. **The real test
+is the NSCF eigenvalue symmetry** (#16's check: should be ≲ 46 μeV), and YP's NSCF has not run.
 

@@ -2,7 +2,7 @@
 
 This note compares the external-term implementation (now in
 `modules/curvature.py`) with
-`notes/Wannier_interpolation_of_geometric_quantities-2.pdf`, especially the
+`references/vanderbilt_souza_2026_wannier_interpolation_notes.pdf`, especially the
 external Berry-curvature terms and the mixed `(k_i, beta)` curvature.
 
 The main conclusion is:

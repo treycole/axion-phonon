@@ -27,4 +27,4 @@ Use the full-precision A(R) built from the `.chk` (the same formula as Jae-Mo's,
 `_hr.dat` is also printed at 6 decimals (eV) and feeds every route. Building H(R) at full precision from `.chk`
 + `.eig` would remove the analogous error; not done.
 
-**Sources:** [`../progress/2026-09-23_ws_ties_in_beta_derivative.md`](../progress/2026-09-23_ws_ties_in_beta_derivative.md).
+**Sources:** [`../log/2026-09-23_ws_ties_in_beta_derivative.md`](../log/2026-09-23_ws_ties_in_beta_derivative.md).

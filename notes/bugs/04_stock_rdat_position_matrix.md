@@ -33,5 +33,5 @@ representative (3), and with most of the signal rounded away (1).
 CLAUDE.md pitfall 2 summarizes the three tiers: stock (unusable), PR 702 (still wrong, #5), and Jae-Mo's branch
 (works).
 
-**Sources:** [`../progress/2026-08-27_rfull_vs_mmn_position_matrix.md`](../progress/2026-08-27_rfull_vs_mmn_position_matrix.md)
+**Sources:** [`../log/2026-08-27_rfull_vs_mmn_position_matrix.md`](../log/2026-08-27_rfull_vs_mmn_position_matrix.md)
 §0, §0b; memory `rdat-position-matrix-unusable`.

@@ -40,4 +40,4 @@ Final State spreads all ≲ 1.1 Å². The minimum gap is comparable to the DFT g
 - **Don't rescue diffuse shells with `dis_num_iter`:** it breaks the projection gauge the finite difference
   relies on.
 
-**Sources:** memory `wannier-gap-collapse-Os`; `notes/Y2Ir2O7/wannierization.md`.
+**Sources:** memory `wannier-gap-collapse-Os`; `notes/materials/Y2Ir2O7.md`.

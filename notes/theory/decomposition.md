@@ -1,6 +1,6 @@
 # Implementation notes: external Berry-curvature terms
 
-**The derivation lives in [`berry_curvature_derivation.md`](berry_curvature_derivation.md).**
+**The derivation lives in [`derivation.md`](derivation.md).**
 Equation numbers below refer to that note. This file holds only what is specific
 to the code: the symbol map, the two things that are easy to get wrong, and the
 validation checklist.
@@ -80,13 +80,13 @@ compare against, so checks 3, 7 and 8, and the analytic moving-frame tests in
 
 | Check | Script |
 | --- | --- |
-| 1, 4, 5, 6 | [`validation/unit/test_curvature.py`](../validation/unit/test_curvature.py) |
-| 9, 10 | [`validation/symmetry/check_convention_symmetry.ipynb`](../validation/symmetry/check_convention_symmetry.ipynb) |
-| 11 (k–k vs pythtb/postw90) | [`validation/external_curvature/check_vs_pythtb.ipynb`](../validation/external_curvature/check_vs_pythtb.ipynb) |
-| 11 (vs postw90 directly) | [`check_vs_postw90_line.ipynb`](../validation/external_curvature/check_vs_postw90_line.ipynb), [`check_vs_postw90_full_mesh.ipynb`](../validation/external_curvature/check_vs_postw90_full_mesh.ipynb) |
-| 12 (mesh convergence) | [`validation/observable/born_effective_charge.ipynb`](../validation/observable/born_effective_charge.ipynb) |
-| 13 (endpoint spread, a linearity diagnostic) | [`validation/observable/audit_mixed_born_response.ipynb`](../validation/observable/audit_mixed_born_response.ipynb) |
-| 2, 3, 7, 8 | **not automated** — see [`validation/README.md`](../validation/README.md) |
+| 1, 4, 5, 6 | [`validation/unit/test_curvature.py`](../../validation/unit/test_curvature.py) |
+| 9, 10 | [`validation/symmetry/check_convention_symmetry.ipynb`](../../validation/symmetry/check_convention_symmetry.ipynb) |
+| 11 (k–k vs pythtb/postw90) | [`validation/external_curvature/check_vs_pythtb.ipynb`](../../validation/external_curvature/check_vs_pythtb.ipynb) |
+| 11 (vs postw90 directly) | [`check_vs_postw90_line.ipynb`](../../validation/external_curvature/check_vs_postw90_line.ipynb), [`check_vs_postw90_full_mesh.ipynb`](../../validation/external_curvature/check_vs_postw90_full_mesh.ipynb) |
+| 12 (mesh convergence) | [`validation/observable/born_effective_charge.ipynb`](../../validation/observable/born_effective_charge.ipynb) |
+| 13 (endpoint spread, a linearity diagnostic) | [`validation/observable/audit_mixed_born_response.ipynb`](../../validation/observable/audit_mixed_born_response.ipynb) |
+| 2, 3, 7, 8 | **not automated** — see [`validation/README.md`](../../validation/README.md) |
 
 The full index, including the input-layer and symmetry checks that this list does
-not cover, is [`validation/README.md`](../validation/README.md).
+not cover, is [`validation/README.md`](../../validation/README.md).

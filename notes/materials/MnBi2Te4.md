@@ -1,6 +1,32 @@
-# Phonon mode calculation
+# MnBi₂Te₄
 
-## Packages
+θ = π (inversion + a composite antiunitary symmetry). Axion-active phonons: the zone-boundary **T₂⁻** modes.
+Where the runs stand is in [`../README.md`](../README.md); this file is the material's setup reference.
+
+## Current setup (2026-10-08)
+
+- **Functional: LDA+U**, U = 4 eV on Mn 3d (`HUBBARD (ortho-atomic)`), `rel-pz` PAW, noncollinear + SOC.
+  Never noncollinear PBE ([bug #18](../bugs/18_qe_noncollinear_gga_spurious_state.md)).
+- **Base:** `MnBi2Te4/base/soc_lda/u_4.0/`, job 209653. Pseudopotentials and how the Te `rel-pz` file was generated:
+  `soc_lda/pseudo_gen/` and [`../log/2026-10-08_mbt_noncollinear_gga_lda.md`](../log/2026-10-08_mbt_noncollinear_gga_lda.md) §11.
+- **Every run:** the exact hex-CIF cell (a = 4.33360, c = 81.85200 Å, atoms at u·c), `startingwfc = 'atomic'`,
+  `diago_thr_init = 1.0d-5`. Check layer mirroring and ∫|m⊥| with
+  `calculations/diagnostics/2026-10-08_mbt_noncollinear_gga/magnetization_texture.py`.
+- **Wannier trial set:** Bi p, Te p, Mn1 d, Mn2 d — 92 spinor WFs (below). n_occ = 58 within the p-d manifold
+  (bands 81-138 of the LDA base).
+- Past MBT-specific bugs: [#9](../bugs/09_mbt_t2_rounded_cell_and_labels.md), [#14](../bugs/14_mbt_stale_binary.md),
+  [#15](../bugs/15_mbt_u3_base_rounded_cell.md), [#18](../bugs/18_qe_noncollinear_gga_spurious_state.md).
+
+---
+
+## Setup notes (early 2026)
+
+The working notes from the initial setup (SMODES, mode selection, Wannier windows). The procedure still holds; the
+specific windows were for PBE without SOC. The files the text calls `SMODES.in.txt`/`SMODES.out.txt` are now `data/MnBi2Te4/phonon/SMODES.in`/`.out`.
+
+### Phonon mode calculation
+
+### Packages
 
 ### SMODES
 - SMODES is a symmetry analysis package for phonon modes
@@ -16,7 +42,7 @@ For some reason, using Wyckoff from cif file gives different atomic positions th
 #### Output
 See SMODES.out.txt for output file. This contains the list of irreps, degeneracies, and displacement patterns for each mode.
 
-## Axion active phonons
+### Axion active phonons
 
 1. Run SMODES with primitive non-magnetic cell
 - choose Gamma and Z modes
@@ -38,7 +64,7 @@ See SMODES.out.txt for output file. This contains the list of irreps, degeneraci
 4. Apply distortion to unit cell multiplying by small constant so that we are in linear response regime
 - Forward and back (positive and negative amplitude)
 
-## Steps
+### Steps
 --------
 1. 5e-3 -> 0.02 Angstrom amplitude
 2. displace smodes output in cartesian
@@ -86,3 +112,17 @@ Remaining states:
 
 
 - The gap is smaller when SOC is included, as expected for MnBi2Te4. VdW + U leads to a larger gap.
+### Notes from 2026-01-21
+
+1. PT symmetry enforces Kramers degeneracy at each k-point, even with distortion. Quantum Espresso doesn't detect this symmetry and the bands are split at each k-point. In part due to this, the convergence is slow. We need to move origin to halfway between Mn atoms to enforce PT symmetry. New flag should be added in QE calculation.
+
+2. Check if undistorted structure is Z2 odd. Should be, but need to confirm.
+
+3. We need small smearing for intermediate metallic phases.
+
+
+### TODO (early 2026)
+
+
+- We want to plot the $C_2$ density for each symmetry mode to show that it is strongly peaked along the z-axis (111 direction in reduced coordinates). This is because of the small band gap and large Berry curvature along this direction. 
+- We need to use consistent gauge as in YIO and figure out why the symmetry detection isn't working as expected.

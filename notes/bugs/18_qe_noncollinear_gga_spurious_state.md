@@ -1,11 +1,10 @@
 # #18 — Noncollinear PBE has a spurious lower-energy, layer-asymmetric MnBi2Te4 state
 
 > **Status: WORKED AROUND for MnBi2Te4** (2026-10-08: base moved to LDA+U, `soc_lda/u_4.0`, job 209653, converged in
-> 12 iterations). **YIO (#17), same family:** LDA converges the YIO base in 21-22 iterations where PBE wanders (2026-10-08).
-> The functional switch for YIO is not decided.
+> 12 iterations). **YIO:** no such state. A fresh PBE start converges (80 iterations); LDA converges in 21-22 (2026-10-08).
 > - **Not a code regression:** the QE 7.2 → 8.0dev audit found nothing that explains it. It's a limitation of
 >   QE's noncollinear GGA.
-> - **Full record:** [`../progress/2026-10-08_mbt_noncollinear_gga_lda.md`](../progress/2026-10-08_mbt_noncollinear_gga_lda.md).
+> - **Full record:** [`../log/2026-10-08_mbt_noncollinear_gga_lda.md`](../log/2026-10-08_mbt_noncollinear_gga_lda.md).
 
 **Found:** 2026-10-05 to 10-08. **Affects:** MnBi2Te4 base SCF with SOC (therefore noncollinear) and PBE, from a
 random start (`startingwfc = 'atomic+random'`, the default). Every MBT PBE+SOC base run on the new QE build.
@@ -36,13 +35,14 @@ random start (`startingwfc = 'atomic+random'`, the default). Every MBT PBE+SOC b
 
 ## Fix / workaround
 - **MnBi2Te4 → LDA+U** with `rel-pz` PAW: Mn and Bi official; Te generated with `ld1.x` from the official
-  `rel-pbe` recipe (validated). Base 209653: converged in 12 iterations, symmetric to 3e-5 μB.
+  `rel-pbe` recipe (validated). Base 209653: converged in 12 iterations, symmetric to 3e-5 μB. NSCF eigenvalues: 12 operations to 0.043 μeV;
+  Kramers-pair splitting (the anti-translation test) max 20 μeV, median 0.6 μeV.
 - **Avoiding it within PBE:** `startingwfc = 'atomic'` (test D converged in 18 iterations), but only for structures
   that keep the anti-translation. The T2⁻ modes break it physically, so PBE can't protect them.
 
 ## Remaining
 - **The LDA U value:** U = 4.0 eV kept for now (user, 2026-10-08). The DMC benchmark optimum for LDA+U is 4.4 eV.
-- **YIO:** LDA converges (see #17 update); the decision is open.
+- **YIO:** PBE converges from scratch, slowly; LDA 4× faster. The functional decision is open (see #17 update).
 - **Atomic start in PBE is knife-edge:** the symmetric state is a saddle (progress note §4.1).
 - **An optional QE patch** to enforce the anti-translation.
 - **Cleanup of the PBE test runs.**

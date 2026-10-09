@@ -1,4 +1,4 @@
-"""Real-space magnetization texture of a noncollinear QE run (notes/progress/2026-10-08_mbt_noncollinear_gga_lda.md §8).
+"""Real-space magnetization texture of a noncollinear QE run (notes/log/2026-10-08_mbt_noncollinear_gga_lda.md §8).
 
 Reads <prefix>.save/charge-density.dat (n, m_x, m_y, m_z in G-space), inverse-FFTs to the dense grid and reports
 1. the transverse part of m: integral |m_perp|, its maximum, and where it dominates;

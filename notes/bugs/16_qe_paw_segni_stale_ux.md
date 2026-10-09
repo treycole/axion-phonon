@@ -265,6 +265,6 @@ smooth-grid GGA follows it, and the PAW GGA applies the collinear-only fixed-axi
 3. **Report to QEF:** the code is unchanged on develop as merged 2026-09-23.
 4. **Delete the old buggy YIO runs** after validation (~3 TB), with the user's OK.
 
-**Sources:** [`../progress/2026-10-05_yio_symmetry_floor_dft_origin.md`](../progress/2026-10-05_yio_symmetry_floor_dft_origin.md),
-[`../progress/2026-10-06_segni_fix_validated_and_reruns.md`](../progress/2026-10-06_segni_fix_validated_and_reruns.md);
+**Sources:** [`../log/2026-10-05_yio_symmetry_floor_dft_origin.md`](../log/2026-10-05_yio_symmetry_floor_dft_origin.md),
+[`../log/2026-10-06_segni_fix_validated_and_reruns.md`](../log/2026-10-06_segni_fix_validated_and_reruns.md);
 scripts in `calculations/diagnostics/2026-10-05_ws_tolerance_window/`.

@@ -51,9 +51,9 @@ The **external** terms are the piece this suite exists for. The internal (Kubo)
 curvature only needs `H(R)`; the external terms need the off-diagonal Wannier
 position matrix `A(R)`, and every way of getting that matrix wrong produces a
 plausible-looking number. The math is in
-[`notes/external_terms.md`](../notes/external_terms.md); the symbol map and the
+[`notes/theory/external_terms.md`](../notes/theory/external_terms.md); the symbol map and the
 list of things that fail silently are in
-[`notes/berry_curvature_decomposition.md`](../notes/berry_curvature_decomposition.md).
+[`notes/theory/decomposition.md`](../notes/theory/decomposition.md).
 
 ---
 
@@ -118,13 +118,13 @@ Note what is **not** covered: `check_vs_pythtb.ipynb` tests the k–beta assembl
 numbers against. Their accuracy rests on `observable/` and on the analytic
 moving-frame tests (`unit/test_curvature.py`). The two endpoint estimates of
 `dtheta` are a linearity test, not an accuracy measure. See §10.4 of
-[`notes/berry_curvature_derivation.md`](../notes/berry_curvature_derivation.md).
+[`notes/theory/derivation.md`](../notes/theory/derivation.md).
 
 ### `symmetry/` — does the curvature transform correctly
 
 | Notebook | Proves |
 | --- | --- |
-| `check_magnetic_symmetry.ipynb` | Y2Ir2O7 base and mode 1: the Cartesian dual trace curvature obeys `omega(Rk) = det(R) R omega(k)` for unitary operations and `omega(-Rk) = -det(R) R omega(k)` for antiunitary ones, plus the invariant-line consequences (base z axis: all components vanish; mode 1 z axis: **all** components vanish, C2z gives `omega_x = omega_y = 0` and the antiunitary S4z T removes `omega_z`; [111]: `omega_x = omega_y = omega_z`; [1,-1,0]: `omega_x = omega_y`). Two calibrations: S4z **without** T is a control that must be violated (relative residual near 2, against 0.04 to 0.13 for the real symmetries), and `mode1_inversion` shows the 0.01 A displacement breaks inversion below the floor. `POSITION_SOURCE` = `mmn`, `rdat` or `jaemo` (Jae-Mo's `<run>/jaemo/`, read as written). The residual floor is the shared H(R)'s, not the curvature code or the position-matrix route: [`notes/progress/2026-09-21_yio_symmetry.md`](../notes/progress/2026-09-21_yio_symmetry.md). |
+| `check_magnetic_symmetry.ipynb` | Y2Ir2O7 base and mode 1: the Cartesian dual trace curvature obeys `omega(Rk) = det(R) R omega(k)` for unitary operations and `omega(-Rk) = -det(R) R omega(k)` for antiunitary ones, plus the invariant-line consequences (base z axis: all components vanish; mode 1 z axis: **all** components vanish, C2z gives `omega_x = omega_y = 0` and the antiunitary S4z T removes `omega_z`; [111]: `omega_x = omega_y = omega_z`; [1,-1,0]: `omega_x = omega_y`). Two calibrations: S4z **without** T is a control that must be violated (relative residual near 2, against 0.04 to 0.13 for the real symmetries), and `mode1_inversion` shows the 0.01 A displacement breaks inversion below the floor. `POSITION_SOURCE` = `mmn`, `rdat` or `jaemo` (Jae-Mo's `<run>/jaemo/`, read as written). The residual floor is the shared H(R)'s, not the curvature code or the position-matrix route: [`notes/log/2026-09-21_yio_symmetry.md`](../notes/log/2026-09-21_yio_symmetry.md). |
 | `check_convention_symmetry.ipynb` (lib: `check_convention_symmetry_lib.py`) | Four internally consistent interpolation conventions (`mmn_pair`, `rdat_direct`, `rdat_pair`, `rfull_pair`) evaluated on paths where symmetry forces `Tr Omega_xy = 0`. Asserts `H(R)` and `A(R)` share an R-set before trusting any of them. Also imported by `check_pr702_rdat_symmetry.ipynb`. |
 | `check_trial_curvature_geometry.ipynb` (lib: `check_trial_curvature_geometry_lib.py`) | Per-interpolant: how far apart two trials' curvatures are at the source nodes, and whether each separately obeys the surviving crystal symmetries *between* nodes. Also imported by `check_rdat_ndegen_applied_symmetry.ipynb`. |
 | `compare_trial_curvature.ipynb` (lib: `compare_trial_curvature_lib.py`) | The occupied traced curvature for two Ti_Q_2A trials on a generic line. Imported as a library by `check_vs_wilson_flux.ipynb`, `check_trial_curvature_geometry.ipynb`, `check_rdat_ndegen_applied_symmetry.ipynb`, and `compare_position_matrix_sources.ipynb`. |
@@ -217,7 +217,7 @@ directory is what `RUN_COMPUTATION = False` reloads.
 The `.mmn` files these notebooks stream are multi-gigabyte and are not in
 version control; several checks read the much smaller `_AA_cache/*.npz`
 archives instead. See
-[`notes/progress/2026-08-27_rfull_vs_mmn_position_matrix.md`](../notes/progress/2026-08-27_rfull_vs_mmn_position_matrix.md)
+[`notes/log/2026-08-27_rfull_vs_mmn_position_matrix.md`](../notes/log/2026-08-27_rfull_vs_mmn_position_matrix.md)
 for which inputs are genuinely required and which were retired.
 
 ---
@@ -280,11 +280,11 @@ conversion, only how it's invoked.
 
 | Note | What it holds |
 | --- | --- |
-| [`external_terms.md`](../notes/external_terms.md) | The math of the external terms as implemented, with the code boundaries. |
-| [`berry_curvature_decomposition.md`](../notes/berry_curvature_decomposition.md) | Symbol map, the two things that fail silently, and the 13-point check list mapped to these scripts. |
-| [`berry_curvature_derivation.md`](../notes/berry_curvature_derivation.md) | The full derivation. §10.4 covers what the k–beta blocks cannot be checked against. |
-| [`implementation_map.md`](../notes/implementation_map.md) | Which module owns which stage of the pipeline. |
+| [`external_terms.md`](../notes/theory/external_terms.md) | The math of the external terms as implemented, with the code boundaries. |
+| [`theory/decomposition.md`](../notes/theory/decomposition.md) | Symbol map, the two things that fail silently, and the 13-point check list mapped to these scripts. |
+| [`theory/derivation.md`](../notes/theory/derivation.md) | The full derivation. §10.4 covers what the k–beta blocks cannot be checked against. |
+| [`code.md`](../notes/code.md) | Which module owns which stage of the pipeline. |
 | `wannier/position_matrix.py` (docstring) | The four A(R) sources, what each reads, and how to add one. |
-| [`2026-08-20_handoff_wannier_conventions.md`](../notes/progress/2026-08-20_handoff_wannier_conventions.md) | Why the aliasing-class representative is a choice of *interpolant*, not a gauge, and why mixing two choices is fatal. |
-| [`2026-08-27_rfull_vs_mmn_position_matrix.md`](../notes/progress/2026-08-27_rfull_vs_mmn_position_matrix.md) | Where `<0i\|r\|Rj>` should come from; why `_r.dat` cannot carry it. |
-| [`2026-08-27_Ti_Q_2A_full_validation.md`](../notes/progress/2026-08-27_Ti_Q_2A_full_validation.md) | The written verdict of the `inputs/` and `external_curvature/` checks on Ti_Q_2A. |
+| [`2026-08-20_handoff_wannier_conventions.md`](../notes/log/2026-08-20_handoff_wannier_conventions.md) | Why the aliasing-class representative is a choice of *interpolant*, not a gauge, and why mixing two choices is fatal. |
+| [`2026-08-27_rfull_vs_mmn_position_matrix.md`](../notes/log/2026-08-27_rfull_vs_mmn_position_matrix.md) | Where `<0i\|r\|Rj>` should come from; why `_r.dat` cannot carry it. |
+| [`2026-08-27_Ti_Q_2A_full_validation.md`](../notes/log/2026-08-27_Ti_Q_2A_full_validation.md) | The written verdict of the `inputs/` and `external_curvature/` checks on Ti_Q_2A. |

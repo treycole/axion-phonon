@@ -14,7 +14,7 @@ Where this sits
         v
     modules/axion.py       STAGE 3  finite difference in beta, c2, BZ integral
 
-Everything here transcribes ``notes/berry_curvature_derivation.md`` (the
+Everything here transcribes ``notes/theory/derivation.md`` (the
 "note"); equation numbers in the docstrings are the note's.  The note splits the
 curvature of the M occupied bands, as an M x M matrix, into three pieces
 

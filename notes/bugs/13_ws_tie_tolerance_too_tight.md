@@ -51,5 +51,5 @@ What remained at 5e-3 on the rotations (~1.5%) was **not** tie-breaking. It was 
 - **Change the default to 5e-3**, the middle of the window. It moves dθ, which should be measured on the new DFT.
 - **The window is base's:** shared-centre pairs fold the mode on base's centres, so it should carry over.
 
-**Sources:** [`../progress/2026-10-05_yio_ws_tolerance_full_group.md`](../progress/2026-10-05_yio_ws_tolerance_full_group.md);
+**Sources:** [`../log/2026-10-05_yio_ws_tolerance_full_group.md`](../log/2026-10-05_yio_ws_tolerance_full_group.md);
 scripts in `calculations/diagnostics/2026-09-29_centre_symmetrization/` and `.../2026-10-05_ws_tolerance_window/`.

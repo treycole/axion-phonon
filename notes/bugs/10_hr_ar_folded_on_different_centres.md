@@ -25,5 +25,5 @@ their combination isn't the curvature of a single interpolated model (CLAUDE.md 
 The effect on dθ at nk = 6 was 2e-7, negligible, but the rule is now consistent. The earlier `.mmn`
 shared-centre sweep had used one array for all four folds and was already consistent.
 
-**Sources:** [`../progress/2026-09-23_ws_ties_in_beta_derivative.md`](../progress/2026-09-23_ws_ties_in_beta_derivative.md)
+**Sources:** [`../log/2026-09-23_ws_ties_in_beta_derivative.md`](../log/2026-09-23_ws_ties_in_beta_derivative.md)
 ("Also fixed").

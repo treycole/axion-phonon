@@ -433,7 +433,7 @@ def load_wannier_pair(
     for a shared rule, 5.5% for two structures each folded from their own
     centres (what this route and the ``.mmn`` route both do), and 15.7% for
     mixed rules.  How much a given contamination moves ``dtheta`` was not
-    calibrated -- see notes/progress/2026-09-20_jaemo_ndegen_yio_mode1.md.
+    calibrated -- see notes/log/2026-09-20_jaemo_ndegen_yio_mode1.md.
 
     ``shared_ws_centres=True`` (``.mmn`` only) folds H(R) and A(R) of **both**
     structures onto the images chosen by the **base** Wannier centres -- the
@@ -443,7 +443,7 @@ def load_wannier_pair(
     each structure onto its own centres, as every run before 2026-09-23 did.
     Valid when the two structures share the lattice, the Wannier functions
     correspond one to one, and the centres move little compared with bond
-    lengths; see notes/progress/2026-09-23_ws_ties_in_beta_derivative.md.
+    lengths; see notes/log/2026-09-23_ws_ties_in_beta_derivative.md.
     """
 
     # Imported here, not at module scope: position_matrix imports this module

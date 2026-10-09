@@ -38,8 +38,9 @@ All MBT runs are U = 4 eV (`HUBBARD (ortho-atomic)`, Mn 3d) unless stated. Clust
 - **Why the atomic start converges:** it starts exactly in the symmetric subspace, which the SCF preserves. In PBE
   the symmetric state is a saddle and the start only works because convergence beats the growth of numerical
   noise (§4.1).
-- **YIO:** the same pattern. LDA converges the base in 21-22 iterations with an exact AIAO order and a 0.68 eV gap
-  on the SCF mesh; PBE wanders with |m|abs creeping up (§12).
+- **YIO is not the same failure.** A fresh PBE start (segni-fixed binary) converges, but slowly: 80 iterations, about
+  30 of them hovering near 1e-6. LDA converges in 21-22, with an exact AIAO order and a 0.68 eV gap on the SCF
+  mesh. YIO's #17 stall is in restarts from the stalled 207546 state (§12).
 
 ## 1. Starting point: the settings audit
 
@@ -391,6 +392,56 @@ pw.x e270b05.
 - **Symmetry:** every layer pair mirrored to 3e-5; Mn1/Mn2 ns identical.
 - **NSCF:** done. `tmp/` is 29 GB; `tmp.tar.gz` is not yet made.
 
+**Eigenvalue symmetry of the LDA base NSCF (2026-10-08).** Checked with
+`calculations/diagnostics/2026-10-08_mbt_noncollinear_gga/eig_symmetry_qe.py`: the 12 operations QE found, 4×4×4
+`nosym` NSCF (64 k), the 138 occupied bands, full-precision xml eigenvalues.
+- **The 12 operations: worst |Δε| = 0.043 μeV** (median 0.043). The rotations move 48-62 of the 64 k, so the test
+  is not vacuous.
+  - Caveat: inversion makes ε(k) = ε(−k), so eigenvalues test the rotations but cannot test the time-reversal
+    flags. Flipping a flag only composes the operation with inversion.
+- **The anti-translation (layer equivalence)**, which QE can't impose, is tested via its consequence: inversion ×
+  anti-translation forces every band to be twofold degenerate at every k. **Pair splitting: max 20.2 μeV, median
+  0.59 μeV** over bands 1-138.
+  - The residual is consistent with the 3e-5 μB layer-moment mismatch and the odd 375 FFT grid
+    (§4.1, `nr1 = nr2 = nr3 = 384` would remove it).
+- **For comparison:** YIO with the segni fix had a 46 μeV floor (4.8 meV before). The MBT LDA base is symmetric for
+  every practical purpose.
+- **Gap on the 4×4×4 NSCF mesh: 198 meV** (band 138 → 139, direct). That is in line with MBT's bulk gap of about
+  0.2 eV.
+
+**Wannierization of the LDA base (submitted 2026-10-08 23:23):** `209653bc889/w90_trial_pd/`, prep 210618,
+Wannier job 210619.
+
+**Trial set:** Bi p, Te p, Mn1 d, Mn2 d, 92 spinor WFs (`notes/materials/MnBi2Te4.md`).
+
+**LDA band layout:**
+
+| bands | eV | character | count |
+|---|---|---|---|
+| 1-16 | −74 to −38 | Mn 3s/3p | 16 |
+| 17-56 | −17 to −14 | Bi 5d | 40 |
+| 57-80 | −5.9 to −0.96 | Te 5s + Bi 6s | 24 |
+| *2.57 eV gap* | | | |
+| 81-138 | 1.62 to 7.27 | Te 5p + occupied Mn 3d, **n_occ = 58** | 58 |
+| 139- | 7.47 → | Bi 6p, empty Mn 3d, … | |
+
+**Windows.** The 92-band p-d manifold (81-172) is entangled at the top: band 172 reaches 11.20 eV, band 173 starts at
+10.97 eV.
+- **Outer 0-20 eV:** starts in the 2.57 eV gap, so the s bands are excluded.
+- **Frozen 0-10 eV:** at most 88 bands at any k, so the 92 WFs fit.
+- `dis_num_iter = num_iter = 0` (projection only, as for YIO).
+
+**`.win` fixes against the u_4.0 template:**
+- `num_bands` 240 → 300;
+- the `write_ndgen_applied` typo;
+- the empty `unit_cell_cart` and `kpoints` blocks, filled with the exact cell and the NSCF's 64-k crystal list in order;
+- `ang` units for the atoms.
+
+**Binaries:** wannier90.x 26c8b506 and pw2wannier90.x 8f5368ba, as YIO.
+
+**Staging:** per the user's rule, the save is staged as `tmp.tar.gz` in the job folder, and the prep job gunzips the
+save in place for the later Julia `.amn` step (T2⁻ modes).
+
 ## 12. YIO
 
 **The two YIO bugs in these terms:**
@@ -407,30 +458,100 @@ iterations. The patched runs also carry more |m|abs (3.35-3.37 vs 3.32 μB), the
 - **YL1_lda_pbepp** (210526): `input_dft = 'pz'` on the `rel-pbe` PAW (functional only).
 - **YL2_lda_relpz** (210527): official `rel-pz` PAW (Y `spn` 1.0.0, Ir `n` 0.2.3, O `n` 0.1).
 
-**Result: LDA converges and PBE does not.** All three runs find 48 operations (36 with fractional translations).
+**Result: both converge; LDA about 4× faster.** (Corrected 19:08: YP had looked stalled at 72 iterations.) All three runs find 48 operations (36 with fractional translations).
 
 | run | converged | E (Ry) | Ir moments (all four) | off ⟨111⟩ | O \|m\| max | \|m\|abs | gap, 8-k SCF mesh |
 |---|---|---|---|---|---|---|---|
-| YP PBE | **no**: 72+ iterations, wandering 2e-7 to 1.5e-5 Ry around conv_thr 1e-7 | — | 0.3099 μB, equal | 0.000° | 0.0132 | 3.32 → **3.40**, creeping up | — |
+| YP PBE | **80 iterations** (hovering 2e-7 to 1.5e-5 from about 45 to 79) | −4624.80821 | 0.3102 μB, equal | 0.000° | 0.0132 | 3.39 | — |
 | YL1 LDA (`rel-pbe` PAW) | **21 iterations** | −4501.58867 | 0.2830 μB, equal | 0.000° | 0.0127 | 3.21 | 0.683 eV |
 | YL2 LDA (`rel-pz` PAW) | **22 iterations** | −4499.85691 | 0.2829 μB, equal | 0.000° | 0.0127 | 3.21 | 0.685 eV |
 
 **Reading it:**
-- **Same family as MBT.** YIO's base stall (#17) follows the MBT pattern. PBE wanders with |m|abs creeping up:
-  YP 3.40, the patched restarts T1c/R1-R3 at 3.35-3.37, against the converged unpatched T1 at 3.32. LDA converges
-  in about 20 iterations.
-- **The mechanism here is different.** YIO keeps all 48 operations, enforced every iteration, so there is no layer
-  asymmetry to fall into. The drift has to happen inside the symmetric subspace: a symmetry-allowed noncollinear
-  texture rewarded by the GGA.
-- **What isn't established:** which part of the GGA does it. The PAW kink regularization (R1-R3) didn't help; the
-  smooth-grid `gradcorr` term was not touched.
+- **No spurious state in YIO.** YIO keeps all 48 operations, enforced every iteration, so there is no layer
+  asymmetry to fall into, and a fresh PBE start converges (YP, 80 iterations).
+- **The |m|abs trend was the patched functional's own value, not a drift.** The patched restarts (T1c, R1-R3,
+  3.35-3.37) were approaching YP's converged 3.39. The unpatched T1's 3.32 belongs to the buggy functional.
+- **So #17 is narrower than thought:** slow PBE convergence, and stalls when restarting from 207546's state. YP is
+  the first converged base on the segni-fixed binary and could replace 207546 for production (its NSCF has not been
+  run).
+- **LDA converges about 4× faster** (21-22 iterations), consistent with its noncollinear form being exact.
 - **LDA keeps the AIAO insulator at U = 3.** Four equal moments exactly along ⟨111⟩, 9% smaller than PBE, and a
   0.68 eV gap on the SCF mesh. For reference, PBE's 512-k NSCF gap was about 0.42 eV; the meshes differ.
 - **θ stays 0.** A trivial AIAO phase is what the project needs for YIO (memory `y2ir2o7-axion-phonon-goal`).
 
+**Decision test (started 2026-10-08 21:45).** NSCFs from identical production inputs (512 k, nosym, 300 bands)
+compare the eigenvalue symmetry floor and the full-mesh gap. Each folder has an `eig_symmetry_qe.py` with its
+settings (N_BANDS 164); results go here when done.
+- **PBE:** YP → `YP_pbe/nscf_from_210525/` (job 210587).
+- **LDA:** YL2 → `YL2_lda_relpz/nscf_from_210527/` (job 210588).
+
+**Literature:** the founding Y2Ir2O7 calculations (Wan, Turner, Vishwanath, Savrasov, PRB 83, 205101 (2011)) and later
+U scans use LSDA+U+SO. There, AIAO is a trivial insulator above U ≈ 1.8-2 eV. So LDA is the YIO literature's own
+method, and U = 3 sits in the trivial phase.
+
 **Caveat:** LDA+U at U = 3 is not PBE+U at U = 3. The YIO AIAO moment is non-monotonic in U, so if YIO moves to
-LDA, check the gap on the full NSCF mesh first. **Not decided:** whether YIO switches. YP was still running at
-15:25 on 10-08.
+LDA, check the gap on the full NSCF mesh first. **Not decided:** whether YIO switches. Since PBE does converge, there is no forcing reason; LDA would only buy
+speed and robustness.
+
+### 12.1 YIO PBE production set rebuilt on base YP (2026-10-08 22:05)
+
+**Nothing had been Wannierized from a converged base.**
+- **Base:** the only base Wannierization was 207546, the stalled SCF, about 1 mRy above YP's branch.
+- **Modes 1 and 3:** stage 1 only (`.mmn`/`.eig`, in place).
+- **Mode 2:** its stage 1 never ran; job 209381 died on a node without `/mnt/wkdk`.
+- **No mode stage 2** (rigid-shift `.amn` + `wannier90`) had ever run.
+
+**Branch check of the existing mode SCFs against YP** (all segni-fixed). Calibrated with the old same-binary pair
+(192344 base and its modes):
+
+| | old pair, E − base | current, E − YP | Ir \|m\| (YP 0.31021) |
+|---|---|---|---|
+| mode_1 (207547) | +1.674 mRy (192345) | +1.668 mRy | 0.31019 ✓ |
+| mode_2 (209040, restart chain) | +1.807 mRy (192346) | +1.947 mRy | 0.30653 ✗ |
+| mode_3 (207549) | unusable (192347 landed elsewhere) | +0.571 mRy | 0.30843 ? |
+
+**Rebuild:** every mode SCF was rerun **from YP's converged state**, so base and modes share one branch.
+- **Start:** `startingpot = 'file'`, with YP's density, ns and becsum in `tmp.tar.gz`.
+- **Settings:** YP's (Davidson, plain β 0.1). The NSCF runs with `-nk 8` in the same job.
+- **Folders and jobs:** `mode_X/fromYP_2026-10-08/`, jobs 210596-210598, all pw.x e270b05.
+- **Read before Wannierizing:** each mode's E − E(YP) should match the calibration column, and Ir |m| should be about
+  0.310.
+
+**Held Wannier chain** (`phonon/setup_w90_chain_YP.sh`):
+- **Rule:** every job that runs pw2wannier90 stages its NSCF save as `tmp.tar.gz` in its own submit folder and untars
+  it on the node. The Julia `.amn` code reads the base save untarred on the shared filesystem (CLAUDE.md cluster
+  practice).
+
+| step | jobs | waits on |
+|---|---|---|
+| base YP: tar the save into `w90_trial02_base/`, then gunzip the save in place | 210599 | NSCF 210589 |
+| base YP: `-pp` → pw2wannier90 `-nk 8` → wannier90 `-np 1` | 210600 | 210599 |
+| modes: tar each NSCF save into `w90_trial02_no-displacement/` | 210601 / 210603 / 210605 | mode reruns |
+| modes: `-pp` → Julia `generate_amn.jl --no-displacement` from YP's `.chk`/`.nnkp` + save → pw2wannier90 (mmn, eig) → wannier90 | 210602 / 210604 / 210606 | own prep and base 210600 |
+
+The jobs delete the unpacked `tmp` before copy-back. Superseded: the base Wannierization of 207546 and the in-place
+mode stage-1 folders.
+
+### 12.2 Branch check by forces (2026-10-08 23:00)
+
+**The check.** E_mode − E_base ≈ −½ (F_base + F_mode)·Δr, exact through third order, with Δr the Γ₂⁻ displacement.
+- **The base term drops out.** The base keeps inversion and Γ₂⁻ is odd, so F_base·Δr = 0, and the check is
+  ΔE ≈ −½ F_mode·Δr.
+- **No reference needed.** It doesn't rely on the old buggy-binary pair. A mismatch means the mode is in a different
+  self-consistent state from the base.
+
+**Hubbard forces work for this setup.** `force_hub.f90` refuses only these: projectors other than atomic or
+ortho-atomic, Hund's J, noncollinear with background states, and gamma_only with ortho-atomic. None apply. The run
+printed a "Hubbard contrib. to forces" term.
+
+**Base forces:** `YP_pbe/forces_2026-10-08`, job 210609. A short SCF from YP's state: 9 iterations to 9.4e-10 Ry,
+E = −4624.80821431, 0.8 μRy from YP.
+- **Pattern:** only the 12 O(48f) carry force, 0.01074 Ry/bohr (0.28 eV/Å) each along the free 48f coordinate; Y, Ir
+  and O(8b) are zero to 1e-8. The base is the unrelaxed experimental structure.
+- **Hubbard part:** −0.00176 Ry/bohr of each. SCF correction 1e-6.
+
+**Mode forces:** jobs 210611/210613/210615, each held on its rerun via a 1-slot prep job that tars the converged
+state.
 
 ## 13. Open
 
@@ -440,8 +561,9 @@ LDA, check the gap on the full NSCF mesh first. **Not decided:** whether YIO swi
    - **Revisit** if a benchmark comparison is needed.
 2. **MBT T2⁻ modes on LDA:** exact cell + Q·mode, same settings. These modes break the anti-translation physically,
    so in PBE no symmetric start could have protected them. That's the main reason for the switch.
-3. **YIO functional:** LDA converges (§12). Decide whether YIO switches, and check the full-mesh gap at LDA U = 3
-   first.
+3. **YIO:** PBE converges from scratch (YP, 210525), and LDA converges 4× faster. Choose: (a) make YP the PBE
+   production base (run its NSCF, then rerun the modes from fresh starts as needed), or (b) switch YIO to LDA.
+   Check the full-mesh gap first if switching.
 4. **A QE patch to enforce the anti-translation** (project charge onto even h+k+l, magnetization onto odd h+k+l, and
    pair-average ns/becsum). Not needed for LDA; would make PBE usable for the base only.
 5. **Cleanup:** C2 and B2 were killed 2026-10-08; their final outputs are kept as

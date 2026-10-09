@@ -35,7 +35,7 @@ QE scf -> nscf -> wannier90 -pp -> pw2wannier90 -> .amn .mmn .eig
    two Wannierisations must share a gauge or the finite difference in beta is
    noise: generate the displaced `.amn` from the *undisplaced* Wannier functions
    with Jae-Mo's rigid-shift tool, then run Wannier90 in the projection gauge
-   only. See [`../notes/rigid_shift.md`](../notes/rigid_shift.md).
+   only. See [`../notes/theory/rigid_shift.md`](../notes/theory/rigid_shift.md).
 3. **Write H(R) and A(R)** with `run_plot_stage.sh` (below). This is a
    `restart = plot` run from the existing `.chk`, so it needs no `.mmn` or `.amn`.
 
@@ -56,7 +56,7 @@ files in `RUN_DIR` are never touched.
 | `bands_plot`, `write_tb` = false | not needed, and they cost time and disk |
 
 Leave any one of the first four out and the result is a different, worse
-position matrix (see `notes/progress/2026-09-16_jaemo_rdat_production_closure.md`).
+position matrix (see `notes/log/2026-09-16_jaemo_rdat_production_closure.md`).
 Disk: about 6 GB per structure for 176 Wannier functions.
 
 ## Check what you wrote
@@ -78,4 +78,4 @@ assignment (`ws_pair_consistency`); that number is information, not a failure.
 Wannier90 picks the Wigner-Seitz images per run from that run's own centres, so a
 displaced structure can spread a tied hopping differently from the base. This is
 measured, present in the older `.mmn` route too, and its effect on dtheta is not
-yet known: `../notes/progress/2026-09-20_jaemo_ndegen_yio_mode1.md`.
+yet known: `../notes/log/2026-09-20_jaemo_ndegen_yio_mode1.md`.

@@ -6,13 +6,13 @@ The production code follows the same boundaries as the derivation:
 
 | derivation object | code |
 |---|---|
-| Wannier inputs: the $H(R)/A(R)$ pair as `_hr.dat` / `_r.dat` | [`wannier/`](../wannier/README.md) (stage 1); PythTB reads the files |
-| $A$, $\operatorname{curl}\Omega$, the $d$ matrix, and full $\Omega$ | [`modules/curvature.py`](../modules/curvature.py) |
-| $c_2$ and the BZ integral $\mathrm{d}\theta/\mathrm{d}\beta$ | [`modules/axion.py`](../modules/axion.py) |
-| Y2Ir2O7 calculation choices | [`calculations/run_axion.py`](../calculations/run_axion.py) |
+| Wannier inputs: the $H(R)/A(R)$ pair as `_hr.dat` / `_r.dat` | [`wannier/`](../../wannier/README.md) (stage 1); PythTB reads the files |
+| $A$, $\operatorname{curl}\Omega$, the $d$ matrix, and full $\Omega$ | [`modules/curvature.py`](../../modules/curvature.py) |
+| $c_2$ and the BZ integral $\mathrm{d}\theta/\mathrm{d}\beta$ | [`modules/axion.py`](../../modules/axion.py) |
+| Y2Ir2O7 calculation choices | [`calculations/run_axion.py`](../../calculations/run_axion.py) |
 
 The position-matrix algebra lives in
-[`modules/curvature.py`](../modules/curvature.py). The construction reproduces pythtb's
+[`modules/curvature.py`](../../modules/curvature.py). The construction reproduces pythtb's
 `TBModel._berry_curvature_external` ($B^X+B^E$, validated against postw90's
 $J_0+J_1$) and adds the mixed $(k,\beta)$ planes for the adiabatic phonon
 coordinate.
@@ -41,7 +41,7 @@ $$
 $$
 
 In code this contraction is owned by
-[`axion.c2_density` and `axion.dtheta`](../modules/axion.py),
+[`axion.c2_density` and `axion.dtheta`](../../modules/axion.py),
 
 ```python
 c2_density[:, beta] = einsum("ijkl,ij...mn,kl...nm->...", epsilon, Omega, Omega) / (16*pi)
@@ -61,7 +61,7 @@ $$
 \boxed{\;\Omega_{\mu\nu} = \Omega^{\text{int}}_{\mu\nu} + \Omega^{\text{ext}}_{\mu\nu}\;}
 $$
 
-and [`curvature.omega`](../modules/curvature.py) sums the pieces
+and [`curvature.omega`](../../modules/curvature.py) sums the pieces
 (`omega_internal + omega_cross + omega_external`).
 
 ---
@@ -78,7 +78,7 @@ $$
 = i\sum_c \frac{v_{\mu,mc}\,v_{\nu,cn} - v_{\nu,mc}\,v_{\mu,cn}}{D_{mc}\,D_{nc}}.
 $$
 
-In code ([`curvature.connection` and `omega_internal`](../modules/curvature.py)) this is formed from the
+In code ([`curvature.connection` and `omega_internal`](../../modules/curvature.py)) this is formed from the
 conduction–occupied "velocity over gap" block
 
 $$
@@ -94,7 +94,7 @@ extra diagonalization.
 
 For $\mu$ or $\nu=\beta$, the velocity is the finite-difference of the two
 Wannierized Hamiltonians
-([`axion.beta_terms`](../modules/axion.py)):
+([`axion.beta_terms`](../../modules/axion.py)):
 
 $$
 v_\beta = \partial_\beta H \approx \frac{H_{\text{mode}} - H_{\text{base}}}{d_\beta}.
@@ -133,7 +133,7 @@ X^{I}_a(R) = \frac{1}{\deg(R)}\cdot\tfrac12\Big(X_a(R) + X_a(-R)^\dagger\Big),
 $$
 
 with $\deg(R)$ the Wigner–Seitz degeneracy. Two $k$-space fields are built from
-it by Bloch summation ([`curvature.fields`](../modules/curvature.py)):
+it by Bloch summation ([`curvature.fields`](../../modules/curvature.py)):
 
 ### (a) External Berry connection (a one-form, $N\times N$ per axis)
 
@@ -143,7 +143,7 @@ e^{\,2\pi i\,k\cdot(\tau_m-\tau_n)},
 $$
 
 where the last factor is the convention-I intra-cell phase
-([`curvature.fields`](../modules/curvature.py)). It is then converted to **reduced**
+([`curvature.fields`](../../modules/curvature.py)). It is then converted to **reduced**
 one-form components with the reciprocal-lattice matrix $B$
 with the stored one-form transform:
 $A_u^{\text{red}} = B_{ua}\,A_a$.
@@ -151,7 +151,7 @@ $A_u^{\text{red}} = B_{ua}\,A_a$.
 ### (b) External curl $\bar\Omega(k)$ (a two-form, dual components $g=(yz,zx,xy)$)
 
 Using the Cartesian bond vectors $b_{nm}(R) = R + \tau_m - \tau_n$
-([`curvature.position_terms`](../modules/curvature.py)), define the $k$-independent curl weights
+([`curvature.position_terms`](../../modules/curvature.py)), define the $k$-independent curl weights
 
 $$
 W_g(R) = i\big(b_\alpha\, X^{I}_\beta - b_\beta\, X^{I}_\alpha\big),
@@ -169,7 +169,7 @@ The dual components of this antisymmetric two-form convert to reduced axes with
 the **cofactor** matrix $M = \det(B)\,B^{-\top}$, not with $B$ itself.
 
 Both fields are returned by `curvature.fields(model, pos, k)` in the Wannier gauge;
-[`curvature.connection`](../modules/curvature.py) supplies the eigenvectors $U$ and
+[`curvature.connection`](../../modules/curvature.py) supplies the eigenvectors $U$ and
 rotates them to the Hamiltonian gauge, $a = U^\dagger A\,U$ and
 $\bar\omega = U^\dagger \bar\Omega\,U$.
 
@@ -180,7 +180,7 @@ $\bar\omega = U^\dagger \bar\Omega\,U$.
 With the rotated connection $a_\mu$ (blocks $a^{co}$ = conduction–occupied,
 $a^{oo}$ = occupied–occupied) and the rotated curl $\bar\omega$, the external
 curvature for a $k$–$k$ plane $(\mu,\nu)$ is assembled by
-[`omega_cross` and `omega_external`](../modules/curvature.py):
+[`omega_cross` and `omega_external`](../../modules/curvature.py):
 
 $$
 \Omega^{\text{ext}}_{\mu\nu} = B^X_{\mu\nu} + B^E_{\mu\nu}.
@@ -206,7 +206,7 @@ The result is antisymmetrized, $\Omega^{\text{ext}}_{\nu\mu} = -\Omega^{\text{ex
 Adding $B^X+B^E$ to $\Omega^{\text{int}}$ reproduces pythtb's
 `berry_curvature(include_external=True, non_abelian=True)` and postw90's
 $J_0+J_1$ (checked by
-[`check_vs_pythtb.ipynb`](../validation/external_curvature/check_vs_pythtb.ipynb)).
+[`check_vs_pythtb.ipynb`](../../validation/external_curvature/check_vs_pythtb.ipynb)).
 
 ---
 
@@ -224,7 +224,7 @@ because the trial orbitals are held fixed (the rigidly-shifted base MLWFs) — t
 $\beta$ dependence enters only through $H$ and through the $k$-connection, not
 through a new position matrix along $\beta$. The mixed curl is then supplied by
 the $\beta$-derivative of the $k$-connection
-([`axion.beta_terms`](../modules/axion.py)):
+([`axion.beta_terms`](../../modules/axion.py)):
 
 $$
 \bar\Omega_{i,\beta} = -\,\partial_\beta A_i,
@@ -234,8 +234,8 @@ $$
 $$
 
 computed once per $k$-batch and shared between the two $\beta$ endpoints by
-[`axion.dtheta`](../modules/axion.py). With $a_\beta=0$, the cross and curl
-terms collapse to, inside [`omega_cross` and `omega_external`](../modules/curvature.py):
+[`axion.dtheta`](../../modules/axion.py). With $a_\beta=0$, the cross and curl
+terms collapse to, inside [`omega_cross` and `omega_external`](../../modules/curvature.py):
 
 $$
 B^X_{i\beta} = i\Big[\big(-i\,a_i^{co}\big)^{\!\dagger} d_\beta^{co}
