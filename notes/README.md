@@ -315,7 +315,7 @@ earlier [`log/2026-10-08_mbt_noncollinear_gga_lda.md`](log/2026-10-08_mbt_noncol
 Outside `notes/`:
 - [`../references/`](../references/README.md): the PDFs (literature and David's handwritten notes).
 - [`meetings/`](meetings/): one file per group meeting.
-- [`../validation/README.md`](../validation/README.md): the check suite.
+- [`../tests/README.md`](../tests/README.md): the test suite. The older notebook suite (old code only): [`../archive/validation/`](../archive/validation/README.md).
 - [`../archive/calculations_README.md`](../archive/calculations_README.md): how the drivers and analysis notebooks are run.
 - `../data/` (not in git): the runs. Y2Ir2O7 is reorganized (2026-10-13): `base/{lda,pbe}/`,
   `phonon/GM2-/mode*/Q_0.01A/{lda,pbe}/`, superseded runs in `archive/` with a README; the run table is in

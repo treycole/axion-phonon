@@ -4,7 +4,7 @@ Since 2026-10-30 (restructure, `notes/restructure/design.md`) the production cod
 in the order the calculation runs, and one script per cluster step, `pipeline/`. The physics files never open a file:
 `axion_phonon/io/` reads QE and Wannier90 files into arrays, and the physics takes and returns arrays. The old
 `modules/`, `wannier/`, `run_axion.py` and the dated diagnostics are in `archive/` (its README; `axion_phonon`
-reproduces them, `validation/restructure/`).
+reproduces them, `archive/validation/restructure/`).
 
 ```text
 axion_phonon/
@@ -81,10 +81,14 @@ spread is not a validity check.
 
 ## Verification
 
-* `validation/unit/` (pytest, no data): curvature covariance and (38) = (39) (`test_curvature.py`); tube quadrature,
-  fold, b-shell weights, `.amn` layout (`test_axion_phonon_core.py`); PAW pieces (`test_axion_phonon_paw.py`).
-* `validation/restructure/`: the new package against the code that made the current numbers: PAW overlaps 0.0; H(k)
+* `tests/` (pytest; `tests/README.md`). `unit/` (no data): curvature covariance and (38) = (39) (`test_curvature.py`);
+  tube quadrature, fold, b-shell weights, `.amn` layout (`test_axion_phonon_core.py`); PAW pieces
+  (`test_axion_phonon_paw.py`); `tube.integrate_at` (`test_tube.py`). On the production runs in `data/`: H(R) and
+  A(R) on and off the mesh (`inputs/`), our curvature against PythTB's and the mixed k-beta assembly by hand, the
+  curvature against the `.chk` Wilson-loop fluxes (`curvature/`), the MBT and YIO magnetic point groups
+  (`symmetry/`), and the MBT dθ claims (window edges, k convergence; `mbt/`).
+* `archive/validation/restructure/`: the new package against the code that made the current numbers: PAW overlaps 0.0; H(k)
   6e-16, A(k) identical, c2 4e-14 (complex128); production precision vs the cluster's c2 1.7e-6; Chern-Simons θ;
   the pipeline's job drivers and its dry run.
-* The other `validation/` notebooks (external codes, symmetry, Born charge) were written against the old code and run
-  against `archive/code` (`validation/_paths.py`); they validate the same curvature code.
+* The other notebooks of `archive/validation/` (archived 2026-10-31) were written against the old code and run
+  against `archive/code` (`_paths.py` there); the checks that still bear on production are ported to `tests/`.

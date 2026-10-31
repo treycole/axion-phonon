@@ -59,8 +59,10 @@ Read in this order before touching code on an unfamiliar part of this repo:
    `paw.py` the mode `.amn`; `wannier.py` H(R), A(R), the shared fold → PythTB models; `curvature.py` Omega;
    `axion.py` β terms and c2; `tube.py` the k list; `chern_simons.py` the 3-form check), a function ↔ equation
    table, and `pipeline/` (the cluster steps).
-3. **[`validation/README.md`](validation/README.md)** — the check suite.
-   Every check is a Jupyter notebook (`.ipynb`), run cell-by-cell with the
+3. **[`tests/README.md`](tests/README.md)** — the test suite (pytest): `axion_phonon` unit tests and checks of the
+   production results (symmetry, k convergence). The older check suite, which runs only on `archive/code`, is
+   [`archive/validation/README.md`](archive/validation/README.md).
+   Every check there is a Jupyter notebook (`.ipynb`), run cell-by-cell with the
    `axion` conda kernel; `RUN_COMPUTATION = False` (default) reloads the last
    saved run from `results/<check>/` instead of recomputing.
 4. **The user's conventions** (`pipeline/README.md`, `analysis/`): every script and
@@ -74,7 +76,7 @@ Read in this order before touching code on an unfamiliar part of this repo:
 `analysis/figures/` the paper figures), `setup/` (notebooks that build structures and QE inputs), `qe_patches/`,
 `archive/` (the old `modules/`, `wannier/`, `run_axion.py`, the dated `diagnostics/`; README there), `data/`
 (git-ignored: the QE/Wannier90 runs and everything computed from them),
-`validation/` (the check suite), `notes/` (status, theory, bugs, investigation log, per-material
+`tests/` (the test suite; the older notebook suite is `archive/validation/`), `notes/` (status, theory, bugs, investigation log, per-material
 setup), `references/` (PDFs: literature and David's notes), `meetings/`, `paper/` (the writeup; its
 numbers are in flux until the reruns).
 
@@ -83,7 +85,7 @@ numbers are in flux until the reruns).
 Use the `axion` conda env (`conda activate axion`) for everything that
 touches Wannier data — it has pythtb on the **`external`** branch (needed for
 `W90.pos_r`/`_pos_r`; `main` and other topic branches raise `no '_pos_r'`),
-plus scipy, matplotlib, nbformat/nbclient/nbconvert. `validation/unit`
+plus scipy, matplotlib, nbformat/nbclient/nbconvert. `tests/unit`
 (pytest) is the only part of this repo that doesn't need it.
 
 ## The eight things that cause the most silent wrong answers
@@ -186,5 +188,5 @@ plus scipy, matplotlib, nbformat/nbclient/nbconvert. `validation/unit`
 
 If you hit a curvature discrepancy that isn't one of these, check
 `notes/theory/decomposition.md`'s 13-point validation checklist and
-which `validation/` notebook covers each point before assuming new code is
+which test in `tests/` (or, for the old code, notebook in `archive/validation/`) covers each point before assuming new code is
 wrong.

@@ -67,3 +67,16 @@ def integrate(c2: np.ndarray, kl: dict) -> tuple[list, list, np.ndarray]:
                 continue
             table[a, b] = ((c2[out] * h ** 2).sum(0) + (c2[box] * (h / lv) ** 2).sum(0)).real / n3
     return levels, n3s, table
+
+
+def integrate_at(c2: np.ndarray, kl: dict, m: int, n3: int, half: int) -> np.ndarray:
+    r"""dtheta at in-plane level ``m``, ``n3`` planes and box half-width ``half`` <= kl["half"]: ``integrate`` with
+    the box cut to the cells within ``half`` of the tube; beyond it, a cell keeps only its level-1 point (its corner,
+    the coarse point) with weight h^2. On the list of klist(nk, m, half, n3) this is ``integrate``'s (m, n3) entry.
+    """
+    h = 1.0 / int(kl["nk"])
+    on = kl["plane"] % (int(kl["n3"]) // n3) == 0
+    inside = kl["cell"] <= half
+    coarse = on & ((kl["level"] == 0) | (~inside & (kl["level"] == 1)))
+    box = on & inside & (kl["level"] >= 1) & (kl["level"] <= m)
+    return ((c2[coarse] * h ** 2).sum(0) + (c2[box] * (h / m) ** 2).sum(0)).real / n3

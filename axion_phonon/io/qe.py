@@ -161,6 +161,27 @@ def fermi_energy(path: str | Path) -> float:
     return value
 
 
+def read_symmetry(path: str | Path) -> dict:
+    """The symmetry operations a pw.x output lists (verbosity 'high'): ``names`` (QE's description), ``cart``
+    (n, 3, 3) the Cartesian rotation matrices, ``time_reversal`` (n,) bool (QE's 'Time Reversal 1': the operation is
+    combined with time reversal), ``fractional`` (n,) bool (it carries a fractional translation), and
+    ``translations_disabled`` (QE's 'fractional translations are disabled', e.g. for a supercell)."""
+    text = Path(path).read_text()
+    if "Sym. Ops." not in text:
+        raise ValueError(f"{path}: no symmetry listing (run pw.x with verbosity = 'high')")
+    block = text.split("Sym. Ops.")[1].split("Cartesian axes")[0]
+    names, cart, trev, frac = [], [], [], []
+    for entry in re.split(r"\n\s+isym =", block)[1:]:
+        names.append(entry.split("\n")[0].split(None, 1)[1].strip())
+        found = re.search(r"Time Reversal\s+(\d)", entry)
+        trev.append(bool(int(found.group(1))) if found else False)
+        rows = re.findall(r"\(\s*(\S+)\s+(\S+)\s+(\S+)\s*\)", re.split(r"\n\s*cart\.\s+s\(", entry)[1])[:3]
+        cart.append(np.array(rows, float))
+        frac.append("f =(" in entry)
+    return dict(names=names, cart=np.array(cart), time_reversal=np.array(trev), fractional=np.array(frac),
+                translations_disabled="fractional translations are disabled" in text)
+
+
 def read_kpath(path: str | Path) -> tuple[np.ndarray, list]:
     """Reduced k points (nk, 3) and [(index, label)] of a pw.x input's ``K_POINTS crystal_b`` path (labels after
     ``!``), expanded exactly as pw.x lists them in the bands output."""

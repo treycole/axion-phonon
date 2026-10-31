@@ -5,6 +5,7 @@ draft/
 validation/
 studies/
 scripts/
+notes/
 
 # ignore tmp directories, too big for GitHub
 tmp/

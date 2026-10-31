@@ -1,0 +1,56 @@
+Here
+   CSG = crystallographic space group
+   CPG = crystallographic point group
+   MSG = magnetic space group
+   MPG = magnetic point group
+   UMPG = unitary subgroup of magnetic point group
+
+-----------------------------------------------------
+Pyrochlore
+-----------------------------------------------------
+In the high-symmetry reference structure,
+  CSG Fd\bar{3}m  (227)       CPG m\bar{3}m
+  MSG Fd\bar{3}m' (227.131)   MPG m\bar{3}m'   UMPG m\bar{3}
+
+  The point symmetry of the Ir (Wyckoff 16c) atom is
+     CPG \bar{3}m   (no free params)
+     MPG \bar{3}m'
+
+After the distortion, the reduced symmetry is
+  CSG F\bar{4}3m   (216)
+  MSG F\bar{4}'3m' (216.76)
+
+  The point symmetry of the Ir (Wyckoff 16e) atom is
+     CPG 3m         (one free param)
+     MPG 3m'
+
+The A_2u = GM2- modes are the ones leading to this symmetry
+reduction.  SMODES determines that there are 3 A_2u modes:
+  1 Ir
+  1 Y
+  1 O
+
+-----------------------------------------------------
+MBT
+-----------------------------------------------------
+In the high-symmetry reference structure,
+  CSG R\bar{3}m   (166)       CPG \bar{3}m
+  MSG R\bar{3}m'  (166.???)   MPG \bar{3}m'   UMPG \bar{3}
+
+  The point symmetry of the Mn (Wyckoff ???) atom is
+     CPG \bar{3}m   (no free params)
+     MPG \bar{3}m'
+
+After the distortion, the reduced symmetry is
+  CSG R3m   (???)
+  MSG R3m'  (???.??)
+
+  The point symmetry of the Mn (Wyckoff ???) atom is
+     CPG 3m         (one free param)
+     MPG 3m'
+
+The A_?? = ???- modes are the ones leading to this symmetry
+reduction.  SMODES determines that there are 4 A_2u modes:
+  1 Mn
+  1 Bi
+  2 Te  ?????
