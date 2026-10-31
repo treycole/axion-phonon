@@ -26,5 +26,13 @@ New note: name it `YYYY-MM-DD_<topic>.md`, open with a "Bottom line", and add on
 | 10-06 | [segni_fix_validated_and_reruns](2026-10-06_segni_fix_validated_and_reruns.md) | Patch validated (4.83 meV → 46 μeV); how the bug works; production reruns submitted | #16 |
 | 10-07 | [validation_methods_and_nk10_mesh](2026-10-07_validation_methods_and_nk10_mesh.md) | How every symmetry check is done; a 10³ mesh makes the floor worse, not better | #16, #17 |
 | 10-08 | [mbt_noncollinear_gga_lda](2026-10-08_mbt_noncollinear_gga_lda.md) | Noncollinear PBE has a spurious MBT state; **MBT moves to LDA+U**; YIO PBE base converges from a fresh start | #17, #18 |
+| 10-11 | [production_binary_ws_cleanup](2026-10-11_production_binary_ws_cleanup.md) | pw.x `db4b99b4` production (k lists unchanged except MBT T₂⁻); WS tolerance 5e-3; MBT per-WF centres break C3 (pinned fixes); YIO symmetry table; cleanup plan | #13, #19, #21 |
+| 10-12 | [yio_lda_modes](2026-10-12_yio_lda_modes.md) | YIO LDA modes 1-3 converged (E vs F within 1%, 24 ops); base windows sit in gaps of every mode NSCF; mode Wannier chain | #22 |
+| 10-14 | [chern_simons_theta](2026-10-14_chern_simons_theta.md) | MBT θ = π (parities); the old SCDM 3-form was singular at Γ. Exact-connection CS 3-form reproduces YIO dθ/dQ (c₂) to ≤ 0.25% for all three modes at nk 10; frozen gauge ≲ 0.3% | — |
+| 10-14 | [mbt_t2m_dynmat](2026-10-14_mbt_t2m_dynmat.md) | MBT T₂⁻ 4×4 dynamical matrix (LDA+U, F − F(0)): 78 / 124 / 140 cm⁻¹; lowest mode = rigid antiphase septuple-layer (interlayer) motion, unresolved (−20 ± 13 cm⁻¹) | — |
+| 10-15 | [mbt_rigid_layer_mode](2026-10-15_mbt_rigid_layer_mode.md) | Rigid-layer SCFs 213463/213464 (Q 0.03/0.05 Å): soft T₂⁻ mode stable at **18.0 cm⁻¹**, E ∝ Q² to 0.1%, E vs F 0.5%; Q = 0.01 runs had the wrong sign along c. Basis reruns 213555-213558 (Q 0.03 Å, conv_thr 1e-10): E/F 1.000-1.001 (Mn 1.24 was SCF noise), **17.8 / 82.7 / 128.7 / 143.3 cm⁻¹** from forces alone, rigid check 2% in stiffness | — |
+| 10-16 | [mbt_interlayer_stiffness](2026-10-16_mbt_interlayer_stiffness.md) | Corrected two-gap counting: K_gap = k_Q/8, about 2.9–3.0 × 10¹⁹ N/m³; phonon frequencies unchanged. Roughly half the experimental chain-model stiffness, close to earlier DFT quoted by Bartram et al. | — |
+| 10-17 | [yio_amplitude_series](2026-10-17_yio_amplitude_series.md) | YIO Γ₂⁻ E(Q), F(Q), θ(Q) series: 3 basis modes × 0.01/0.02/0.03/0.05 Å at conv_thr 1e-10 + base (213998-214010) | — |
+| 10-24 | [cluster_cleanup_plan](2026-10-24_cluster_cleanup_plan.md) | Cluster inventory (10.9 TB): what to delete (superseded, ~4.3 TB), what to slim to outputs (~3.1 TB), production decisions (~1.5 TB) | — |
 
 All dates are 2026.

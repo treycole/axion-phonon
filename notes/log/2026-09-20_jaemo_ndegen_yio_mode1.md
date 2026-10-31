@@ -129,7 +129,7 @@ real-space half of the equivariant phase, `exp(−i b·R/2)`, *per b, at the fin
 expanded lattice vector* ("has to be evaluated at the final lattice vector").
 Here `b = ±G_i/8` and images of a class differ by `L = 8n`, so the factor
 differs by `(−1)^{n_i}` between images. Checked on the base
-(`calculations/diagnostics/2026-09-20_ndegen_pair/image_structure_check.py`):
+(`archive/diagnostics/2026-09-20_ndegen_pair/image_structure_check.py`):
 
 | | `H(R)` | `A(R)` |
 |---|---|---|
@@ -184,7 +184,7 @@ Open, in order of cost:
 ## Regression of the rewritten code (`curvature.py`, `axion.py`)
 
 The same `jaemo/` pair, run through the new three-stage code
-(`calculations/run_axion.py`, complex64, numpy in place of
+(`archive/code/run_axion.py`, complex64, numpy in place of
 TensorFlow, frozen gauge) against the saved results above:
 
 | | new | old | relative difference |
@@ -200,7 +200,7 @@ nk=4 and 6 took 240 s and 7.0 GB.
 
 Independent check of the k planes against PythTB's own
 `berry_curvature(non_abelian=True)` on the real base structure (176 WF, 156
-occupied, six generic k-points, `calculations/diagnostics/2026-09-20_ndegen_pair/check_curvature_vs_pythtb.py`):
+occupied, six generic k-points, `archive/diagnostics/2026-09-20_ndegen_pair/check_curvature_vs_pythtb.py`):
 `omega_internal` equals its internal curvature, and `omega_cross + omega_external`
 equals its `include_external=True` minus `False`, on all three planes to 3.6e-16
 relative, comparing band traces and Frobenius norms (the matrices sit in the
@@ -210,7 +210,7 @@ analytic moving-frame tests and the regression above.
 
 ## Reproducing
 
-Scripts are in `calculations/diagnostics/2026-09-20_ndegen_pair/`
+Scripts are in `archive/diagnostics/2026-09-20_ndegen_pair/`
 (`ws_pair_calibration.py`, `refold_driver.py`, `image_structure_check.py`); run
 with the `axion` env. Unit tests: `validation/unit/test_ndegen_pair_checks.py`.
 The two `jaemo/` directories hold ~6 GB each and the disk was at 97% when they

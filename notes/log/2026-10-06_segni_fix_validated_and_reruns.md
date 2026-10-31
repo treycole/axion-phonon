@@ -18,7 +18,7 @@ the `lsign` guard. This note covers four things:
 - **Binary:** `pw.x` md5 **`e270b05b9424b3dca8145a4b84f26be4`**. The production `~/q-e` (`c41c409`) is
   unchanged.
 - **Files:** the patch and the build/submit script are in
-  `calculations/diagnostics/2026-10-05_ws_tolerance_window/qe_segni_patch/`.
+  `archive/diagnostics/2026-10-05_ws_tolerance_window/qe_segni_patch/`.
 
 **Validation: run C2** (job 205711). It's identical to test C (193145 fixed SCF save, the same 60 k,
 byte-identical `nscf.in`) except for the patched binary. Full-precision eigenvalues come from each run's
@@ -271,7 +271,7 @@ iterations.
   iterations 41-47.
 - **Then a period-2 oscillation:** accuracy alternated 5e-5 / 1.9e-4 Ry, and the total energy flipped by 1.2e-4 Ry
   every step.
-- **Diagnosis** (`calculations/diagnostics/2026-10-05_ws_tolerance_window/scf_oscillation.py`): the oscillation is
+- **Diagnosis** (`archive/diagnostics/2026-10-05_ws_tolerance_window/scf_oscillation.py`): the oscillation is
   in the **Ir Hubbard occupations**. Tr ns↑ and ns↓ swing by ~2e-4 and the Hubbard moment by 4e-4, about 7× the
   noise. The charges and integrated moments of all atoms (Ir, Y, both O types) do not oscillate.
 - **Secondary signal:** CG "eigenvalues not converged" warnings went from about 0.5 to 3 per iteration in the

@@ -1,10 +1,16 @@
 # #13 — Wigner–Seitz tie tolerance too tight (1e-5 Å)
 
-> **Status: PARTIALLY FIXED.**
+> **Status: FIXED for YIO (2026-10-11):** `_DEFAULT_WS_DISTANCE_TOLERANCE = 5e-3` Å (`wannier/position_matrix.py:501`,
+> user OK). On the clean YIO DFT (212615/212616) the near-ties reach 1.68e-3 / 1.72e-3 Å and the next excess is
+> 2.23e-2 / 2.13e-2 Å, so 5e-3 sits in an empty gap (`tie_window_check.py`). LDA 212615 at 5e-3: external
+> 17.8% → 0.13%, total 0.68% → 0.52% (median). **MnBi2Te4 has no such gap:** its per-WF centres are not covariant
+> under C3, which no tolerance fixes; see [#21](21_mbt_wf_centres_not_c3_covariant.md).
+>
+> Earlier status: PARTIALLY FIXED.
 > - **2026-09-30:** `_DEFAULT_WS_DISTANCE_TOLERANCE` raised from 1e-5 to **1e-3 Å**
 >   (`wannier/position_matrix.py:501`).
 > - **2026-10-05:** the physically allowed range was found to be **[2.05e-3, 2.12e-2) Å**. 1e-3 is just below
->   it. **5e-3 recommended, not yet applied**; dθ was measured at 1e-3 on 09-30 (pre-segni DFT): mode 1 −0.01856/−0.01864, mode 2 +0.04387/+0.04558, mode 3 +0.1697/+0.1787 rad/Å at nk 12, `right_centre_from_chk`, shared WS. The tolerance was confirmed 2026-10-07 by rebuilding the base gap (matches 1e-3 to 1e-7 eV, not 1e-5). Not yet measured at 5e-3. **With Jae-Mo's formula (`transl_inv_full_from_chk`, shared WS; 2026-10-07), 1e-5 → 1e-3:** mode 1 −0.01752/−0.01761 → −0.01753/−0.01760, mode 2 +0.04593/+0.04758 → +0.04517/+0.04668, mode 3 +0.1684/+0.1775 → +0.1689/+0.1779 rad/Å. The tolerance moves dθ by ≤ 2%; the formula choice (tif vs right_centre) moves it up to 6%. Outputs `nk_sweep_tif_shared_ws_tol1e-3/` and (mode 2) `nk_sweep_tif_shared_ws_tol1e-5/`; logs `calculations/diagnostics/2026-10-05_ws_tolerance_window/dtheta_old_tif_*.log`.
+>   it. **5e-3 recommended, not yet applied**; dθ was measured at 1e-3 on 09-30 (pre-segni DFT): mode 1 −0.01856/−0.01864, mode 2 +0.04387/+0.04558, mode 3 +0.1697/+0.1787 rad/Å at nk 12, `right_centre_from_chk`, shared WS. The tolerance was confirmed 2026-10-07 by rebuilding the base gap (matches 1e-3 to 1e-7 eV, not 1e-5). Not yet measured at 5e-3. **With Jae-Mo's formula (`transl_inv_full_from_chk`, shared WS; 2026-10-07), 1e-5 → 1e-3:** mode 1 −0.01752/−0.01761 → −0.01753/−0.01760, mode 2 +0.04593/+0.04758 → +0.04517/+0.04668, mode 3 +0.1684/+0.1775 → +0.1689/+0.1779 rad/Å. The tolerance moves dθ by ≤ 2%; the formula choice (tif vs right_centre) moves it up to 6%. Outputs `nk_sweep_tif_shared_ws_tol1e-3/` and (mode 2) `nk_sweep_tif_shared_ws_tol1e-5/`; logs `archive/diagnostics/2026-10-05_ws_tolerance_window/dtheta_old_tif_*.log`.
 
 **Found:** 2026-09-30, refined 2026-10-05. **Affects:** the in-house folds of H(R) and A(R)
 (`_map_R_by_orbital_positions`), used by every `.mmn`/`.chk` route.
@@ -52,4 +58,4 @@ What remained at 5e-3 on the rotations (~1.5%) was **not** tie-breaking. It was 
 - **The window is base's:** shared-centre pairs fold the mode on base's centres, so it should carry over.
 
 **Sources:** [`../log/2026-10-05_yio_ws_tolerance_full_group.md`](../log/2026-10-05_yio_ws_tolerance_full_group.md);
-scripts in `calculations/diagnostics/2026-09-29_centre_symmetrization/` and `.../2026-10-05_ws_tolerance_window/`.
+scripts in `archive/diagnostics/2026-09-29_centre_symmetrization/` and `.../2026-10-05_ws_tolerance_window/`.

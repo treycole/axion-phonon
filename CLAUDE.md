@@ -21,17 +21,25 @@ software readme.
 ## Cluster practices
 
 - When a file is stale in the cluster, and has large size, delete it. If we don't need it, we don't need to keep it. The cluster should be at less the 2 TB of data.
-- We need one good DFT run per structure (undistorted and each distortion from the phonon modes for MBT and YIO). In this ouput folder should be a tmp.tar.gz for Quantum ESPRESSO restarts and pw2wannier.x. There should be an untarred tmp/ folder for the Julia code that generates the .amn of the distorted structure. There should be one .mmn per DFT run, since it doesn't depend on trial wave functions. Extra copies of these files should not be kept around.
+- We need one good DFT run per structure (undistorted and each distortion from the phonon modes for MBT and YIO). Its NSCF folder keeps one untarred `tmp/<prefix>.save` (for pw2wannier90 and the PAW overlaps of step 4), no `tmp.tar.gz` (agreed 2026-10-29). There should be one .mmn per DFT run and mesh, since it doesn't depend on trial wave functions. Extra copies of these files should not be kept around.
+- New runs go through `pipeline/` (one script per step, `pipeline/README.md`): run a step on the login node, wait for `OK` in its folder, run the next. Nothing is queued behind a step that has not succeeded.
 - Be sure that we are using the correct versions of Quantum ESPRESSO and Wannier90. The cluster has a few different versions of QE and Wannier90, and we need to be sure that we are using the correct ones. The correct versions are:
-  - Quantum ESPRESSO 7.6.0 (with the patch for the new_ns_nc bug and with the PAW initialization bug fixed); for Y2Ir2O7 also the PAW segni/`lsign` fix (bug #16): cluster `~/q-e-segnifix`, pw.x md5 `e270b05b`. MnBi2Te4 runs use the same binary.
-  - Wannier90 3.1.0 (with the patch for the rdat_ndegen_applied bug)
+  - Quantum ESPRESSO 7.6.0 develop with every fix found here: new_ns_nc (#7), PAW `v_rad` initialization (#12, upstream), PAW segni/`lsign` (#16), `irreducible_BZ` time-reversal unfold (#19). Cluster `~/q-e-kfix`, pw.x md5 **`db4b99b4`**, branch `production/axion-phonon` (fa9b19c8f) in `~/Repos/q-e` and on the GitLab fork. All new runs, MnBi2Te4 and Y2Ir2O7 (since 2026-10-11). The previous binary `e270b05b` (`~/q-e-segnifix`) gives identical k lists for YIO and the MBT base, so runs made with it stay valid, except MBT T2⁻ modes (#19).
+  - Wannier90 4.0.3 (develop v4.0.1-160-gc4a924a5): cluster `~/wannier90-dev`, wannier90.x md5 **`26c8b506`**; every
+    production `.wout` says "Release: 4.0.3". Projection only (`num_iter = 0`, `dis_num_iter = 0`), `mpirun -np 1`.
+    A(R) is rebuilt from the `.chk` in Python, so Jae-Mo's `rdat_ndegen_applied` binary is not used in production.
+  - Frozen copies of both, and the pseudopotentials, are in `/mnt/wkdk/bc889/axion/{bin,pseudo}/` with `MD5SUMS`;
+    job scripts call them by absolute path, print `md5sum $BIN/pw.x`, and set `-l hostname=!n138`.
 - **Functionals (since 2026-10-08):**
-  - **MnBi2Te4: LDA+U**, U = 4 eV on Mn 3d, `rel-pz` PAW. Base: `MnBi2Te4/base/soc_lda/u_4.0/` (job 209653).
+  - **MnBi2Te4: LDA+U**, U = 4 eV on Mn 3d, `rel-pz` PAW. Production base: `MnBi2Te4/base/` (SCF + NSCF 214290,
+    Wannier 214300); layout and every run in `MnBi2Te4/README.md` (cluster and `data/`, same tree since 2026-10-30).
   - **Pseudopotentials:** Mn `spn` 0.3.1 and Bi `dn` 1.0.0 are the official pslibrary files. Te `rel-pz-n` 1.0.0 is
     not on the QE site, so it was generated with `ld1.x` from the official `rel-pbe` recipe; see
-    `MnBi2Te4/base/soc_lda/pseudo_gen/`.
+    `MnBi2Te4/pseudo_gen/`.
   - **No PBE for MBT with SOC** (pitfall 8).
-  - **Y2Ir2O7 is still PBE+U** (U = 3); whether to switch to LDA+U is open (status in `notes/README.md`).
+  - **Y2Ir2O7: LDA+U** (U = 3, `rel-pz` PAW) since 2026-10-12 (user): base YL2 210527 (+ NSCF 210590, Wannier 212615),
+    modes `phonon/mode_{1,2,3}/fromYL2_2026-10-12/`. LDA's curvature symmetry is exact (bug #22) and its SCFs converge;
+    the PBE+U runs (YP) are superseded.
 - **Monitor every SCF:** check total *and* absolute magnetization at each check. `md5sum pw.x` before debugging
   anything at source level.
 
@@ -47,26 +55,25 @@ Read in this order before touching code on an unfamiliar part of this repo:
    investigation notes explaining *why* current defaults are what they are), `archive/`.
    **Keep it current:** when a run finishes or a decision is made, update its status
    table; each fact has one home (status there, a bug's story in `bugs/`, evidence in `log/`).
-2. **[`notes/code.md`](notes/code.md)** — the code: three
-   stages (`wannier/` writes `_hr.dat`/`_r.dat` → `modules/curvature.py` builds
-   Omega → `modules/axion.py` does the β finite difference and c2), a
-   function ↔ equation table, and what is legacy.
+2. **[`notes/code.md`](notes/code.md)** — the code: `axion_phonon/` in run order (`io/` reads files into arrays;
+   `paw.py` the mode `.amn`; `wannier.py` H(R), A(R), the shared fold → PythTB models; `curvature.py` Omega;
+   `axion.py` β terms and c2; `tube.py` the k list; `chern_simons.py` the 3-form check), a function ↔ equation
+   table, and `pipeline/` (the cluster steps).
 3. **[`validation/README.md`](validation/README.md)** — the check suite.
    Every check is a Jupyter notebook (`.ipynb`), run cell-by-cell with the
    `axion` conda kernel; `RUN_COMPUTATION = False` (default) reloads the last
    saved run from `results/<check>/` instead of recomputing.
-4. **[`calculations/README.md`](calculations/README.md)** — how the code in
-   `calculations/` is laid out and run. The user's convention: every script and
+4. **The user's conventions** (`pipeline/README.md`, `analysis/`): every script and
    notebook starts with a settings block of plain variables (full paths into
    `data/`, n_occ, amplitude, options with their choices listed), and there are no
    command-line flags or automatic run detection. Derive a path only when it is
    always predictable (`<run>/jaemo/`, `<scf>/<prefix>.scf.out`, the output
    `nk_sweep_*` folder). Some run folders carry a plain-text `NOTE`.
 
-`modules/` (production code), `calculations/` (`run_axion.py` for dθ/dQ of a
-base/mode pair set at the top of the file, `analysis/` one notebook per task, `setup/`, `diagnostics/`,
-`qe_patches/`), `data/` (git-ignored: the QE/Wannier90 runs and everything computed
-from them, e.g. `nk_sweep_*` dθ results next to the mode run, `_AA_cache/`),
+`axion_phonon/` (production code), `pipeline/` (the cluster steps), `analysis/` (one notebook per task;
+`analysis/figures/` the paper figures), `setup/` (notebooks that build structures and QE inputs), `qe_patches/`,
+`archive/` (the old `modules/`, `wannier/`, `run_axion.py`, the dated `diagnostics/`; README there), `data/`
+(git-ignored: the QE/Wannier90 runs and everything computed from them),
 `validation/` (the check suite), `notes/` (status, theory, bugs, investigation log, per-material
 setup), `references/` (PDFs: literature and David's notes), `meetings/`, `paper/` (the writeup; its
 numbers are in flux until the reruns).
@@ -106,7 +113,7 @@ plus scipy, matplotlib, nbformat/nbclient/nbconvert. `validation/unit`
      on the production SrTiO3 trial (matching `.mmn`'s own ~1e-9 residuals)
      and cross-checked against an independently-built postw90 `rfull` export
      to ~1e-8 — two separate Fortran implementations agreeing. This is
-     `source="rdat_ndegen_applied"` in `wannier/position_matrix.py`, and it
+     `source="rdat_ndegen_applied"` in `archive/code/wannier/position_matrix.py`, and it
      needs no `.mmn` at all.
    - **Caveat, not a bug**: `rdat_ndegen_applied` still differs from `.mmn`
      by ~6-38% pointwise at current mesh density — that's the same known
@@ -116,8 +123,9 @@ plus scipy, matplotlib, nbformat/nbclient/nbconvert. `validation/unit`
      wrong. **Production (2026-10-07) is
      `transl_inv_full_from_chk`**: Jae-Mo's formula rebuilt from the `.chk`
      overlap matrices, with `SHARED_WS = True` (his own files can't be folded on
-     the base's WS images). It is the default in `calculations/run_axion.py`
-     and the symmetry scripts. `right_centre_from_chk` is the `.mmn` formula
+     the base's WS images). It is the only source in `axion_phonon/wannier.py`. **H(R) also comes from the `.chk` + `.eig`, with no PythTB hopping cut** (production
+     2026-10-12, bug #22: `_hr.dat` rounding and `min_hopping_norm=1e-5` break m-3m′'s spin-mixing operations).
+     `right_centre_from_chk` is the `.mmn` formula
      from the same `.chk` (the default 09-30 to 10-06, by accident); state
      the A(R) source with every number.
    See `notes/log/2026-08-27_rfull_vs_mmn_position_matrix.md` §0 (why stock fails),
@@ -127,9 +135,8 @@ plus scipy, matplotlib, nbformat/nbclient/nbconvert. `validation/unit`
    `notes/log/2026-09-16_jaemo_rdat_production_closure.md` (production-scale
    closure).
 3. **The embedding τ must be identical across both structures/endpoints of a
-   finite difference** (assumption A3 of the derivation) — build both PythTB
-   models with `W90.model(orb_vecs=tau)` using that same array
-   (`position_terms` reads it from the model; `axion.dtheta` checks it). Otherwise the
+   finite difference** (assumption A3 of the derivation) — `wannier.pair_models` builds both models on the
+   base's pinned positions, one τ for both (`position_terms` reads it from the model; `axion.dtheta` checks it). Otherwise the
    cross/external terms pick up a spurious artifact linear in τ (a past bug:
    `TBModel.lattice` returns a copy, so setting `model.lattice.orb_vecs`
    directly is a silent no-op). See `notes/theory/decomposition.md`
@@ -150,7 +157,9 @@ plus scipy, matplotlib, nbformat/nbclient/nbconvert. `validation/unit`
    assuming `R → gR` gives garbage. See `notes/log/2026-08-20_handoff_wannier_conventions.md`
    §7.
 
-7. **Only the segni-fixed pw.x (md5 `e270b05b`) gives a symmetric noncollinear DFT+U+PAW Hamiltonian.** Two QE
+7. **Only the patched pw.x (md5 `db4b99b4`; `e270b05b` before 2026-10-11) gives a symmetric noncollinear DFT+U+PAW
+   Hamiltonian.** A third QE bug (#19, `irreducible_BZ`) drops −k stars for groups like MBT T2⁻ (13 k instead of 16,
+   E 0.3 mRy too low, |m|abs 10.27); check `number of k points` against the orbit count. Two QE
    bugs broke the YIO magnetic symmetry and showed up as a 4-14% curvature symmetry floor that looked like a
    Wannier/WS/A(R) problem but never was:
    - **`new_ns_nc`** (#7) symmetrises the Hubbard occupations with the wrong atom for operations of order 3, 4 or 6
@@ -172,7 +181,7 @@ plus scipy, matplotlib, nbformat/nbclient/nbconvert. `validation/unit`
    - The exact hex-CIF cell (a = 4.33360, c = 81.85200 Å, atoms at u·c, as in the u_4.0 input), not the rounded
      rhombohedral cell of 151625/152188.
    - Check layer mirroring and ∫|m⊥| on new runs with
-     `calculations/diagnostics/2026-10-08_mbt_noncollinear_gga/magnetization_texture.py`.
+     `archive/diagnostics/2026-10-08_mbt_noncollinear_gga/magnetization_texture.py`.
    - See `notes/bugs/18_qe_noncollinear_gga_spurious_state.md` and `notes/log/2026-10-08_mbt_noncollinear_gga_lda.md`.
 
 If you hit a curvature discrepancy that isn't one of these, check

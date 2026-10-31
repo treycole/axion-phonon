@@ -75,7 +75,7 @@ The old saved tables also contain rows the new run cannot reproduce: the four PR
   `rdat` source above was used instead).
 * `check_vs_postw90_line` and `check_vs_postw90_full_mesh` need external postw90 output (`TRIAL*_POSTW90`
   and `KPOINTS_NPZ` are `None`). Their edit is the same three lines as everywhere else.
-* `calculations/diagnostics/2026-09-20_ndegen_pair/refold_driver.py` was repointed at
+* `archive/diagnostics/2026-09-20_ndegen_pair/refold_driver.py` was repointed at
   `run_axion.py` (it now patches `pythtb.W90`). Not rerun: it is a parked 25 minute experiment.
 * `meetings/2026-08-31.ipynb` still imports the removed module. It is a dated meeting record, so it was
   left alone; its saved outputs are intact.

@@ -1,0 +1,43 @@
+From 308a2f8b29fa6c471f6d317aa0d069ce737a90c8 Mon Sep 17 00:00:00 2001
+From: Trey Cole <treco713@gmail.com>
+Date: Sat, 10 Oct 2026 23:23:37 -0400
+Subject: [PATCH] irreducible_BZ: do not apply t_rev when unfolding with the
+ lattice group
+
+The input k points are irreducible under the plain rotations of the Bravais
+lattice. Since 1ce38add3 the unfold step maps k -> -S k for lattice
+rotations that the crystal group contains only combined with time reversal.
+When every lattice rotation is in the magnetic group but some only with T
+(nsym == nrot), the unfold then never generates the -k partners and the
+k-point set misses whole stars (MnBi2Te4 T2- distortion, 4x4x4: 13 k instead
+of 16, wrong weights, total energy 0.3 mRy too low). The reduction step keeps
+its t_rev handling, as in irrek_nc before 1ce38add3.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ PW/src/irreducible_BZ.f90 | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/PW/src/irreducible_BZ.f90 b/PW/src/irreducible_BZ.f90
+index 4131f7c78..34a6f89c1 100644
+--- a/PW/src/irreducible_BZ.f90
++++ b/PW/src/irreducible_BZ.f90
+@@ -110,11 +110,14 @@ SUBROUTINE irreducible_BZ( nrot, s, nsym, minus_q, magnetic_sym, at, bg, &
+       DO irot = 2, nrot
+          !
+          ! ... Then it is rotated with each symmetry of the global group.
++         !     The input k points are irreducible under the plain rotations of
++         !     the Bravais lattice, so the unfolding must not apply t_rev: when
++         !     a lattice rotation belongs to the crystal group only combined
++         !     with time reversal, k -> -S k would leave part of the star out.
+          !
+          xks(:) = invs(:,1,irot) * xkg(1) + &
+                   invs(:,2,irot) * xkg(2) + &
+                   invs(:,3,irot) * xkg(3)
+-         IF (magnetic_sym .AND. (t_rev(irot) == 1)) xks = -xks
+          !
+          !  ... Now check if there is an operation of the subgroup that
+          !      makes xks equivalent to some other already found k point
+-- 
+2.45.2
+

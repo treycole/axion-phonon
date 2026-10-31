@@ -38,7 +38,7 @@ DFT, which predates the #16 fix, so it says nothing yet about the patched reruns
 
 The 8×8×8 `chk` row is the existing base table in
 `2026-09-29_centre_symmetrization/logs/full_symmetry_tables.log`, computed with the same metric and k-points.
-Script, log and arrays: `calculations/diagnostics/2026-10-05_yio_nk10_symmetry/base_symmetry_vs_mesh.{py,log,npz}`.
+Script, log and arrays: `archive/diagnostics/2026-10-05_yio_nk10_symmetry/base_symmetry_vs_mesh.{py,log,npz}`.
 
 **Result (median over the 47 non-identity operations):**
 
@@ -108,14 +108,14 @@ single number and can't be tested this way.
 
 ### 4.1 `new_ns_nc` (bug #7)
 
-1. **Python port of the symmetrizer** (`calculations/diagnostics/2026-09-21_qe_new_ns_nc/qe_ns_symmetriser_check.py`).
+1. **Python port of the symmetrizer** (`archive/diagnostics/2026-09-21_qe_new_ns_nc/qe_ns_symmetriser_check.py`).
    - **Port:** QE's own `irt`, `sr`, `t_rev`, `find_u` and `d_matrix`, fed with the operation data that run
      178382 printed (`verbosity = 'high'`).
    - **Test:** start from QE's analytic AIAO ns, check it is invariant under all 48 forward actions (6e-15), then
      apply the symmetrizer.
    - **As written:** it does not return the input (|m| 3.0 → 1.0), so it isn't a valid symmetrizer.
    - **With the pre-image `irt(invs(isym), na)`:** it returns symmetric input unchanged and is idempotent, to 1e-15.
-2. **Local pw.x, patched vs unpatched** (`calculations/qe_patches/verification/compare_hubbard_moments.py`).
+2. **Local pw.x, patched vs unpatched** (`qe_patches/verification/compare_hubbard_moments.py`).
    - **Setup:** the YIO input, the same Davidson settings and seeds, so both binaries receive identical raw
      occupations and only the symmetrizer differs.
    - **Compared:** the four Ir Hubbard moments per iteration, as the spread in |m| and each moment's tilt from its
@@ -132,7 +132,7 @@ single number and can't be tested this way.
    - **Result:** the four Fe moments spread 7.9-9.6% unpatched and 0.00% patched.
    - **Pattern:** the unpatched split pairs exactly the atoms that the image/pre-image mix-up predicts.
 5. **Stored quantities of the converged patched SCFs** (192344, 193145; scripts in
-   `calculations/diagnostics/2026-10-05_ws_tolerance_window/`).
+   `archive/diagnostics/2026-10-05_ws_tolerance_window/`).
    - **`density_symmetry.py`:** ρ and m in G-space under each {R|t}: ρ(RG) = e^{−iRG·t} ρ(G) and
      m(RG) = e^{−iRG·t} s·det(R)·R m(G), with s = −1 for primed operations. t is recovered from the atom basis.
      Exact to 1e-15.

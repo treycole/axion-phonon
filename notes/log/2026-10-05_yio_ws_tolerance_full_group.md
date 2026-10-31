@@ -33,11 +33,11 @@ gives the identical fold (§4). At 5e-3, every tie that symmetry forces is caugh
   the `.win` origin; these drop out of Ω(k), but §4's centre check has to restore them.
 
 Files:
-- Sep 30 – Oct 1 scripts: `calculations/diagnostics/2026-09-29_centre_symmetrization/`. Their logs,
+- Sep 30 – Oct 1 scripts: `archive/diagnostics/2026-09-29_centre_symmetrization/`. Their logs,
   `point_groups.npz` and `derive_point_groups.py` are copied into its `logs/` (originally under a
   `~/.claude/jobs/` tmp dir).
 - Today's scripts, logs and `base_full_group_tolerances.npz`:
-  `calculations/diagnostics/2026-10-05_ws_tolerance_window/`.
+  `archive/diagnostics/2026-10-05_ws_tolerance_window/`.
 
 ## 1. Why the tolerance was widened (Sep 30)
 

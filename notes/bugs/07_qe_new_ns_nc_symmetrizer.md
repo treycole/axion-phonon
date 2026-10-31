@@ -1,6 +1,6 @@
 # #7 — QE `new_ns_nc` symmetrizes noncollinear Hubbard occupations with the wrong atom
 
-> **Status: FIXED** (2026-09-21). A two-line patch (`calculations/qe_patches/`) is in every pw.x used since
+> **Status: FIXED** (2026-09-21). A two-line patch (`qe_patches/`) is in every pw.x used since
 > 2026-09-22: the `q-e-nsfix` build, `~/q-e` (`c41c409`) and `~/q-e-segnifix` (`e270b05b`). An upstream MR was
 > submitted from GitLab `fix/new_ns_nc-preimage`.
 
@@ -29,12 +29,12 @@ contracts `Dᵀ nr D` and is correct.
   actions (6e-15), but `new_ns_nc` as written doesn't return it (|m| 3.0 → 1.0).
 
 ## Fix
-Use the pre-image, `irt(invs(isym), na)`: two lines (`calculations/qe_patches/`). With it, the symmetrizer is an
+Use the pre-image, `irt(invs(isym), na)`: two lines (`qe_patches/`). With it, the symmetrizer is an
 exact projector (1e-15).
 
 ## Verification
 - **Ported routines:** QE's own `irt`/`sr`/`t_rev`/`find_u`/`d_matrix` ported to Python
-  (`calculations/diagnostics/2026-09-21_qe_new_ns_nc/qe_ns_symmetriser_check.py`).
+  (`archive/diagnostics/2026-09-21_qe_new_ns_nc/qe_ns_symmetriser_check.py`).
 - **Real pw.x build:** identical raw data, patched vs unpatched. Unpatched: Ir |m| spread 2.5%, tilts up to 0.7°.
   Patched: 0.00% / 0.00°.
 - **Saved ns exactly covariant:** on 2026-10-05 the saved ns of the patched 192344 and 193145 SCFs was exactly

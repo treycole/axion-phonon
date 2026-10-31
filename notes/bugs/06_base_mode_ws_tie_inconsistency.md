@@ -1,7 +1,7 @@
 # #6 — Base and mode didn't share a Wigner–Seitz rule (assumption A3′)
 
 > **Status: FIXED for the in-house folds** (2026-09-23): `load_wannier_pair(shared_ws_centres=True)` folds both
-> structures on base's centres, and `calculations/run_axion.py` uses `SHARED_WS = True`. **Open** for the
+> structures on base's centres, and `archive/code/run_axion.py` uses `SHARED_WS = True`. **Open** for the
 > Fortran `rdat_ndegen_applied` route, where the fix would have to go inside Wannier90.
 
 **Found:** 2026-09-20 (diagnosed and fixed 2026-09-23). **Affects:** every dθ from a base/mode pair folded on

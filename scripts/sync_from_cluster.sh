@@ -7,8 +7,9 @@ set -euo pipefail
 
 # ============================================================================== settings
 CLUSTER="bc889@rupc-01.rutgers.edu"                                   # ssh host or alias, e.g. "bc889@cluster.example.edu"; required
-REMOTE="/home/bc889/mnt/w/axion/Y2Ir2O7/phonon/base/u_3.0/192344bc889/"   # job folder on the cluster; it is created, by name, inside LOCAL
-LOCAL="/Users/treycole/Repos/axion-phonon/data/Y2Ir2O7/base/soc/u_3.0/output/"  # the folder to put it in: a full path, or relative to the repository root
+REMOTE="/home/bc889/mnt/w/axion/Y2Ir2O7/phonon/base/u_3.0/lda_test_2026-10-08/YL2_lda_relpz/nscf_from_210527/w90_trial02_base/212615bc889/"   # job folder on the cluster; it is created, by name, inside LOCAL
+LOCAL="/Users/treycole/Repos/axion-phonon/data/Y2Ir2O7/base/lda/"  # the folder to put it in: a full path, or relative to the repository root
+# Y2Ir2O7 names local run folders <kind>_<job> (w90_trial02_212615, scf_210527): rename the copied <job>bc889 folder after.
 BIG_MB=100                                   # list every file larger than this in the preview
 # ======================================================================================
 

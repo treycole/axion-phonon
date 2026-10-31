@@ -1,4 +1,10 @@
 .claude/
+messages/
+archive/
+draft/
+validation/
+studies/
+scripts/
 
 # ignore tmp directories, too big for GitHub
 tmp/

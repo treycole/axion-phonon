@@ -54,7 +54,7 @@ sits almost entirely in A(R), not H(R).**
 
 `transl_inv_full_from_chk` + `SHARED_WS=True` (rebuilds Jae-Mo's formula from the `.chk`, no
 `.mmn`; base and mode share base's Wigner-Seitz images, per `ws_ties_in_beta_derivative`).
-`calculations/run_axion.py` now points at this pair with this source.
+`archive/code/run_axion.py` now points at this pair with this source.
 
 | nk | base end | mode end |
 |---|---|---|
@@ -84,7 +84,7 @@ where H(R) is fine. Testable in isolation on base alone (no pairing): refold bot
 centre array forced to satisfy `INVERSION @ e_s - L_s = e_{partner(s)}` exactly, instead
 of the raw centres, and rerun `base_inversion`'s covariance test.
 
-Script: `calculations/diagnostics/2026-09-29_centre_symmetrization/check_base_inversion_symmetrized.py`.
+Script: `archive/diagnostics/2026-09-29_centre_symmetrization/check_base_inversion_symmetrized.py`.
 Partner found by bipartite (Hungarian) nearest-centre matching mod lattice shifts;
 symmetrized centre = `c_s + r_s/2` where `r_s` is the pairwise defect (derivation and an
 exactness self-check are in the script).
@@ -129,7 +129,7 @@ matrices, not geometry) for the 15% mismatched subset. Neither settled.
 
 Tested whether §1's residual biases §2's `dtheta`, by group-averaging the already-saved
 `c2_density` grids over mode 1's magnetic point group (script:
-`calculations/diagnostics/2026-09-29_centre_symmetrization/symmetrize_c2_test.py`). Since
+`archive/diagnostics/2026-09-29_centre_symmetrization/symmetrize_c2_test.py`). Since
 the group maps the reciprocal lattice to itself, every mesh point's group image is exactly
 another mesh point (integer index permutation, no interpolation) — cheap, reuses
 `nk_sweep_tif_shared_ws/*.npz` directly, no new curvature evaluation.

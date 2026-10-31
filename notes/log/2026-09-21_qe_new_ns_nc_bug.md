@@ -36,7 +36,7 @@ conj(dS_g)` (and `nr(a)^T` for a time-reversed `g`), so the term for atom `a` mu
 
 Everything below uses QE's own data for the run in `data/Y2Ir2O7/base/soc/u_3.0/output/178382bc889`
 (48 operations, `irt`, `t_rev`, `find_u`, `comp_dspinldau`, `d_matrix`), ported line for line to Python in
-[`calculations/diagnostics/2026-09-21_qe_new_ns_nc/qe_ns_symmetriser_check.py`](../../calculations/diagnostics/2026-09-21_qe_new_ns_nc/qe_ns_symmetriser_check.py).
+[`archive/diagnostics/2026-09-21_qe_new_ns_nc/qe_ns_symmetriser_check.py`](../../archive/diagnostics/2026-09-21_qe_new_ns_nc/qe_ns_symmetriser_check.py).
 
 * The operation data are consistent. `find_u(sr)` implements `sr` for all 48; the AIAO moments obey
   `m(irt(a)) = +-det(sr) sr m(a)` for all 48 (`-` for time-reversed); QE's own starting ns is invariant under the
@@ -69,7 +69,7 @@ Everything below uses QE's own data for the run in `data/Y2Ir2O7/base/soc/u_3.0/
     -  nb = irt (isym, na)
     +  nb = irt (invs(isym), na)
 
-in `new_ns_nc` only ([`qe_patches/new_ns_nc_preimage.patch`](../../calculations/qe_patches/README.md)).
+in `new_ns_nc` only ([`qe_patches/new_ns_nc_preimage.patch`](../../qe_patches/README.md)).
 `invs` is QE's index of the inverse operation; for all 48 operations `irt(invs(g), .)` is the inverse
 permutation of `irt(g, .)`.
 
@@ -77,7 +77,7 @@ permutation of `irt(g, .)`.
 run on the actual YIO base input (22 atoms, 48 operations, 8 k-points, `HUBBARD (ortho-atomic)`,
 `symmetry_with_labels`), unpatched and patched, same Davidson settings and seeds, so both receive **identical raw
 occupations** and only the symmetriser differs. Hubbard-projected |m| on Ir1..Ir4
-([`qe_patches/verification/`](../../data/Y2Ir2O7/qe_patches/verification), compared with `calculations/qe_patches/verification/compare_hubbard_moments.py`):
+([`qe_patches/verification/`](../../data/Y2Ir2O7/qe_patches/verification), compared with `qe_patches/verification/compare_hubbard_moments.py`):
 
 | block | unpatched | spread | tilt off the 3-fold axis | patched | spread | tilt |
 |---|---|---|---|---|---|---|

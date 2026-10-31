@@ -9,7 +9,7 @@ The production code follows the same boundaries as the derivation:
 | Wannier inputs: the $H(R)/A(R)$ pair as `_hr.dat` / `_r.dat` | [`wannier/`](../../wannier/README.md) (stage 1); PythTB reads the files |
 | $A$, $\operatorname{curl}\Omega$, the $d$ matrix, and full $\Omega$ | [`modules/curvature.py`](../../modules/curvature.py) |
 | $c_2$ and the BZ integral $\mathrm{d}\theta/\mathrm{d}\beta$ | [`modules/axion.py`](../../modules/axion.py) |
-| Y2Ir2O7 calculation choices | [`calculations/run_axion.py`](../../calculations/run_axion.py) |
+| Y2Ir2O7 calculation choices | [`archive/code/run_axion.py`](../../archive/code/run_axion.py) |
 
 The position-matrix algebra lives in
 [`modules/curvature.py`](../../modules/curvature.py). The construction reproduces pythtb's

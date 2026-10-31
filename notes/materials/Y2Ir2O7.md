@@ -4,19 +4,39 @@
 phonon: the zone-centre **Γ₂⁻ (A₂ᵤ)** mode, IR- and Raman-silent. Where the runs stand is in
 [`../README.md`](../README.md); this file is the material's setup reference.
 
-## Current setup (2026-10-08)
+## Current setup (2026-10-12)
 
-- **Functional: PBE+U**, U = 3 eV on Ir 5d, noncollinear + SOC. Switching to LDA+U is under consideration (LDA
-  converges the base 4× faster; see [`../log/2026-10-08_mbt_noncollinear_gga_lda.md`](../log/2026-10-08_mbt_noncollinear_gga_lda.md) §12).
-- **Binary:** the segni-fixed pw.x (cluster `~/q-e-segnifix`, md5 `e270b05b`). Every YIO run before it is superseded
-  ([bug #16](../bugs/16_qe_paw_segni_stale_ux.md); earlier [#7](../bugs/07_qe_new_ns_nc_symmetrizer.md)).
+- **Functional: LDA+U** (since 2026-10-12, user), U = 3 eV on Ir 5d, `rel-pz` PAW (Y `spn` 1.0.0, Ir `n` 0.2.3, O `n`
+  0.1), noncollinear + SOC. Why: curvature symmetry exact (PBE 0.013%, [bug #22](../bugs/22_hopping_cut_and_hr_rounding.md)),
+  band energies ~100× more symmetric, SCFs converge (PBE mode 2 stalled like [#17](../bugs/17_segni_fix_base_scf_stall.md)).
+- **Binary:** pw.x `db4b99b4` (cluster `~/q-e-kfix`) for new runs. Runs on the segni-fixed `e270b05b` stay valid (same k
+  lists). Every YIO run before the segni fix is superseded ([bug #16](../bugs/16_qe_paw_segni_stale_ux.md); earlier
+  [#7](../bugs/07_qe_new_ns_nc_symmetrizer.md)).
+- **Runs** (local `data/Y2Ir2O7/`, reorganized 2026-10-13; cluster paths unchanged under `Y2Ir2O7/phonon/`):
+
+  | | local | cluster |
+  |---|---|---|
+  | LDA base | `base/lda/{scf_210527, nscf_210590, w90_trial02_212615}` | `base/u_3.0/lda_test_2026-10-08/YL2_lda_relpz/` |
+  | LDA modes 1-3 | `phonon/GM2-/mode{1,2,3}/Q_0.01A/lda/{scf_nscf_21275{5,6,7}, w90_trial02_{212982,212994,212995}}` | `mode_{1,2,3}/fromYL2_2026-10-12/` |
+  | LDA amplitude series (10-17) | not copied yet | `mode_{1,2,3}/Q_0p0{1,2,3,5}_conv1e-10_2026-10-17/`, base `.../YL2_lda_relpz/conv1e-10_2026-10-17/` ([log 10-17](../log/2026-10-17_yio_amplitude_series.md)) |
+  | PBE base (comparison) | `base/pbe/{scf_210525, nscf_210589, w90_trial02_212616}` | `.../YP_pbe/` (W90 in `w90_trial02_base_frozfix_2026-10-10/`) |
+  | PBE modes 1, 3 | `phonon/GM2-/mode{1,3}/Q_0.01A/pbe/{scf_nscf_21059{6,8}, w90_trial02_{212996,213002}}` | `mode_{1,3}/fromYP_2026-10-08/` (W90 `..._frozfix`) |
+
+  Each `w90_*` folder has the Wannier90 output, the dθ sweeps (`nk_sweep_*`, modes) and `job_scripts/` (the
+  cluster `.win`, `pw2wan.in`, job scripts and NOTE). The SCF/NSCF folders hold text only (inputs, outputs, NOTE).
+  PBE mode 2 never converged (212707, [#17](../bugs/17_segni_fix_base_scf_stall.md)). Superseded runs:
+  `data/Y2Ir2O7/archive/` (its README lists each one and why). Templates and the cluster workflow scripts:
+  `archive/setup_templates/Y2Ir2O7/`.
+- **Wannier windows:** every `dis_*` edge in an eigenvalue gap of that NSCF (tens of meV); 15.0 eV sat 0.16 meV from a
+  band and broke the threefold operations ([log 10-08 §12.8](../log/2026-10-08_mbt_noncollinear_gga_lda.md)).
+- **WS tie tolerance 5e-3 Å** (default; with base Wannier centres YIO's near-ties end at 1.7e-3, genuine differences start at 2.1e-2). **Atom-pinned positions since 2026-10-26:** ties exact (≤ 1e-12 Å), next distinct distance 0.39 Å, so the tolerance no longer matters (`archive/diagnostics/2026-10-26_yio_pinned/tie_window_pinned.log`).
 - **Structures:** base `Y2Ir2O7/phonon/base/u_3.0/` and the three Γ₂⁻ mode structures `mode_1..3`
   (SMODES files: `data/Y2Ir2O7/phonon/SMODES.Y2Ir2O7.*`).
 - **Magnetic point groups:** base m-3m′, displaced −4′3m′.
 - **Wannier set: "Option A"** — `Y: p`, `Ir: d`, `O: s;p`, 176 WFs, projection only, **n_occ = 156**. The diffuse
   empty shells (Y 4d, Ir 6s/6p) close the gap and must stay out ([bug #1](../bugs/01_wannier_diffuse_projections_gap_collapse.md)).
-- **Modes are Wannierized from the base's MLWFs, rigidly shifted** ([`../theory/rigid_shift.md`](../theory/rigid_shift.md),
-  commands in [`../howto/rigid_shift_commands.md`](../howto/rigid_shift_commands.md)).
+- **Mode `.amn` from the base Wannier functions, unshifted:** `generate_amn.jl --no-displacement`, on the login
+  node (the rigid-shift variant, [`../theory/rigid_shift.md`](../theory/rigid_shift.md), is no longer used).
 - Spreads of every trial set tried: [`Y2Ir2O7_trial_orbital_spreads.txt`](Y2Ir2O7_trial_orbital_spreads.txt).
 
 ---

@@ -34,7 +34,7 @@ PAW + SO + magnetic + GGA).
 
 ## Verification
 Patched build on MBT input 192903: 48 and 64 processes agree (iteration 1 −7140.62251 / −7140.62245 Ry; total
-magnetization 0.00, absolute 10.43). The new `~/q-e` build reproduces that to 2e-8 Ry (193147).
+magnetization 0.00, absolute 10.43). The new `~/q-e` build reproduces that to 2e-8 Ry (193147; cluster `MnBi2Te4/base/soc/u_4.0/bug_12/test_newqe_48/`).
 
 ## YIO
 - **Little effect on the SCF:** the 192344 vs 193145 comparison found a small change (iteration-1 energy to

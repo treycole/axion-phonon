@@ -1,0 +1,308 @@
+<title>MnBi₂Te₄ Calculation Walkthrough</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* One reading column. The calculation is a real sequence, so steps are numbered; each step has the same four parts
+   (what, where, the job, the code) in the same order. Slate neutrals, teal accent, three "where" colours. */
+:root {
+  --bg: #f5f7f9; --surface: #ffffff; --ink: #18212b; --muted: #566372; --rule: #d9e0e7;
+  --accent: #0b6e7a; --accent-soft: #e2f1f2; --code-bg: #eef2f5;
+  --cluster: #6b3fa0; --cluster-soft: #efe7f8; --login: #9a5b00; --login-soft: #fbefd9; --laptop: #1d7a46; --laptop-soft: #e3f3e9;
+  --display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11161c; --surface: #18202a; --ink: #e4eaf0; --muted: #9aa8b6; --rule: #2a3542; --accent: #4fc2cf; --accent-soft: #15333a;
+  --code-bg: #1e2833; --cluster: #c3a3ec; --cluster-soft: #2c2140; --login: #f0b75a; --login-soft: #3a2b12; --laptop: #5cc98a; --laptop-soft: #173326; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #11161c; --surface: #18202a; --ink: #e4eaf0; --muted: #9aa8b6; --rule: #2a3542; --accent: #4fc2cf; --accent-soft: #15333a;
+  --code-bg: #1e2833; --cluster: #c3a3ec; --cluster-soft: #2c2140; --login: #f0b75a; --login-soft: #3a2b12; --laptop: #5cc98a; --laptop-soft: #173326; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 32px 72px; }
+main { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 44px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; text-wrap: balance; margin: 0; line-height: 1.2; }
+h1 { font-size: 2rem; } h2 { font-size: 1.4rem; padding-bottom: 6px; border-bottom: 1px solid var(--rule); } h3 { font-size: 1.02rem; color: var(--muted); letter-spacing: .02em; }
+p, li { max-width: 72ch; } p { margin: 0; }
+section { display: flex; flex-direction: column; gap: 14px; }
+.lede { color: var(--muted); }
+code, .mono { font-family: var(--mono); font-size: .86em; }
+:not(pre) > code { background: var(--code-bg); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+pre { background: var(--code-bg); border-radius: 8px; padding: 12px 14px; margin: 0; overflow-x: auto; font-size: .8rem; line-height: 1.5; }
+.tablewrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: .88rem; }
+th, td { text-align: left; padding: 8px 11px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { color: var(--muted); font-size: .75rem; letter-spacing: .05em; text-transform: uppercase; font-weight: 600; white-space: nowrap; }
+tr:last-child td { border-bottom: none; }
+td.num { font-family: var(--mono); font-size: .82rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.where { display: inline-block; font-family: var(--mono); font-size: .72rem; font-weight: 500; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+.cluster { color: var(--cluster); background: var(--cluster-soft); } .login { color: var(--login); background: var(--login-soft); } .laptop { color: var(--laptop); background: var(--laptop-soft); }
+.step { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px; }
+.step-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.n { font-family: var(--display); font-weight: 600; font-size: 1.15rem; color: var(--accent); background: var(--accent-soft); border-radius: 8px; padding: 2px 10px; }
+.step h2 { border: none; padding: 0; font-size: 1.25rem; }
+.facts { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; font-size: .9rem; }
+.facts dt { color: var(--muted); } .facts dd { margin: 0; min-width: 0; }
+ul, ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
+.why { border-left: 3px solid var(--accent); padding: 6px 0 6px 14px; display: flex; flex-direction: column; gap: 6px; }
+.chain { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; }
+.chain div { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; font-size: .85rem; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.chain b { font-family: var(--display); font-size: .95rem; }
+footer { color: var(--muted); font-size: .82rem; }
+</style>
+
+<main>
+  <header style="display:flex;flex-direction:column;gap:10px">
+    <h1>MnBi₂Te₄ calculation walkthrough</h1>
+    <p class="lede">Every step from a crystal structure to ∂θ/∂Q: what it computes, where it runs, what the job script does,
+      what the code does, how long it takes, and where its output sits in the new layout. Numbers are from the production
+      runs (base 214290/214300, pattern 3 at Q = 0.01 Å). State of 30 Oct 2026.</p>
+    <p><span class="where cluster">cluster job</span> submitted to the queue, runs on a compute node &nbsp;
+       <span class="where login">login node</span> run by hand on rupc-01, seconds &nbsp;
+       <span class="where laptop">laptop</span> notebooks and checks on your Mac</p>
+  </header>
+
+  <section>
+    <h2>The whole chain</h2>
+    <p>For each structure (the base, and each displaced structure such as <code>T2-_p3_Q0.01</code>), steps 1–4 are DFT
+      and run once. Steps 5–8 run once per <em>window</em> (the energy range the Wannier functions are built from), for
+      a base/structure pair.</p>
+    <div class="chain">
+      <div><b>1 SCF</b><span>pw.x · density</span><span class="where cluster">1 job · 1.3 h</span></div>
+      <div><b>2 NSCF</b><span>pw.x · 512 k states</span><span class="where cluster">1 job · 28.6 h</span></div>
+      <div><b>3 pw2wannier90</b><span>overlaps between k</span><span class="where cluster">1 job · ~7.5 h</span></div>
+      <div><b>4 PAW overlaps</b><span>structure vs base</span><span class="where cluster">1 job, 8 slices · 11 min</span></div>
+      <div><b>5 wannier90</b><span>per window</span><span class="where cluster">1 job · 20–45 min</span></div>
+      <div><b>6 c₂</b><span>7,928 tube k</span><span class="where cluster">10 jobs · 27 min</span></div>
+      <div><b>7 sum → ∂θ/∂Q</b><span>integrate c₂</span><span class="where login">seconds</span></div>
+      <div><b>8 analysis</b><span>bands, maps, tables</span><span class="where laptop">notebooks</span></div>
+    </div>
+    <div class="tablewrap"><table>
+      <thead><tr><th>step</th><th>folder (cluster and data/, same tree)</th><th>pipeline script</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><code>dft/&lt;structure&gt;/scf/</code></td><td><code>1_scf.sh</code></td></tr>
+        <tr><td>2</td><td><code>dft/&lt;structure&gt;/nscf_k8/</code></td><td><code>2_nscf.sh</code></td></tr>
+        <tr><td>3</td><td><code>dft/&lt;structure&gt;/pw2wannier_k8/</code></td><td><code>3_pw2wannier.sh</code></td></tr>
+        <tr><td>4</td><td><code>dft/&lt;structure&gt;/overlap_k8/</code></td><td><code>4_overlap.sh</code></td></tr>
+        <tr><td>5</td><td><code>windows/&lt;window&gt;_k8/base/</code> and <code>…/&lt;structure&gt;/</code></td><td><code>5_wannier.sh</code></td></tr>
+        <tr><td>6</td><td><code>windows/&lt;window&gt;_k8/dtheta_&lt;structure&gt;/c2/out_1 … out_10</code></td><td><code>6_c2.sh</code></td></tr>
+        <tr><td>7</td><td><code>windows/&lt;window&gt;_k8/dtheta_&lt;structure&gt;/</code> (dtheta.log)</td><td><code>7_dtheta.sh</code></td></tr>
+      </tbody>
+    </table></div>
+    <p>Each step folder holds the inputs, <code>NOTE</code> (what, when, job number), <code>OK</code> (job number) and
+      <code>out/</code> (everything the job produced). The pipeline scripts are in <code>analysis/pipeline/</code>; the
+      cluster copy is <code>/mnt/wkdk/bc889/axion/code/2026-10-29/pipeline/</code>.</p>
+  </section>
+
+  <section>
+    <h2>How every step is run</h2>
+    <ol>
+      <li><span class="where login">login node</span> Edit the settings block at the top of the step script (structure,
+        mesh, window), run it with <code>bash 5_wannier.sh</code>.</li>
+      <li>The script checks: the binaries' md5 (pw.x db4b99b4, pw2wannier90.x 8f5368ba, wannier90.x 26c8b506), the
+        pseudopotentials and the code; that the steps it needs have <code>OK</code> and have left the queue; the inputs
+        (k counts, window edges). Any failure stops it before anything is submitted.</li>
+      <li>It writes <code>send_job.sh</code> in the step folder and submits it with <code>qsub</code>. Nothing is queued
+        behind another job.</li>
+      <li><span class="where cluster">cluster job</span> The job starts in node scratch (<code>/scratch/&lt;job&gt;bc889</code>),
+        copies its inputs there and checks them, runs, writes <code>OK</code> or <code>FAIL</code> into the step folder,
+        exits 1 on failure. The cluster then copies scratch back to <code>&lt;step folder&gt;/&lt;job&gt;bc889/</code>;
+        the next step renames that to <code>out/</code> when it first reads it.</li>
+    </ol>
+    <p>Every job script starts with the same header (queue, slots, memory, wall time, modules, and three helpers):</p>
+<pre><code>#!/bin/bash
+#$ -N scf_base              # job name
+#$ -pe orte_one 64          # slots (cores on one node)
+#$ -q dko64m4               # queue
+#$ -l h_vmem=3.6G           # memory per slot: 64 x 3.6 = 230 GB
+#$ -l h_rt=248:00:00        # wall-time limit
+source $TMPDIR/sge_init.sh  # cd into node scratch
+module load intel/2024 intel/ompi
+export PYTHONPATH=/mnt/wkdk/bc889/axion/code/2026-10-29   # axion_phonon/
+fail() { echo "FAIL: $*"; echo $JOB_ID &gt; $SGE_O_WORKDIR/FAIL; exit 1; }
+ok()   { echo $JOB_ID &gt; $SGE_O_WORKDIR/OK; }
+get()  { ... copy one file into scratch, unzipping it if the cluster gzipped it ... }</code></pre>
+  </section>
+
+  <section class="step">
+    <div class="step-head"><span class="n">1</span><h2>SCF: the ground-state density</h2><span class="where cluster">cluster job</span></div>
+    <dl class="facts">
+      <dt>Program</dt><dd>pw.x (Quantum ESPRESSO 7.6 with our fixes, md5 db4b99b4)</dd>
+      <dt>Physics</dt><dd>LDA+U (U = 4 eV on Mn 3d), spin-orbit, noncollinear, A-type antiferromagnet; exact hex-CIF cell (a = 4.3336, c = 81.852 Å), 14 atoms; 4×4×4 k grid reduced by symmetry to 13 k (base) or 16 k (T2⁻ patterns, which have less symmetry); conv_thr 1e-10 Ry</dd>
+      <dt>Input</dt><dd><code>dft/&lt;structure&gt;/scf/MnBi2Te4.scf.in</code> (written once per structure by the setup notebooks in <code>analysis/setup/</code>); the start density from the base</dd>
+      <dt>Output</dt><dd><code>scf/out/</code>: <code>MnBi2Te4.scf.out</code> and <code>tmp/MnBi2Te4.save</code> (density, PAW and Hubbard occupations)</dd>
+      <dt>Resources</dt><dd>64 cores, dko64m4; base 214290: 7 iterations, 1 h 20 min</dd>
+    </dl>
+    <h3>The job</h3>
+<pre><code>cp $SGE_O_WORKDIR/MnBi2Te4.scf.in .                       # its own input
+cp &lt;base save, without wavefunctions&gt; tmp/MnBi2Te4.save/   # start from the base density
+mpirun -np 64 pw.x -input MnBi2Te4.scf.in &gt; MnBi2Te4.scf.out
+grep 'convergence has been achieved'          || fail      # converged
+number of k points = 13 (base) / 16 (patterns) || fail     # the symmetry bug #19 check
+|total magnetization| = 0.00 ± 0.05, absolute = 9.99 ± 0.05 || fail
+rm tmp/MnBi2Te4.save/wfc*.dat                              # the next step does not need them
+ok</code></pre>
+    <p>For the existing runs the SCF and the 8³ NSCF were done in one job (214290 for the base), so
+      <code>scf/out/</code> holds both outputs and <code>nscf_k8/out</code> is a link to it.</p>
+  </section>
+
+  <section class="step">
+    <div class="step-head"><span class="n">2</span><h2>NSCF: Bloch states on the Wannier mesh</h2><span class="where cluster">cluster job</span></div>
+    <dl class="facts">
+      <dt>Program</dt><dd>pw.x, non-self-consistent, on the SCF density</dd>
+      <dt>What</dt><dd>The 240 lowest bands at every point of the full 8×8×8 grid (512 k, written out explicitly, no symmetry): the states the Wannier functions are built from</dd>
+      <dt>Input</dt><dd><code>nscf_k8/MnBi2Te4.nscf.in</code>: the base's, written once; for a displaced structure the script copies it and puts in that structure's atomic positions</dd>
+      <dt>Output</dt><dd><code>nscf_k8/out/tmp/MnBi2Te4.save/</code>: <code>wfc1.dat … wfc512.dat</code>, 87 GB; <code>MnBi2Te4.nscf.out</code> (all eigenvalues)</dd>
+      <dt>Resources</dt><dd>64 cores, 8 k-pools (<code>-nk 8</code>); base: 1 day 4.5 h</dd>
+    </dl>
+<pre><code>cp &lt;scf/out/tmp/MnBi2Te4.save&gt; tmp/                        # the density
+mpirun -np 64 pw.x -nk 8 -input MnBi2Te4.nscf.in &gt; MnBi2Te4.nscf.out
+grep 'JOB DONE' || fail;  512 k points and 512 wfc files || fail
+ok</code></pre>
+    <p>The 10×10×10 NSCF (<code>nscf_k10/</code>, base 218391 and pattern 3 218395) is the same with 1,000 k; it took about 2.5 days.</p>
+  </section>
+
+  <section class="step">
+    <div class="step-head"><span class="n">3</span><h2>pw2wannier90: overlaps between neighbouring k</h2><span class="where login">login node</span><span class="where cluster">cluster job</span></div>
+    <dl class="facts">
+      <dt>Login node</dt><dd>The script writes the structure's <code>.win</code> (the base's, with this structure's atoms) and runs <code>wannier90.x -pp</code> (seconds), which lists for each k its neighbours k + b on the mesh in <code>MnBi2Te4.nnkp</code></dd>
+      <dt>Program</dt><dd>pw2wannier90.x (QE)</dd>
+      <dt>What</dt><dd><code>.mmn</code>: M<sub>mn</sub>(k, b) = ⟨u<sub>mk</sub>|u<sub>n,k+b</sub>⟩ for all 240 × 240 band pairs, every k and every neighbour b (the information about how the states change with k); <code>.eig</code>: the band energies; for the base only, <code>.amn</code>: A<sub>mn</sub>(k) = ⟨ψ<sub>mk</sub>|g<sub>n</sub>⟩, the projections onto 116 atomic orbitals (Bi s,p; Te s,p; Mn d; ×2 spin)</dd>
+      <dt>Output</dt><dd><code>pw2wannier_k8/out/</code>: <code>MnBi2Te4.mmn.gz</code>, <code>.eig</code>, (<code>.amn.gz</code>), and the <code>.win</code>, <code>.nnkp</code> in the step folder</dd>
+      <dt>Resources</dt><dd>48 cores, <code>-nk 8</code>; base 214300 took 8.2 h, of which wannier90 (step 5) and its band plot were the last ~20 min</dd>
+    </dl>
+<pre><code>cp $SGE_O_WORKDIR/{MnBi2Te4.win, MnBi2Te4.nnkp, MnBi2Te4_pw2wan.in} .
+copy &lt;nscf_k8/out/tmp/MnBi2Te4.save&gt; (87 GB) into scratch
+mpirun -np 48 pw2wannier90.x -nk 8 -pd true -input MnBi2Te4_pw2wan.in
+rm -rf tmp;  .mmn and .eig exist || fail;  gzip .mmn (.amn)
+ok</code></pre>
+    <p>One <code>.mmn</code> per structure and mesh: it does not depend on the window, so every window reuses it.</p>
+  </section>
+
+  <section class="step">
+    <div class="step-head"><span class="n">4</span><h2>PAW overlaps between the displaced structure and the base</h2><span class="where cluster">cluster job</span><span class="where">displaced structures only</span></div>
+    <dl class="facts">
+      <dt>Code</dt><dd>Ours: <code>analysis/pipeline/overlap.py</code>, calling <code>axion_phonon.paw</code> (readers in <code>axion_phonon.io.qe</code>)</dd>
+      <dt>What</dt><dd>O<sub>mn</sub>(k) = ⟨ψ<sup>structure</sup><sub>mk</sub>|S|ψ<sup>base</sup><sub>nk</sub>⟩, a 240 × 240 matrix at each of the 512 k</dd>
+      <dt>Why</dt><dd>The displaced structure's Wannier functions are built from the base's Wannier functions as trial orbitals, unshifted. Then the two Wannier gauges match and the parametric connection Λ vanishes exactly at O(Q), so the frozen-gauge c₂ (step 6) is exact. Projecting needs this overlap between two different crystals. With PAW the inner product carries the metric S = 1 + Σ |β⟩ q ⟨β| on each structure's own atoms; the old Julia code left S out (bug #23)</dd>
+      <dt>Output</dt><dd><code>overlap_k8/out/chunks/chunk_0000.npz … chunk_0007.npz</code>: each holds its k points, their k vectors and O</dd>
+      <dt>Resources</dt><dd>48 cores; 512 k in about 11 min</dd>
+    </dl>
+    <h3>What the code does at each k</h3>
+    <ol>
+      <li>Read <code>wfc&lt;k&gt;.dat</code> of both structures: plane-wave coefficients of 240 bands, two spin components.</li>
+      <li>Plane-wave part: match the G vectors of the two files, take ⟨ψ<sup>s</sup>|ψ<sup>b</sup>⟩ over common G.</li>
+      <li>PAW part: project both on the β functions of each structure's atoms (476 projectors), add ⟨ψ<sup>s</sup>|β<sub>s</sub>⟩ q ⟨β<sub>b</sub>|ψ<sup>b</sup>⟩ with the small atomic displacement handled exactly.</li>
+      <li>Check once: each structure's own states are S-orthonormal (production: 1.7e-14).</li>
+    </ol>
+    <div class="why">
+      <b>Why 8 slices?</b>
+      <p>Each k is independent and takes about 10 s (pattern 3: 64 k in 11 min per slice). In one process the 512 k take about 85 min. The job runs 8 copies of <code>overlap.py</code> side by side, each on every 8th k (k = 1, 9, 17, … for slice 1), with 6 threads each: 8 × 6 = the 48 cores of one node, done in about 11 min. The number 8 is only for speed; the result is identical, and step 5 reads all 8 chunks back into one 512 × 240 × 240 array. (For pattern 3 at 8³ the slices ran as 8 separate jobs from an older script; their chunks are now gathered in <code>overlap_k8/out/</code>. The 10³ overlaps ran as one job: 1,000 k in 45 min.)</p>
+    </div>
+  </section>
+
+  <section class="step">
+    <div class="step-head"><span class="n">5</span><h2>wannier90: Wannier functions for one window</h2><span class="where login">login node</span><span class="where cluster">cluster job</span></div>
+    <dl class="facts">
+      <dt>Login node</dt><dd>Set dis_froz_max and dis_win_max in the <code>.win</code>; check that both edges are at least 5 meV from every NSCF eigenvalue at every k, and that the displaced structure has the same number of bands below each edge at every k as the base (else one structure's Wannier functions would be built from a different set of states)</dd>
+      <dt>Program</dt><dd>wannier90.x 4.0.3 (26c8b506), one process (<code>mpirun -np 1</code>), projection only: num_iter = 0, dis_num_iter = 0</dd>
+      <dt>What</dt><dd>From the 240 bands, the 116-dimensional subspace and its 116 Wannier functions: V(k) = U<sub>dis</sub>(k) U(k), 240 × 116 at each k. The frozen window (below dis_froz_max) is kept exactly; above it, up to dis_win_max, the states are chosen by projection on the trial orbitals</dd>
+      <dt>Trial orbitals</dt><dd>Base: the atomic orbitals (the <code>.amn</code> from step 3). Displaced structure: the base's Wannier functions for the same window, A(k) = O(k) V<sub>base</sub>(k) (<code>analysis/pipeline/mode_amn.py</code>, from step 4 and the base's <code>.chk</code>)</dd>
+      <dt>Output</dt><dd><code>windows/&lt;window&gt;_k8/&lt;structure&gt;/out/MnBi2Te4.chk</code> (V(k), the overlaps M rotated to the Wannier gauge, the centres), <code>.wout</code>, and the <code>.eig</code>, <code>.win</code>, <code>.nnkp</code> step 6 reads</dd>
+      <dt>Resources</dt><dd>8 cores reserved for memory (28.8 GB); base 21 min, pattern 3 44 min (the <code>.amn</code> step adds ~20 min)</dd>
+    </dl>
+<pre><code>cp $SGE_O_WORKDIR/{MnBi2Te4.win, MnBi2Te4.nnkp} .
+get pw2wannier_k8/out MnBi2Te4.mmn;  get pw2wannier_k8/out MnBi2Te4.eig
+base:      get pw2wannier_k8/out MnBi2Te4.amn
+pattern:   copy overlap_k8/out/chunks/*  and  windows/&lt;window&gt;/base/out/MnBi2Te4.chk  into scratch
+           python mode_amn.py              # A(k) = O(k) V_base(k) -&gt; MnBi2Te4.amn
+mpirun -np 1 wannier90.x MnBi2Te4 &gt; MnBi2Te4.wout
+'All done' in .wout and .chk exists || fail;  delete the scratch copies of .mmn, overlaps
+ok</code></pre>
+    <p>Check of the displaced run: its spread Ω<sub>I</sub> equals the base's to 0.01% or better (0.01 Å displacement); the smallest singular value of A(k) is 0.99996.</p>
+  </section>
+
+  <section class="step">
+    <div class="step-head"><span class="n">6</span><h2>c₂: the axion-response density on the tube k points</h2><span class="where login">login node</span><span class="where cluster">10 cluster jobs</span></div>
+    <dl class="facts">
+      <dt>Login node</dt><dd>Write the k list (<code>axion_phonon.tube.klist(16, 4, 3, 8)</code>, 7,928 points) and <code>c2.py</code> with the settings (n_occ = 82, Q = 0.01 Å); submit 10 jobs with <code>qsub -v TASK=1</code> … <code>TASK=10</code></dd>
+      <dt>Code</dt><dd>Ours: <code>analysis/pipeline/c2.py</code> → <code>axion_phonon.io.wannier90</code>, <code>.wannier</code>, <code>.curvature</code>, <code>.axion</code></dd>
+      <dt>Output</dt><dd><code>dtheta_&lt;structure&gt;/c2/out_&lt;task&gt;/chunks/chunk_&lt;task-1&gt;.npz</code>: the task's k indices, c₂ at both ends, the direct gap</dd>
+      <dt>Resources</dt><dd>8 cores each; 218727: 793 k in 27 min, of which ~3 min building the models</dd>
+    </dl>
+    <h3>What the code does</h3>
+    <ol>
+      <li><b>Read</b> both Wannier runs (<code>read_run</code>): V(k), the band energies, the overlaps M(k, b) in the Wannier gauge (1.2 GB), the k mesh, the neighbours b, the lattice, the Wannier centres and the atoms.</li>
+      <li><b>Common positions</b> (<code>pair_models</code>): each base Wannier centre is replaced by its nearest atom; these 116 positions are used for both structures (one embedding τ for both ends of the finite difference).</li>
+      <li><b>H(R)</b> (<code>hamiltonian_R</code>): H(R) = (1/N<sub>k</sub>) Σ<sub>k</sub> e<sup>−ik·R</sup> V(k)<sup>†</sup> E(k) V(k), at full precision from the <code>.chk</code> and <code>.eig</code>, one R per aliasing class of the 8³ mesh, then each matrix element moved to the image of R closest to its two orbitals (<code>fold</code>).</li>
+      <li><b>A(R)</b> (<code>position_matrix_R</code>): the Wannier position matrix ⟨0m|r|Rn⟩ from the overlaps M by Wannier90's translation-invariant formula, folded on the same positions.</li>
+      <li><b>Models</b> (<code>tb_model</code>): two PythTB models carrying H(R) and A(R).</li>
+      <li><b>At each k</b> of the task: H(k), ∂H/∂k, A(k) and its curl for both structures (<code>curvature.fields</code>); the fourth direction β from the finite difference between the structures, ∂H/∂β = (H<sub>structure</sub> − H<sub>base</sub>)/Q and the same for A (<code>axion.beta_terms</code>); diagonalise; the non-Abelian Berry curvature Ω of the 82 occupied bands in the four directions (k<sub>x</sub>, k<sub>y</sub>, k<sub>z</sub>, β), as internal + cross + external parts (<code>curvature.connection</code>, <code>omega</code>); c₂ = (1/16π) ε<sup>μνρσ</sup> Tr[Ω<sub>μν</sub> Ω<sub>ρσ</sub>] (<code>axion.c2_density</code>).</li>
+      <li><b>Two ends</b>: the spatial fields at the base (β = 0) and at the displaced structure (β = Q) give two estimates of the same derivative, the "base end" and "structure end" (they differ at O(Q)).</li>
+    </ol>
+    <div class="why">
+      <b>Why a tube, and why 7,928 k?</b>
+      <p>c₂ is ~10³ near the line k<sub>x</sub> = k<sub>y</sub> = 0 through Γ (along k<sub>z</sub>), where the direct gap is only ~0.19 eV, and small elsewhere. The list is a 16 × 16 grid in each of 8 planes along that line, with every cell within 3 cells of the line replaced by a 4 × 4 finer grid. Converged to ~0.1% (studies/tube_convergence).</p>
+      <b>Why 10 outputs?</b>
+      <p>One job holding both models needs ~25 GB, so it reserves a whole 8-core slot of memory, and does about 0.3 k points per second: the 7,928 points would take ~4.5 h in one job. Split 10 ways (task i takes points i, i+10, i+20, …, so each task samples the whole tube and they finish together), the 10 jobs run on 10 nodes at once and finish in ~27 min. They are separate jobs, not an SGE array, at the admin's request. 10 is only for speed: the sum in step 7 uses all 7,928 values exactly once.</p>
+    </div>
+<pre><code>cp $SGE_O_WORKDIR/{c2.py, klist.npz} .
+for f in .chk .eig .win .nnkp:  get windows/&lt;w&gt;/base/out MnBi2Te4$f  -&gt; base/
+                                get windows/&lt;w&gt;/&lt;structure&gt;/out MnBi2Te4$f -&gt; mode/
+python c2.py      # TASK = 1..10 from qsub -v; writes chunks/chunk_&lt;TASK-1&gt;.npz
+rm -rf base mode;  chunk written || fail
+ok    # -&gt; c2/OK_&lt;TASK&gt;</code></pre>
+  </section>
+
+  <section class="step">
+    <div class="step-head"><span class="n">7</span><h2>The sum: ∂θ/∂Q</h2><span class="where login">login node</span></div>
+    <dl class="facts">
+      <dt>Code</dt><dd><code>analysis/pipeline/dtheta.py</code> → <code>axion_phonon.tube.integrate</code>; run by <code>7_dtheta.sh</code> once all 10 tasks are OK (seconds)</dd>
+      <dt>What</dt><dd>Put the 10 chunks together (each k exactly once), then ∂θ/∂Q = (1/N₃) Σ<sub>planes</sub> [Σ<sub>coarse</sub> c₂ h² + Σ<sub>refined</sub> c₂ (h/m)²], h = 1/16, for each refinement level m = 1, 2, 4 and plane count 8, 4, 2: a convergence table at both ends</dd>
+      <dt>Output</dt><dd><code>dtheta_&lt;structure&gt;/dtheta.log</code> (the table; the answer is the m = 4, 8-plane entry), <code>c2.npz</code> (c₂ at every k, kept for the figures), <code>dtheta.npz</code></dd>
+    </dl>
+<pre><code>dθ base end (rows: in-plane level m; columns: planes along k_z)       production pair, window 10.278 / 15.169
+                 8           4           2
+m=1        2.93116     3.05625     3.17854
+m=2        6.65474     7.02464     6.77525
+m=4        6.43227     6.77676     6.63165      &lt;- ∂θ/∂Q = 6.43227 rad/Å (structure end 6.60007)</code></pre>
+  </section>
+
+  <section class="step">
+    <div class="step-head"><span class="n">8</span><h2>On the laptop</h2><span class="where laptop">laptop</span></div>
+    <ul>
+      <li><b>Copy back</b> the small outputs (inputs, <code>.out</code>, <code>.win</code>, <code>.eig</code>, logs, c₂ chunks, the production <code>.chk</code>) into <code>data/MnBi2Te4/</code>, same tree; never the 87 GB saves.</li>
+      <li><b>Notebooks</b> in <code>analysis/</code>: <code>bands.ipynb</code> (Wannier vs DFT bands), <code>c2_distribution_modes.ipynb</code> (where in k the response comes from), <code>phonon_frequencies.ipynb</code>, <code>amplitude_series.ipynb</code>, <code>theta.ipynb</code> (θ = π from parities), the paper figures in <code>analysis/figures/</code>.</li>
+      <li><b>Studies</b>: <code>analysis/studies/2026-10-30_window_parts/assemble.py</code> (the window tests: bands vs DFT and c₂ split into parts per window).</li>
+      <li><b>Checks of the code</b>: <code>analysis/validation/</code> (unit tests; the restructure acceptance tests showing the package reproduces the earlier code).</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Other jobs that are not on the main chain</h2>
+    <div class="tablewrap"><table>
+      <thead><tr><th>what</th><th>where</th><th>folder</th></tr></thead>
+      <tbody>
+        <tr><td>DFT bands on the k path (pw.x bands, 104 k)</td><td><span class="where cluster">1 job</span></td><td><code>dft/base/bands/</code></td></tr>
+        <tr><td>Window test: base-model bands vs DFT, and c₂ from internal / +cross / full curvature (one job per window, ~15 min)</td><td><span class="where cluster">1 job per window</span></td><td><code>windows/&lt;w&gt;/bands_and_parts_&lt;structure&gt;/</code></td></tr>
+        <tr><td>Force-constant and amplitude-series SCFs (phonon frequencies, E(Q))</td><td><span class="where cluster">1 job each</span></td><td><code>phonons/</code></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <h2>Where each structure is</h2>
+    <div class="tablewrap"><table>
+      <thead><tr><th>structure</th><th>steps done</th><th>to do for ∂θ/∂Q</th></tr></thead>
+      <tbody>
+        <tr><td><code>base</code></td><td>1–3; step 5 for 17 windows</td><td>step 5 for the chosen window if new</td></tr>
+        <tr><td><code>T2-_p3_Q0.01</code></td><td>1–4; step 5 for 17 windows; steps 6–7 for 9 of them</td><td>steps 6–7 for the chosen window</td></tr>
+        <tr><td><code>T2-_p1_Q0.01</code>, <code>T2-_p2_Q0.01</code>, <code>T2-_p4_Q0.01</code>, <code>T2-_p3_Q0.03</code></td><td>1–3</td><td>4, 5, 6, 7</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <footer>Sources: the job logs on the cluster (run times, cores, memory), <code>analysis/pipeline/</code>, <code>axion_phonon/</code>, <code>data/MnBi2Te4/README.md</code>.</footer>
+</main>

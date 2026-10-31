@@ -1,8 +1,9 @@
 # #9 — MnBi2Te4 T2⁻ inputs: a rounded bohr cell loses C3, and `symmetry_with_labels` triggers #7
 
-> **Status: OPEN, fix known, not yet applied.** As of 2026-10-06 every T2⁻ input (locally and on the
-> cluster, files from Nov 2025) still uses the rounded `CELL_PARAMETERS bohr` cell. Regenerate on the precise
-> ångström cell before the next T2⁻ run.
+> **Status: FIXED** (checked 2026-10-13). The production T₂⁻ runs (`phonon_lda/T2-/mode_*/Q_0p01_kfix_2026-10-11`,
+> 212708-212711, and their 8×8×8 NSCFs) use the exact `CELL_PARAMETERS angstrom` cell (a = 4.33360 Å, c/3 = 27.284 Å)
+> and QE finds 12 operations (6 with fractional translations). `symmetry_with_labels` is still on; the two Mn-swap
+> operations it adds were the #7 trigger, and #7 is patched in the production pw.x `db4b99b4`.
 
 **Found:** 2026-09-22. **Affects:** MnBi2Te4 zone-boundary T2⁻ mode inputs (`phonon/T2-/mode*/...`). The T1⁺
 inputs already use `CELL_PARAMETERS angstrom`.

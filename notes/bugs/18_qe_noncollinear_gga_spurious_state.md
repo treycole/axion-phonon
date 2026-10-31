@@ -5,6 +5,9 @@
 > - **Not a code regression:** the QE 7.2 → 8.0dev audit found nothing that explains it. It's a limitation of
 >   QE's noncollinear GGA.
 > - **Full record:** [`../log/2026-10-08_mbt_noncollinear_gga_lda.md`](../log/2026-10-08_mbt_noncollinear_gga_lda.md).
+> - **Runs on the cluster:** `MnBi2Te4/base/soc/u_4.0/bug_18/` (209025 with the energy-breakdown restart and the
+>   asymmetric state's density, tests B, B2, C, D, E1, E2; its `NOTE` says which runs are wrong and what each shows).
+>   Test D's save is the converged PBE+U base kept for a PBE vs LDA band comparison.
 
 **Found:** 2026-10-05 to 10-08. **Affects:** MnBi2Te4 base SCF with SOC (therefore noncollinear) and PBE, from a
 random start (`startingwfc = 'atomic+random'`, the default). Every MBT PBE+SOC base run on the new QE build.
@@ -45,4 +48,4 @@ random start (`startingwfc = 'atomic+random'`, the default). Every MBT PBE+SOC b
 - **YIO:** PBE converges from scratch, slowly; LDA 4× faster. The functional decision is open (see #17 update).
 - **Atomic start in PBE is knife-edge:** the symmetric state is a saddle (progress note §4.1).
 - **An optional QE patch** to enforce the anti-translation.
-- **Cleanup of the PBE test runs.**
+- ~~Cleanup of the PBE test runs~~ done 2026-10-19: diagnosis runs kept as outputs in `soc/u_4.0/bug_18/`, the rest deleted.

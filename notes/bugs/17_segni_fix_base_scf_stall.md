@@ -55,7 +55,7 @@ The plane-wave part (`gradcorr.f90`) uses the same local frame without the Y_lm 
 
 ## Candidate fix
 
-`calculations/diagnostics/2026-10-05_ws_tolerance_window/qe_segni_patch/paw_mag_regularize.patch`, on top of
+`archive/diagnostics/2026-10-05_ws_tolerance_window/qe_segni_patch/paw_mag_regularize.patch`, on top of
 `paw_segni_lsign.patch`. Only in the local frame (`lsign = .false.`):
 
 - `compute_rho_spin_lm`: |m| → |m̃| = |m|² / √(|m|² + δ²). Smooth (analytic in m), ≈ |m|²/δ near zero,

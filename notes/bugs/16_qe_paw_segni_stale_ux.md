@@ -167,7 +167,7 @@ collinear case.
 moments and never follows m. The NSCF keeps the SCF's m(r) fixed.
 
 ## Fix
-`calculations/diagnostics/2026-10-05_ws_tolerance_window/qe_segni_patch/paw_segni_lsign.patch`. In both routines,
+`archive/diagnostics/2026-10-05_ws_tolerance_window/qe_segni_patch/paw_segni_lsign.patch`. In both routines,
 `use_ux = lsign` (passed to the OpenACC loop as `firstprivate`), and `IF (use_ux) segni_rad = SIGN(1, m·ux)`,
 `ELSE segni_rad = 1`, mirroring `compute_rho.f90`.
 
@@ -267,4 +267,4 @@ smooth-grid GGA follows it, and the PAW GGA applies the collinear-only fixed-axi
 
 **Sources:** [`../log/2026-10-05_yio_symmetry_floor_dft_origin.md`](../log/2026-10-05_yio_symmetry_floor_dft_origin.md),
 [`../log/2026-10-06_segni_fix_validated_and_reruns.md`](../log/2026-10-06_segni_fix_validated_and_reruns.md);
-scripts in `calculations/diagnostics/2026-10-05_ws_tolerance_window/`.
+scripts in `archive/diagnostics/2026-10-05_ws_tolerance_window/`.

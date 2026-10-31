@@ -7,7 +7,7 @@ eigenvalues. **Corrects the 09-29 note's "the floor moved into A(R)"**: A(R) isn
 
 Base run throughout: `data/Y2Ir2O7/base/soc/u_3.0/output/192344bc889` (SCF + NSCF, QE 7.6 + `new_ns_nc`
 patch, **without** the PAW `v_rad`/`g_rad` fix), Wannierization `.../trial_02_Y_p_Ir_d_O_sp/192473bc889`.
-Scripts: `calculations/diagnostics/2026-10-05_ws_tolerance_window/`.
+Scripts: `archive/diagnostics/2026-10-05_ws_tolerance_window/`.
 
 ## 1. The DFT eigenvalues break the symmetry (`eig_symmetry.py`)
 
