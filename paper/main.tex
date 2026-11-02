@@ -1,4 +1,9 @@
 \include{preamble}
+
+\newcommand{\MBT}{MnBi$_2$Te$_4$}
+\newcommand{\YIO}{Y$_2$Ir$_2$O$_7$}
+\newcommand{\cmi}{cm$^{-1}$}
+
 \begin{document}
 
 \title{Axion-active phonons in magnetic insulators}
@@ -17,16 +22,20 @@ Department of Physics, University of Texas at Austin, Austin, Texas 78712, USA}
 \affiliation{
 Department of Physics \& Astronomy, Center for Materials Theory, Rutgers University, Piscataway, New Jersey 08854, USA}
 
+\author{Jae-Mo Lihm}
+\affiliation{
+Center for Computational Quantum Physics, Flatiron Institute, 162 5th Avenue, New York, New York 10010, USA
+}
+
 \author{David Vanderbilt}
 \affiliation{
 Department of Physics \& Astronomy, Center for Materials Theory, Rutgers University, Piscataway, New Jersey 08854, USA}
 
 \begin{abstract}
-The Chern-Simons axion angle $\theta$ is quantized to $0$ or $\pi$ in insulators possessing certain symmetries such as spatial inversion $\mathcal{P}$ or time-reversal $\mathcal{T}$.
-Phonon modes that simultaneously break all symmetries protecting this quantization---which we call ``axion-active'' phonons---induce a first-order modulation of $\theta$ away from its quantized value.
-We develop a first-principles methodology for identifying axion-active phonon modes through symmetry analysis and computing the induced linear response $\partial_\lambda \theta$ using a gauge-invariant four-curvature formulation evaluated on Wannierized tight-binding Hamiltonians derived from density-functional theory.
-We apply this approach to two magnetic insulators with contrasting axion topology: (i) MnBi$_2$Te$_4$, an antiferromagnetic topological insulator with $\theta = \pi$ enforced by inversion $\mathcal{P}$ and the combined symmetry $\Theta = \mathcal{T} S_{1/2}$, where the axion-active phonons belong to the $T_2^-$ irreducible representation at the Brillouin-zone boundary; and (ii) Y$_2$Ir$_2$O$_7$, a pyrochlore iridate with all-in-all-out magnetic order studied in a correlation regime where $\theta = 0$, providing a non-topological counterpoint.
-In Y$_2$Ir$_2$O$_7$, the axion-active phonons transform as the zone-center $\Gamma_2^-$ ($A_{2u}$) representation---a mode that is neither infrared- nor Raman-active, representing a ``silent'' modulation of the axion angle.
+
+The Chern-Simons axion angle $\theta$ is pinned to $0$ or $\pi$ by any symmetry that reverses orientation or time. A lattice vibration that removes all such symmetries makes $\theta$ dynamical, and proposals ranging from axion polaritons to axion dark matter detectors rest on the size of the resulting coupling $\partial \theta/\partial u$. This coupling has so far been a model parameter. Here, we compute it from first principles in two magnetic insulators with distinct topological classifications. \MBT, an antiferromagnetic topological insulator whose ground state has $\theta=\pi$, and the all-in-all-out pyrochlore iridate \YIO, whose ground state is trivial and whose crystal symmetry enforces $\theta=0$. We express the linear response of $\theta$ to an atomic displacement as a Brillouin-zone integral of the trace of a product of non-Abelian Berry curvatures in the joint space of crystal momentum and phonon amplitude, and evaluate it via Wannier interpolation. We then derive the symmetry rules that govern the coupling. A phonon changes $\theta$ at linear order only if it transforms as $\theta$ itself, a one-dimensional representation; it is then infrared-active only if the magnetic point group admits a net magnetization, and never Raman-active when the undistorted crystal is centrosymmetric. In magnets whose magnetic ions sit on inversion centers, no uniform spin fluctuation moves $\theta$ at any order, so the bulk dynamical axion must be a lattice mode. In \YIO{} the three axion-active $\Gamma_2^-$ ($A_{2u}$) phonons, at 229, 328, and 472~\cmi{}, change $\theta$ by $0.010$--$0.024$~rad per {\AA} of displacement. In \MBT{} the axion-active modes are the four zone-boundary $T_2^-$ phonons at 18, 83, 129, and 143~\cmi{}, including the rigid interlayer breathing mode, which changes $\theta$ by 1.4~rad per {\AA}; the largest coupling, 3.6~rad per {\AA}, belongs to the 129~\cmi{} Mn-dominated mode, two orders of magnitude above \YIO{}.
+
+
 \end{abstract}
 
 \maketitle
@@ -38,26 +47,10 @@ In Y$_2$Ir$_2$O$_7$, the axion-active phonons transform as the zone-center $\Gam
 \seclab{intro}
 %==========================================================================
 
-The Chern-Simons axion angle $\theta$ describes an isotropic contribution to the orbital magnetoelectric coupling in three-dimensional insulators \cite{qi2008topological, essin2010orbital}.
-In insulating materials that break both spatial inversion and time-reversal symmetries, a magnetic field $\mathbf{B}$ can induce an electric polarization $\mathbf{P}$, and an electric field $\mathbf{E}$ can induce a magnetization $\mathbf{M}$.
-This coupling is described by a linear magnetoelectric coupling tensor $\alpha_{ij} = (\partial P_i / \partial B_j)_{\mathbf{E}=0} = (\partial M_i/\partial E_j)_{\mathbf{B}=0}$ \cite{Malashevich_2010}.
-The Chern-Simons axion (CSA) coupling makes an isotropic contribution $\alpha^{\text{CS}}$ to the magnetoelectric tensor proportional to the dimensionless quantity $\theta$,
-\begin{equation}
-    \alpha^{\text{CS}}_{ij} = \frac{\theta e^2}{2 \pi h} \delta_{ij}.
-    \eqlab{alpha-CS}
-\end{equation}
-The quantity $\theta$ is determined by the integral of a Chern-Simons 3-form over the Brillouin zone \cite{chern1974characteristic, Malashevich_2010, mong2010antiferromagnetic, essin2010orbital},
-\begin{equation}
- \theta = -\frac{1}{4\pi} \int_{\text{BZ}} d^3k \,
-\epsilon^{\mu\nu\sigma} \mathrm{Tr} \left[
-    \mathcal{A}_\mu \partial_\nu \mathcal{A}_\sigma - \frac{2i}{3} \mathcal{A}_\mu \mathcal{A}_\nu \mathcal{A}_\sigma
-\right],
-\eqlab{CS3form}
-\end{equation}
-where $\mathcal{A}_\mu$ is the non-Abelian Berry connection matrix.
-In general, $\theta$ is only well-defined modulo $2\pi$, reflecting a gauge ambiguity analogous to the quantum of polarization in the modern theory of electric polarization \cite{marzari2012}.
-However, in the presence of symmetries that quantize $\theta$---either inversion $\mathcal{P}$, time-reversal $\mathcal{T}$, or certain composite antiunitary symmetries---the axion angle is pinned to the discrete values $\theta = 0$ or $\theta = \pi$ (mod $2\pi$) \cite{Turner2012, mong2010}.
-Materials with $\theta = \pi$ are termed \emph{axion insulators}, and exhibit half-quantized surface anomalous Hall conductivity on symmetry-preserving surfaces \cite{qi2008topological, essin2010orbital}.
+Many properties of crystalline insulators are governed by the geometry of the occupied Bloch states rather than by the band energies alone~\cite{xiao2010berry, vanderbilt2018berry}. The electric polarization is the most familiar example: it is a Berry phase of the occupied manifold, defined only modulo a quantum~\cite{kingsmith1993theory, resta1994macroscopic}. Its three-dimensional, magnetoelectric counterpart is the Chern-Simons axion angle $\theta$, which describes the isotropic part of the orbital magnetoelectric response~\cite{qi2008topological, essin2009magnetoelectric, essin2010orbital, malashevich2010theory, coh2011chern}. An insulator with $\theta\neq0$ responds to a magnetic field $\mathbf B$ with an electric polarization $\mathbf P=(\theta e^2/2\pi h)\mathbf B$, and to an electric field with the corresponding magnetization; in the language of high-energy physics, $\theta$ plays the role of a background axion field coupled to $\mathbf E\cdot\mathbf B$~\cite{wilczek1987two}.
+
+Like the polarization, $\theta$ is a multivalued quantity, defined modulo $2\pi$. Any symmetry that reverses either spatial orientation or time maps $\theta$ to $-\theta$, and therefore pins it to $0$ or $\pi$~\cite{qi2008topological, essin2009magnetoelectric, mong2010antiferromagnetic, hughes2011inversion, turner2012quantized, marzari2012maximally}. Insulators with $\theta=\pi$ are axion insulators. Time-reversal-symmetric strong topological insulators are the original example, and their quantized magnetoelectric response has been observed through Faraday and Kerr rotation~\cite{wu2016quantized, armitage2019matter}. In magnetic insulators, $\theta=\pi$ can instead be protected by inversion or by a composite of time reversal with a fractional translation~\cite{mong2010antiferromagnetic}. The layered antiferromagnet \MBT{} is the most studied realization~\cite{otrokov2019prediction, li2019intrinsic, zhang2019topological, gong2019experimental}: it is an intrinsic antiferromagnetic topological insulator, and thin films show axion-insulator and Chern-insulator transport~\cite{deng2020quantum, liu2020robust, gao2021layer}.
+
 
 The electrodynamics of a homogeneous medium are unaffected by a spatially and temporally uniform $\theta$, being instead only sensitive to its spatial gradients---producing a local anomalous Hall current $\mathbf{J}(\mathbf{r}, t) \propto \mathbf{E} \times \nabla \theta(\mathbf{r}, t)$---or to its time derivative---producing a local chiral magnetic effect $\mathbf{J}(\mathbf{r}, t) \propto \mathbf{B}\, \partial_t \theta(\mathbf{r}, t)$.
 These effects will be activated insofar as some parameters in the crystal Hamiltonian are spatially inhomogeneous or time-dependent, and their magnitudes will be controlled by the first derivatives of $\theta$ with respect to those parameters.
