@@ -6,7 +6,7 @@
 #           planes, refined M x M within HALF cells of the small-gap line. HALF = -1 and M = 1, N3 = NK_T: the plain
 #           NK_T^3 grid.
 #   job     copies both Wannier runs (.chk, .eig, .win, .nnkp) into scratch, runs c2.py.
-#   output  dft/<structure>/windows/<window>/dtheta_<structure>/: klist.npz, c2/out/chunks/chunk_<i-1>.npz
+#   output  windows/<window>/dtheta_<structure>/: klist.npz, c2/out/chunks/chunk_<i-1>.npz
 set -euo pipefail
 # ============================================================================== settings
 MAT=/mnt/wkdk/bc889/axion/MnBi2Te4

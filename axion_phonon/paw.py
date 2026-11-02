@@ -233,6 +233,8 @@ def gradient_matrix(ps: Pseudo, ch: Channels, G: np.ndarray, H: np.ndarray) -> n
     The O(d) term of the cross-structure augmentation: <phi_i(r - d)|phi_j(r)> = q_ij + d . D_ij + O(d^2).
     Large components only (PP_AEWFC); the small-component (PP_AEWFC_REL) part of q_ij is not differentiated.
     """
+    if not ps.augmented:                                                # norm-conserving: no partial waves
+        return np.zeros((3, len(ch.indv), len(ch.indv)))
     k = ps.kkbeta
     r, rab = ps.r[:k], ps.rab[:k]
     nb = len(ps.lll)

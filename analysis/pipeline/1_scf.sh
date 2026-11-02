@@ -11,6 +11,7 @@ set -euo pipefail
 MAT=/mnt/wkdk/bc889/axion/MnBi2Te4
 STRUCTURE=T2-_p3_Q0.01   # a folder of $MAT/dft/: base, T2-_p1_Q0.01, ...
 PREFIX=MnBi2Te4
+PSEUDO=/mnt/wkdk/bc889/axion/pseudo/rel-pz   # the pseudopotential set (pseudo/README); the input's pseudo_dir must be it
 START=/mnt/wkdk/bc889/axion/MnBi2Te4/dft/base/scf/out/tmp/MnBi2Te4.save   # or "" (input without startingpot)
 N_KPOINTS=16             # k points pw.x must find: the orbit count (MBT base 13, T2- patterns 16; bug #19)
 M_TOTAL=0.00             # expected |total magnetization| (Bohr mag/cell)

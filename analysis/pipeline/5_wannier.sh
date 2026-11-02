@@ -8,6 +8,9 @@
 #           .chk. Then wannier90.x -np 1 with the step-3 .mmn and .eig.
 #   output  windows/<window>/<structure>/out/: <PREFIX>.chk(.gz), .wout, .eig, .win, .nnkp (everything step 6 reads);
 #           displaced structures also keep their .amn.gz
+#   TRIAL   another trial set (step 3 with TRIAL): the base's .amn and .win (projections, lower edges) from
+#           dft/base/pw2wannier_k<NK>_<TRIAL>/, a displaced structure's .win made from it; .mmn and .eig as always.
+#           Window folder <TRIAL>_f<FROZ_MAX>_w<WIN_MAX>_k<NK>.
 set -euo pipefail
 # ============================================================================== settings
 MAT=/mnt/wkdk/bc889/axion/MnBi2Te4
@@ -17,6 +20,7 @@ NK=8
 FROZ_MAX=10.278          # eV (recorded in the folder's NOTE)
 WIN_MAX=15.169
 TOL=0.005                # eV: every window edge at least this far from every NSCF eigenvalue
+TRIAL=""                 # "": the main trial set (pw2wannier_k<NK>); a label: the set of pw2wannier_k<NK>_<TRIAL>
 QUEUE=dko48m4,dko64m4
 SLOTS=8                  # wannier90.x runs on one rank (-np 1); the slots reserve its memory (8 x 3.6 GB)
 H_RT=24:00:00
@@ -24,22 +28,31 @@ SUBMIT=true
 # ======================================================================================
 source $(dirname $0)/common.sh
 check_tools
-WINDOW=f${FROZ_MAX}_w${WIN_MAX}_k$NK        # the folder of $MAT/windows/ for this window and mesh
+WINDOW=${TRIAL:+${TRIAL}_}f${FROZ_MAX}_w${WIN_MAX}_k$NK   # the folder of $MAT/windows/ for this trial set, window, mesh
 D=$MAT/windows/$WINDOW/$STRUCTURE
 NAME=$STRUCTURE
 ready $D
-P=$(need_ok $MAT/dft/$STRUCTURE/pw2wannier_k$NK)
+P=$(need_ok $MAT/dft/$STRUCTURE/pw2wannier_k$NK)    # .mmn, .eig (and the main set's base .amn)
 NS=$(need_ok $MAT/dft/$STRUCTURE/nscf_k$NK)
-sed -E -e "s/^(\s*dis_froz_max\s*=\s*).*/\1$FROZ_MAX/" -e "s/^(\s*dis_win_max\s*=\s*).*/\1$WIN_MAX/" \
-  $MAT/dft/$STRUCTURE/pw2wannier_k$NK/$PREFIX.win > $D/$PREFIX.win
+SRC=$MAT/dft/$STRUCTURE/pw2wannier_k$NK/$PREFIX.win
+PA=$P                                                # where the base .amn is
+if [ -n "$TRIAL" ]; then
+  PA=$(need_ok $MAT/dft/base/pw2wannier_k${NK}_$TRIAL)
+  SRC=$MAT/dft/base/pw2wannier_k${NK}_$TRIAL/$PREFIX.win
+  if [ $STRUCTURE != base ]; then                    # the trial set's base .win with this structure's displacements
+    $PY $CODE/pipeline/inputs.py win $SRC $MAT/dft/base/scf/$PREFIX.scf.in $MAT/dft/$STRUCTURE/scf/$PREFIX.scf.in > $D/$PREFIX.win.src
+    SRC=$D/$PREFIX.win.src
+  fi
+fi
+sed -E -e "s/^(\s*dis_froz_max\s*=\s*).*/\1$FROZ_MAX/" -e "s/^(\s*dis_win_max\s*=\s*).*/\1$WIN_MAX/" $SRC > $D/$PREFIX.win
 grep -Eq "^\s*dis_froz_max\s*=\s*$FROZ_MAX$" $D/$PREFIX.win && grep -Eq "^\s*dis_win_max\s*=\s*$WIN_MAX$" $D/$PREFIX.win \
   || die "could not set the window in $D/$PREFIX.win"
-[ "$(diff $MAT/dft/$STRUCTURE/pw2wannier_k$NK/$PREFIX.win $D/$PREFIX.win | grep -c '^>' || true)" -le 2 ] || die "the .win changed in more than the window"
+[ "$(diff $SRC $D/$PREFIX.win | grep -c '^>' || true)" -le 2 ] || die "the .win changed in more than the window"
 cp -p $MAT/dft/$STRUCTURE/pw2wannier_k$NK/$PREFIX.nnkp $D/
 if [ $STRUCTURE = base ]; then
   $PY $CODE/pipeline/inputs.py window $NS/$PREFIX.nscf.out $D/$PREFIX.win $TOL > $D/window_check.txt \
     || { cat $D/window_check.txt; die "window"; }
-  AMN_LINES=("get $P $PREFIX.amn")
+  AMN_LINES=("get $PA $PREFIX.amn")
   KEEP_AMN="rm -f $PREFIX.amn                              # the base .amn stays in pw2wannier"
 else
   NSB=$(need_ok $MAT/dft/base/nscf_k$NK)
@@ -71,5 +84,5 @@ cat $D/window_check.txt
     "grep 'Omega I ' $PREFIX.wout | tail -1" \
     "ok"; } > $D/send_job.sh
 submit $D send_job.sh
-note $D "wannier90 k$NK of $NAME, dis_froz_max $FROZ_MAX eV, dis_win_max $WIN_MAX eV: .mmn/.eig $P$( [ $STRUCTURE = base ] && echo ", atomic .amn" || echo ", .amn = O V_base from $O and $BW"). Job $(cat $D/SUBMITTED 2>/dev/null)."
+note $D "wannier90 k$NK of $NAME${TRIAL:+ (trial set $TRIAL)}, dis_froz_max $FROZ_MAX eV, dis_win_max $WIN_MAX eV: .mmn/.eig $P$( [ $STRUCTURE = base ] && echo ", atomic .amn" || echo ", .amn = O V_base from $O and $BW"). Job $(cat $D/SUBMITTED 2>/dev/null)."
 cp -p $0 $D/

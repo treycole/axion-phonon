@@ -6,6 +6,9 @@
 #           atom moved by its displacement. Here: wannier90.x -pp on the login node (the .nnkp).
 #   job     copies the NSCF save into scratch, runs pw2wannier90.x -nk POOLS -pd true, gzips .mmn (and .amn).
 #   output  dft/<structure>/pw2wannier_k<NK>/out/: <PREFIX>.mmn.gz, .eig (, .amn.gz); <PREFIX>.win and .nnkp in the step folder
+#   TRIAL   another trial set of the base (its own projections and lower window edges): only its .amn, from the
+#           base's pw2wannier_k<NK>_<TRIAL>/<PREFIX>.win (written by you), into dft/base/pw2wannier_k<NK>_<TRIAL>/out/.
+#           The .mmn and .eig do not depend on the trial orbitals: every trial set uses those of pw2wannier_k<NK>/.
 set -euo pipefail
 # ============================================================================== settings
 MAT=/mnt/wkdk/bc889/axion/MnBi2Te4
@@ -17,14 +20,20 @@ QUEUE=dko48m4,dko64m4
 SLOTS=48
 H_RT=96:00:00
 SCRATCH_GB=200           # free scratch the job needs: the save (MBT 87 GB at 8^3) and the .mmn
+TRIAL=""                 # "": the main trial set (and the .mmn, .eig); a label: only that set's base .amn (see above)
 SUBMIT=true
 # ======================================================================================
 source $(dirname $0)/common.sh
 check_tools
-D=$MAT/dft/$STRUCTURE/pw2wannier_k$NK
-TEMPLATE=$MAT/dft/base/pw2wannier_k$NK/$PREFIX.win
-NAME=$STRUCTURE
+SUFFIX=${TRIAL:+_$TRIAL}
+D=$MAT/dft/$STRUCTURE/pw2wannier_k$NK$SUFFIX
+TEMPLATE=$MAT/dft/base/pw2wannier_k$NK$SUFFIX/$PREFIX.win
+NAME=$STRUCTURE$SUFFIX
 ready $D
+if [ -n "$TRIAL" ]; then
+  [ $STRUCTURE = base ] || die "a trial set needs only the base .amn (STRUCTURE=base); displaced structures get theirs in step 5"
+  need_ok $MAT/dft/base/pw2wannier_k$NK > /dev/null   # the .mmn and .eig every trial set uses
+fi
 NSCF=$(need_ok $MAT/dft/$STRUCTURE/nscf_k$NK)
 NKPT=$((NK * NK * NK))
 [ -s $TEMPLATE ] || die "no $TEMPLATE"
@@ -42,11 +51,13 @@ fi
 WIN=$D/$PREFIX.win
 grep -Eq "^\s*num_iter\s*=\s*0\s*$" $WIN && grep -Eq "^\s*dis_num_iter\s*=\s*0\s*$" $WIN || die "$WIN: not num_iter = 0, dis_num_iter = 0"
 grep -Eiq "^\s*mp_grid\s*=?\s*$NK\s+$NK\s+$NK\s*$" $WIN || die "$WIN: mp_grid is not $NK $NK $NK"
+WRITE_MMN=.true.
+[ -z "$TRIAL" ] || WRITE_MMN=.false.                 # a trial set: the .amn only
 printf "%s\n" "&inputpp" "    outdir = './tmp/'" "    prefix = '$PREFIX'" "    seedname = '$PREFIX'" "    write_amn = $WRITE_AMN" \
-  "    write_mmn = .true." "    write_unk = .false." "    write_eig = .true." "/" > $D/${PREFIX}_pw2wan.in
+  "    write_mmn = $WRITE_MMN" "    write_unk = .false." "    write_eig = $WRITE_MMN" "/" > $D/${PREFIX}_pw2wan.in
 (cd $D && $W90 -pp $PREFIX > /dev/null 2>&1 && [ -s $PREFIX.nnkp ]) || die "wannier90.x -pp failed in $D"
 for blk in kpoints nnkpts; do                        # projection centres move with the atoms; these must not
-  [ $STRUCTURE = base ] || cmp -s <(sed -n "/begin $blk/,/end $blk/p" $D/$PREFIX.nnkp) \
+  [ $STRUCTURE = base ] && [ -z "$TRIAL" ] || cmp -s <(sed -n "/begin $blk/,/end $blk/p" $D/$PREFIX.nnkp) \
                                    <(sed -n "/begin $blk/,/end $blk/p" $MAT/dft/base/pw2wannier_k$NK/$PREFIX.nnkp) \
     || die "the .nnkp $blk differ from the base's"
 done
@@ -57,9 +68,9 @@ done
     "date; get_save $NSCF/tmp/$PREFIX.save tmp $NKPT" \
     "date; mpirun -np \$NSLOTS $QE/pw2wannier90.x -nk $POOLS -pd true -input ${PREFIX}_pw2wan.in > ${PREFIX}_pw2wan.out" \
     "rm -rf tmp; grep -q 'JOB DONE' ${PREFIX}_pw2wan.out || fail \"pw2wannier90.x did not finish\"" \
-    "[ -s $PREFIX.mmn ] && [ -s $PREFIX.eig ] || fail \"no .mmn or .eig\"" \
+    "[ $WRITE_MMN = .false. ] || { [ -s $PREFIX.mmn ] && [ -s $PREFIX.eig ]; } || fail \"no .mmn or .eig\"" \
     "[ $WRITE_AMN = .false. ] || [ -s $PREFIX.amn ] || fail \"no .amn\"" \
-    "date; pigz -p \$NSLOTS $PREFIX.mmn; [ ! -e $PREFIX.amn ] || pigz -p \$NSLOTS $PREFIX.amn" \
+    "date; [ ! -e $PREFIX.mmn ] || pigz -p \$NSLOTS $PREFIX.mmn; [ ! -e $PREFIX.amn ] || pigz -p \$NSLOTS $PREFIX.amn" \
     "ok"; } > $D/send_job.sh
 submit $D send_job.sh
 note $D "pw2wannier90 k$NK of $NAME: save $NSCF, write_amn $WRITE_AMN; .win from $TEMPLATE. Job $(cat $D/SUBMITTED 2>/dev/null)."

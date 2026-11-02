@@ -36,6 +36,13 @@ def _nat(text):
     return int(re.search(r"^\s*nat\s*=\s*(\d+)", text, re.M | re.I).group(1))
 
 
+def _cell(text):
+    """The cell as written: the CELL_PARAMETERS card, or (ibrav != 0, e.g. SrTiO3) the ibrav / celldm / A..cosC lines."""
+    if re.search(r"^CELL_PARAMETERS\b", text, re.M):
+        return _block(text, "CELL_PARAMETERS", 3)[2].split()
+    return sorted(re.findall(r"^\s*((?:ibrav|celldm\(\d\)|a|b|c|cosab|cosac|cosbc)\s*=\s*\S+)", text, re.M | re.I))
+
+
 def _atoms(text):
     _, _, blk = _block(text, "ATOMIC_POSITIONS", _nat(text))
     head, *rows = blk.splitlines()
@@ -46,8 +53,8 @@ def nscf(base_nscf, scf):
     t, s = open(base_nscf).read(), open(scf).read()
     if _nat(t) != _nat(s):
         sys.exit("nat differs")
-    if _block(t, "CELL_PARAMETERS", 3)[2].split() != _block(s, "CELL_PARAMETERS", 3)[2].split():
-        sys.exit("CELL_PARAMETERS differ from the base")
+    if _cell(t) != _cell(s):
+        sys.exit("the cell differs from the base")
     (h1, a1), (h2, a2) = _atoms(t), _atoms(s)
     if h1.split() != h2.split() or [x for x, _ in a1] != [x for x, _ in a2]:
         sys.exit("ATOMIC_POSITIONS units or species differ from the base")

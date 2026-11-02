@@ -8,9 +8,11 @@
 # it renames it out/ (need_ok). One step folder = one calculation; a variant is another step folder. c2 tasks use the same markers with the task number appended (OK_3, FAIL_3, ...).
 
 AX=/mnt/wkdk/bc889/axion
-QE=$AX/bin/qe_db4b99b4                         # pw.x db4b99b4, pw2wannier90.x 8f5368ba
+QE=$AX/bin/qe_db4b99b4                         # pw.x db4b99b4, pw2wannier90.x 8f5368ba, ph.x 554fabc7 (dfpt.sh)
+PH_MD5=554fabc7                                # ph.x, built 2026-11-01 in the same tree (make ph)
 W90=$AX/bin/wannier90_26c8b506/wannier90.x     # 26c8b506
-PSEUDO=$AX/pseudo/rel-pz                       # every production UPF (MD5SUMS there)
+PSEUDO=${PSEUDO:-$AX/pseudo/rel-pz}            # every production UPF (MD5SUMS there); a step's settings may name
+                                               # another set of $AX/pseudo/ (SrTiO3: oncv-pbe-rel)
 CODE=$AX/code/2026-10-29                       # axion_phonon/, pipeline/*.py, pythtb/ (external 5776792); MD5SUMS
 PY=/mnt/wkdk/bc889/envs/axion/bin/python       # numpy 1.26, scipy 1.11; runs on the login node and the nodes
 USER_TAG=bc889                                 # job folder = <step folder>/<job id>$USER_TAG

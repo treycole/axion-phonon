@@ -1,6 +1,6 @@
 #!/bin/bash
 # Step 7: dtheta/dQ of a pair, once every step-6 task is OK. Runs here on the login node (seconds, no job).
-#   output  dft/<structure>/windows/<window>/dtheta_<structure>/: dtheta.log (the result), c2.npz (k-resolved c2 at both ends), dtheta.npz, OK
+#   output  windows/<window>/dtheta_<structure>/: dtheta.log (the result), c2.npz (k-resolved c2 at both ends), dtheta.npz, OK
 set -euo pipefail
 # ============================================================================== settings
 MAT=/mnt/wkdk/bc889/axion/MnBi2Te4
