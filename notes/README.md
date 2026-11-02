@@ -29,6 +29,12 @@ with a since-fixed QE bug. The pipeline itself (Wannier → Ω → dθ) is valid
 - **MBT:** the paper's ~10 rad/Å came from a driver with bug [#2](bugs/02_pythtb_embedding_noop.md) and is invalid.
   MBT is being redone in LDA+U; the T₂⁻ modes also had [#19](bugs/19_qe_sym_ftrans_trev_energy.md).
 
+**SrTiO₃ Born-charge validation (2026-10-31/11-01, `data/SrTiO3/README.md`):** the mixed (k, u) curvature through the
+production pipeline and code (pw.x db4b99b4, ONCV NC + SOC, A(R) transl_inv_full from the `.chk`, frozen gauge) gives
+Z*_Ti,zz = 7.404 / 7.370 / 7.333 (all-valence / old trial_02 / old trial_03) against DFPT 7.2886 (ph.x 554fabc7,
+`pipeline/dfpt.sh`): +1.6 / +1.1 / +0.6%. Notebook `analysis/validation/sto_born_charge.ipynb`; test `tests/sto/`.
+Not covered: the PAW augmentation term of step 4 (NC has none), the O(u) one-sided difference.
+
 **Interlayer-stiffness audit (2026-10-16):** the per-gap conversion is k_Q/8, giving about 2.9–3.0 × 10¹⁹ N/m³;
 the phonon frequencies below are unchanged. Experimental comparison and its chain-model limitation:
 [log 10-16](log/2026-10-16_mbt_interlayer_stiffness.md).
@@ -323,7 +329,7 @@ Outside `notes/`:
   `../archive/setup_templates/Y2Ir2O7/`. MnBi2Te4 the same way (2026-10-13): `base/lda/`,
   `phonon/T2-/mode*/Q_0.01A/lda/`, `archive/` (every PBE run); run table in
   [`materials/MnBi2Te4.md`](materials/MnBi2Te4.md), templates in `../archive/setup_templates/MnBi2Te4/`.
-  SrTiO3 is not reorganized yet.
+  SrTiO3 (validation only) is in the pipeline layout since 2026-10-31: `data/SrTiO3/README.md`.
 
 **Conventions.**
 - Each fact has one home. Status lives here, a bug's story in `bugs/`, the evidence in `log/`; elsewhere, link to
