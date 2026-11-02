@@ -125,7 +125,8 @@ def _block(text: str, name: str) -> list[list[str]]:
 
 
 def read_win(path: str | Path) -> dict:
-    """``.win``: ``lattice`` (3, 3) rows a_i (A), ``atoms`` (nat, 3) Cartesian (A), ``symbols``, ``mp_grid``."""
+    """``.win``: ``lattice`` (3, 3) rows a_i (A), ``atoms`` (nat, 3) Cartesian (A), ``symbols``, ``mp_grid``,
+    ``windows`` {dis_win_min, dis_win_max, dis_froz_min, dis_froz_max: eV} (those the file sets)."""
     text = _text(path)
     rows = _block(text, "unit_cell_cart")
     scale = 1.0
@@ -149,7 +150,10 @@ def read_win(path: str | Path) -> dict:
     else:
         raise ValueError(f"{path}: no atoms_cart or atoms_frac block")
     m = re.search(r"^\s*mp_grid\s*[=:]?\s*(\d+)\s+(\d+)\s+(\d+)", text, re.I | re.M)
-    return dict(lattice=lattice, atoms=atoms, symbols=symbols, mp_grid=tuple(int(x) for x in m.groups()))
+    windows = {key: float(v) for key, v in re.findall(r"^\s*(dis_(?:win|froz)_(?:min|max))\s*[=:]?\s*(\S+)", text,
+                                                         re.I | re.M)}
+    return dict(lattice=lattice, atoms=atoms, symbols=symbols, mp_grid=tuple(int(x) for x in m.groups()),
+                windows=windows)
 
 
 def read_nnkp_neighbours(path: str | Path) -> tuple[np.ndarray, np.ndarray]:

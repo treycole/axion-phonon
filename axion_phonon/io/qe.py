@@ -52,7 +52,9 @@ def _floats(node) -> np.ndarray:
 
 @dataclass
 class Pseudo:
-    """The parts of a PAW UPF (v2) that build S and the partial-wave terms. Radial functions are r * f(r)."""
+    """The parts of a PAW UPF (v2) that build S and the partial-wave terms. Radial functions are r * f(r).
+    A norm-conserving UPF (no PP_AUGMENTATION, e.g. ONCV for SrTiO3) reads with ``augmented = False`` and zero Q:
+    S = 1 and the overlap is the plane-wave part alone."""
     r: np.ndarray
     rab: np.ndarray
     beta: list                                      # projectors r * beta(r)
@@ -64,6 +66,7 @@ class Pseudo:
     aewfc: list = field(default_factory=list)       # all-electron partial waves (large component)
     pswfc: list = field(default_factory=list)       # pseudo partial waves
     iraug: int = 0
+    augmented: bool = True
 
 
 def read_upf(path: str | Path) -> Pseudo:
@@ -81,17 +84,22 @@ def read_upf(path: str | Path) -> Pseudo:
         lll.append(int(node.get("angular_momentum")))
         kbeta.append(int(node.get("cutoff_radius_index")))
     aug = nl.find("PP_AUGMENTATION")
-    iraug = int(aug.get("cutoff_r_index"))
-    qqq = _floats(aug.find("PP_Q")).reshape(nbeta, nbeta)
-    if aug.get("q_with_l", "F").strip().lower() not in ("t", "true", ".true."):
-        raise NotImplementedError("augmentation without q_with_l")
     qfunc0 = np.zeros((nbeta, nbeta, len(r)))
-    for i in range(1, nbeta + 1):
-        for j in range(i, nbeta + 1):
-            node = aug.find(f"PP_QIJL.{i}.{j}.0")
-            if node is not None:
-                qfunc0[i - 1, j - 1] = qfunc0[j - 1, i - 1] = _floats(node)
-    qfunc0[:, :, iraug:] = 0.0                                          # read_upf_new: zero beyond iraug
+    if aug is None:                                                     # norm-conserving: no augmentation
+        if root.find("PP_HEADER").get("pseudo_type", "").strip().upper() != "NC":
+            raise ValueError(f"{path}: no PP_AUGMENTATION, but pseudo_type is not NC")
+        iraug, qqq = 0, np.zeros((nbeta, nbeta))
+    else:
+        iraug = int(aug.get("cutoff_r_index"))
+        qqq = _floats(aug.find("PP_Q")).reshape(nbeta, nbeta)
+        if aug.get("q_with_l", "F").strip().lower() not in ("t", "true", ".true."):
+            raise NotImplementedError("augmentation without q_with_l")
+        for i in range(1, nbeta + 1):
+            for j in range(i, nbeta + 1):
+                node = aug.find(f"PP_QIJL.{i}.{j}.0")
+                if node is not None:
+                    qfunc0[i - 1, j - 1] = qfunc0[j - 1, i - 1] = _floats(node)
+        qfunc0[:, :, iraug:] = 0.0                                      # read_upf_new: zero beyond iraug
     so = root.find("PP_SPIN_ORB")
     jjj = None
     if so is not None:
@@ -100,7 +108,8 @@ def read_upf(path: str | Path) -> Pseudo:
     aewfc = [_floats(full.find(f"PP_AEWFC.{i}")) for i in range(1, nbeta + 1)] if full is not None else []
     pswfc = [_floats(full.find(f"PP_PSWFC.{i}")) for i in range(1, nbeta + 1)] if full is not None else []
     return Pseudo(r=r, rab=rab, beta=beta, lll=np.array(lll), jjj=jjj,
-                  kkbeta=max(max(kbeta), iraug), qqq=qqq, qfunc0=qfunc0, aewfc=aewfc, pswfc=pswfc, iraug=iraug)
+                  kkbeta=max(max(kbeta), iraug), qqq=qqq, qfunc0=qfunc0, aewfc=aewfc, pswfc=pswfc, iraug=iraug,
+                  augmented=aug is not None)
 
 
 def read_pseudos(structure: dict, pseudo_dir: str | Path) -> dict[str, Pseudo]:
