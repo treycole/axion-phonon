@@ -14,7 +14,7 @@ axion topology:
   non-topological counterpoint; axion-active phonon is the zone-center
   `Γ₂⁻` (`A₂ᵤ`) mode, IR- and Raman-silent.
 
-`paper/main.tex` has the precise current statement. `README.md` at repo root
+`paper/draft/main_draft.tex` (the working draft; `paper/README.md`) has the precise current statement. `README.md` at repo root
 is David Vanderbilt's original 2024 project proposal (motivation), not a
 software readme.
 
@@ -22,7 +22,7 @@ software readme.
 
 - When a file is stale in the cluster, and has large size, delete it. If we don't need it, we don't need to keep it. The cluster should be at less the 2 TB of data.
 - We need one good DFT run per structure (undistorted and each distortion from the phonon modes for MBT and YIO). Its NSCF folder keeps one untarred `tmp/<prefix>.save` (for pw2wannier90 and the PAW overlaps of step 4), no `tmp.tar.gz` (agreed 2026-10-29). There should be one .mmn per DFT run and mesh, since it doesn't depend on trial wave functions. Extra copies of these files should not be kept around.
-- New runs go through `pipeline/` (one script per step, `pipeline/README.md`): run a step on the login node, wait for `OK` in its folder, run the next. Nothing is queued behind a step that has not succeeded.
+- New runs go through `analysis/pipeline/` (one script per step, `analysis/pipeline/README.md`): run a step on the login node, wait for `OK` in its folder, run the next. Nothing is queued behind a step that has not succeeded.
 - Be sure that we are using the correct versions of Quantum ESPRESSO and Wannier90. The cluster has a few different versions of QE and Wannier90, and we need to be sure that we are using the correct ones. The correct versions are:
   - Quantum ESPRESSO 7.6.0 develop with every fix found here: new_ns_nc (#7), PAW `v_rad` initialization (#12, upstream), PAW segni/`lsign` (#16), `irreducible_BZ` time-reversal unfold (#19). Cluster `~/q-e-kfix`, pw.x md5 **`db4b99b4`**, branch `production/axion-phonon` (fa9b19c8f) in `~/Repos/q-e` and on the GitLab fork. All new runs, MnBi2Te4 and Y2Ir2O7 (since 2026-10-11). The previous binary `e270b05b` (`~/q-e-segnifix`) gives identical k lists for YIO and the MBT base, so runs made with it stay valid, except MBT T2⁻ modes (#19).
   - Wannier90 4.0.3 (develop v4.0.1-160-gc4a924a5): cluster `~/wannier90-dev`, wannier90.x md5 **`26c8b506`**; every
@@ -31,15 +31,17 @@ software readme.
   - Frozen copies of both, and the pseudopotentials, are in `/mnt/wkdk/bc889/axion/{bin,pseudo}/` with `MD5SUMS`;
     job scripts call them by absolute path, print `md5sum $BIN/pw.x`, and set `-l hostname=!n138`.
 - **Functionals (since 2026-10-08):**
-  - **MnBi2Te4: LDA+U**, U = 4 eV on Mn 3d, `rel-pz` PAW. Production base: `MnBi2Te4/base/` (SCF + NSCF 214290,
-    Wannier 214300); layout and every run in `MnBi2Te4/README.md` (cluster and `data/`, same tree since 2026-10-30).
+  - **MnBi2Te4: LDA+U**, U = 4 eV on Mn 3d, `rel-pz` PAW. Production: `MnBi2Te4/dft/base/` (SCF + NSCF 214290,
+    pw2wannier90 214300), window `f10.962_w12.810_k8` (base Wannier 219737); layout and every run in
+    `data/MnBi2Te4/README.md` (cluster and `data/`, same tree since 2026-10-30).
   - **Pseudopotentials:** Mn `spn` 0.3.1 and Bi `dn` 1.0.0 are the official pslibrary files. Te `rel-pz-n` 1.0.0 is
     not on the QE site, so it was generated with `ld1.x` from the official `rel-pbe` recipe; see
     `MnBi2Te4/pseudo_gen/`.
   - **No PBE for MBT with SOC** (pitfall 8).
-  - **Y2Ir2O7: LDA+U** (U = 3, `rel-pz` PAW) since 2026-10-12 (user): base YL2 210527 (+ NSCF 210590, Wannier 212615),
-    modes `phonon/mode_{1,2,3}/fromYL2_2026-10-12/`. LDA's curvature symmetry is exact (bug #22) and its SCFs converge;
-    the PBE+U runs (YP) are superseded.
+  - **Y2Ir2O7: LDA+U** (U = 3, `rel-pz` PAW) since 2026-10-12 (user). Production (pipeline, 2026-11-02): base SCF 213998 + NSCF
+    214124, window `f12.422_w22.644_k8` (base Wannier 220455), displaced structures `dft/GM2-_p{1,2,3}_Q{0.01..0.05}/`;
+    every run in `data/Y2Ir2O7/README.md`. LDA's curvature symmetry is exact (bug #22); the PBE+U runs (YP) and the
+    earlier YL2 / `fromYL2` runs are superseded.
 - **Monitor every SCF:** check total *and* absolute magnetization at each check. `md5sum pw.x` before debugging
   anything at source level.
 
@@ -48,37 +50,40 @@ software readme.
 
 Read in this order before touching code on an unfamiliar part of this repo:
 
+0. **[`RESULTS.md`](RESULTS.md)** — settings, trial sets, the response of every pattern and every convergence test
+   with its status, on one page. **[`REPRODUCE.md`](REPRODUCE.md)** — where every figure, table and number of the paper comes from (paper item →
+   notebook → data → pipeline step), the software, and how to rerun everything.
 1. **[`notes/README.md`](notes/README.md)** — the project's current status (what is
    running, which numbers are valid, open decisions) and a map of `notes/`:
-   `theory/` (the canonical derivation is `theory/derivation.md`), `materials/`,
+   `theory/` (the canonical derivation is `theory/derivation.md`),
    `howto/`, `bugs/` (one file per bug, status table), `log/` (dated, append-only
    investigation notes explaining *why* current defaults are what they are), `archive/`.
    **Keep it current:** when a run finishes or a decision is made, update its status
    table; each fact has one home (status there, a bug's story in `bugs/`, evidence in `log/`).
 2. **[`notes/code.md`](notes/code.md)** — the code: `axion_phonon/` in run order (`io/` reads files into arrays;
-   `paw.py` the mode `.amn`; `wannier.py` H(R), A(R), the shared fold → PythTB models; `curvature.py` Omega;
+   `paw/` the mode `.amn`; `wannier.py` H(R), A(R), the shared fold → PythTB models; `curvature.py` Omega;
    `axion.py` β terms and c2; `tube.py` the k list; `chern_simons.py` the 3-form check), a function ↔ equation
-   table, and `pipeline/` (the cluster steps).
+   table, and `analysis/pipeline/` (the cluster steps).
 3. **[`tests/README.md`](tests/README.md)** — the test suite (pytest): `axion_phonon` unit tests and checks of the
    production results (symmetry, k convergence). The older check suite, which runs only on `archive/code`, is
    [`archive/validation/README.md`](archive/validation/README.md).
    Every check there is a Jupyter notebook (`.ipynb`), run cell-by-cell with the
    `axion` conda kernel; `RUN_COMPUTATION = False` (default) reloads the last
    saved run from `results/<check>/` instead of recomputing.
-4. **The user's conventions** (`pipeline/README.md`, `analysis/`): every script and
+4. **The user's conventions** (`analysis/pipeline/README.md`, `analysis/`): every script and
    notebook starts with a settings block of plain variables (full paths into
    `data/`, n_occ, amplitude, options with their choices listed), and there are no
    command-line flags or automatic run detection. Derive a path only when it is
    always predictable (`<run>/jaemo/`, `<scf>/<prefix>.scf.out`, the output
    `nk_sweep_*` folder). Some run folders carry a plain-text `NOTE`.
 
-`axion_phonon/` (production code), `pipeline/` (the cluster steps), `analysis/` (one notebook per task;
-`analysis/figures/` the paper figures), `setup/` (notebooks that build structures and QE inputs), `qe_patches/`,
+`axion_phonon/` (production code), `analysis/pipeline/` (the cluster steps), `analysis/` (one notebook per task;
+`analysis/figures/` the paper figures, `analysis/{yio,mbt}/` per material, `analysis/validation/` dated studies),
+`notes/qe_patches/` and `notes/upstream/patches/` (the QE patches),
 `archive/` (the old `modules/`, `wannier/`, `run_axion.py`, the dated `diagnostics/`; README there), `data/`
 (git-ignored: the QE/Wannier90 runs and everything computed from them),
 `tests/` (the test suite; the older notebook suite is `archive/validation/`), `notes/` (status, theory, bugs, investigation log, per-material
-setup), `references/` (PDFs: literature and David's notes), `meetings/`, `paper/` (the writeup; its
-numbers are in flux until the reruns).
+setup; `notes/meetings/`), `paper/` (the writeup: `draft/main_draft.tex`, figures from `analysis/figures/`).
 
 ## Environment
 
