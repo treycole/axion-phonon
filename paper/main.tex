@@ -1,9 +1,106 @@
-\include{preamble}
+\def\draftversion{false}
+\RequirePackage{ifthen}
+\ifthenelse{\equal{\draftversion}{true}}{
+  \documentclass[galley,aps,pra,10pt,amsmath,amssymb,
+    superscriptaddress,nofootinbib,longbibliography]{revtex4-2}
+}{
+  \documentclass[twocolumn,aps,pra,10pt,amsmath,amssymb,
+    superscriptaddress,nofootinbib,longbibliography]{revtex4-2}
+}
+\usepackage{graphicx}% Include figure files
+\usepackage[usenames,dvipsnames]{color} % colors
+\usepackage{bm} % bold math
+\usepackage{soul} % \st    for strike-out
+\usepackage{mathtools}
+\usepackage{tabularx}
+\usepackage{dcolumn}
+\usepackage{bbold}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,       
+    linkcolor=blue,          
+    citecolor=blue,       
+    filecolor=magenta,      
+    urlcolor=blue          
+}
 
+\def\Red#1{\textcolor{red}{#1}}
+\def\Blue#1{\textcolor{blue}{#1}}
+\def\Green#1{\textcolor{OliveGreen}{#1}}
+\def\Magenta#1{\textcolor{magenta}{#1}}
+
+\def\scr{\scriptsize}
+\ifthenelse{\equal{\draftversion}{true}}{
+  \marginparwidth 2.7in
+  \marginparsep 0.5in
+  \newcounter{comm} 
+  \def\commnext{\stepcounter{comm}}
+  \def\commtext{{\bf\color{blue}[\arabic{comm}]}}
+  \def\commmar{{\bf\color{blue}[\arabic{comm}]}}
+  \def\dvm#1{\commnext\marginpar{\small DV\commmar: #1}\commtext}
+  \def\tcm#1{\commnext\marginpar{\small TC\commmar: #1}\commtext}
+  \def\tnewpage{\newpage\marginpar{\small Temporary newpage}}
+  \newcommand{\seclab}[1]{\label{sec:#1}{\Red{\small\;\;[sec:~#1]}}}
+  \newcommand{\eqlab}[1]{\Red{\hbox{\small\;\;[#1]}}\label{eq:#1}}
+  \newcommand{\figlab}[1]{\Red{\hbox{\small\;\;[fig:~#1]}}\label{fig:#1}}
+}{
+  \def\dvm#1{}
+  \def\tcm#1{}
+  \def\tnewpage{}
+  \newcommand{\eqlab}[1]{\label{eq:#1}}
+  \newcommand{\seclab}[1]{\label{sec:#1}}
+  \newcommand{\figlab}[1]{\label{fig:#1}}
+}
+
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\eea}{\end{eqnarray}}
+\newcommand{\nn}{\nonumber\\}
+\newcommand{\eq}[1]{Eq.~(\ref{eq:#1})}
+\newcommand{\Eq}[1]{Equation~(\ref{eq:#1})}
+\newcommand{\eqs}[2]{Eqs.~(\ref{eq:#1}) and (\ref{eq:#2})}
+\newcommand{\Eqs}[2]{Equations~(\ref{eq:#1}) and (\ref{eq:#2})}
+\newcommand{\eqo}[2]{Eq.~(\ref{eq:#1}) or (\ref{eq:#2})}
+\newcommand{\eqr}[2]{Eqs.~(\ref{eq:#1}-\ref{eq:#2})}
+\newcommand{\Eqr}[2]{Equations~(\ref{eq:#1}-\ref{eq:#2})}
+\newcommand{\fref}[1]{Fig.~\ref{fig:#1}}
+\newcommand{\Fref}[1]{Figure~\ref{fig:#1}}
+\newcommand{\frefs}[2]{Figs.~\ref{fig:#1} and \ref{fig:#2}}
+\newcommand{\frefo}[2]{Figs.~\ref{fig:#1} or \ref{fig:#2}}
+\newcommand{\sref}[1]{Sec.~\ref{sec:#1}}
+\newcommand{\srefs}[2]{Secs.~\ref{sec:#1} and \ref{sec:#2}} 
+\newcommand{\Sref}[1]{Section~\ref{sec:#1}}
+\newcommand{\aref}[1]{Appendix~\ref{sec:#1}}
+\newcommand{\ket}[1]{\vert#1\rangle}
+\newcommand{\bra}[1]{\langle#1\vert}
+\newcommand{\ip}[2]{\langle#1\vert#2\rangle}
+\newcommand{\me}[3]{\langle#1\vert#2\vert#3\rangle}
+\newcommand{\ev}[1]{\langle#1\rangle}
+\newcommand{\wt}[1]{\widetilde{#1}}
+\newcommand{\Tr}{\mathrm{Tr}\,}   
+\newcommand{\code}[1]{\textsc{#1}}  
+\renewcommand{\Re}{\mathrm{Re}\,}
+\renewcommand{\Im}{\mathrm{Im}\,}
+
+\newcommand{\parkmu}{ \partial_{k_\mu} }
+\newcommand{\parmu}{ \partial_{\mu} }
+
+\newcommand{\figbox}[2][0.95\columnwidth]{%
+  \fbox{\parbox{#1}{\centering\vspace{6pt}\textbf{\Blue{[Figure placeholder]}}\\[3pt]
+  \raggedright\small #2\vspace{6pt}}}}
+\newcommand{\figboxwide}[1]{\figbox[0.95\textwidth]{#1}}
+\newcommand{\tref}[1]{Table~\ref{tab:#1}}
+\newcommand{\Tref}[1]{Table~\ref{tab:#1}}
+\newcommand{\Srefs}[2]{Sections~\ref{sec:#1} and \ref{sec:#2}}
+\newcommand{\Tth}{Z^{\theta}}              % axion charge
+\newcommand{\BB}{\mathcal{B}}              % covariant non-Abelian curvature
+\newcommand{\Ab}{\mathbb{A}}               % Wannier-gauge connection (J x J)
+\newcommand{\Hb}{\mathbb{H}}               % Wannier-gauge Hamiltonian (J x J)
+\newcommand{\Omb}{\mathbb{\Omega}}         % plain curl of the Wannier-gauge connection
 \newcommand{\MBT}{MnBi$_2$Te$_4$}
 \newcommand{\YIO}{Y$_2$Ir$_2$O$_7$}
 \newcommand{\cmi}{cm$^{-1}$}
-
 \begin{document}
 
 \title{Axion-active phonons in magnetic insulators}
@@ -33,7 +130,7 @@ Department of Physics \& Astronomy, Center for Materials Theory, Rutgers Univers
 
 \begin{abstract}
 
-The Chern-Simons axion angle $\theta$ is pinned to $0$ or $\pi$ by any symmetry that reverses orientation or time. A lattice vibration that removes all such symmetries makes $\theta$ dynamical, and proposals ranging from axion polaritons to axion dark matter detectors rest on the size of the resulting coupling $\partial \theta/\partial u$. This coupling has so far been a model parameter. Here, we compute it from first principles in two magnetic insulators with distinct topological classifications. \MBT, an antiferromagnetic topological insulator whose ground state has $\theta=\pi$, and the all-in-all-out pyrochlore iridate \YIO, whose ground state is trivial and whose crystal symmetry enforces $\theta=0$. We express the linear response of $\theta$ to an atomic displacement as a Brillouin-zone integral of the trace of a product of non-Abelian Berry curvatures in the joint space of crystal momentum and phonon amplitude, and evaluate it via Wannier interpolation. We then derive the symmetry rules that govern the coupling. A phonon changes $\theta$ at linear order only if it transforms as $\theta$ itself, a one-dimensional representation; it is then infrared-active only if the magnetic point group admits a net magnetization, and never Raman-active when the undistorted crystal is centrosymmetric. In magnets whose magnetic ions sit on inversion centers, no uniform spin fluctuation moves $\theta$ at any order, so the bulk dynamical axion must be a lattice mode. In \YIO{} the three axion-active $\Gamma_2^-$ ($A_{2u}$) phonons, at 229, 328, and 472~\cmi{}, change $\theta$ by $0.010$--$0.024$~rad per {\AA} of displacement. In \MBT{} the axion-active modes are the four zone-boundary $T_2^-$ phonons at 18, 83, 129, and 143~\cmi{}, including the rigid interlayer breathing mode, which changes $\theta$ by 1.4~rad per {\AA}; the largest coupling, 3.6~rad per {\AA}, belongs to the 129~\cmi{} Mn-dominated mode, two orders of magnitude above \YIO{}.
+The Chern-Simons axion angle $\theta$ is pinned to $0$ or $\pi$ by any symmetry that reverses orientation or time. A lattice vibration that removes all such symmetries makes $\theta$ dynamical, and proposals ranging from axion polaritons to axion dark matter detectors rest on the size of the resulting coupling $\partial \theta/\partial u$. This coupling has so far been a model parameter. Here, we compute it from first principles in two magnetic insulators with distinct topological classifications. \MBT, an antiferromagnetic topological insulator whose ground state has $\theta=\pi$, and the all-in-all-out pyrochlore iridate \YIO, whose ground state is trivial and whose crystal symmetry enforces $\theta=0$. We express the linear response of $\theta$ to an atomic displacement as a Brillouin-zone integral of the trace of a product of non-Abelian Berry curvatures in the joint space of crystal momentum and phonon amplitude, and evaluate it via Wannier interpolation. We then derive the symmetry rules that govern the coupling. A phonon changes $\theta$ at linear order only if it transforms as $\theta$ itself, a one-dimensional representation; it is then infrared-active only if the magnetic point group admits a net magnetization, and never Raman-active when the undistorted crystal is centrosymmetric. In magnets whose magnetic ions sit on inversion centers, no uniform spin fluctuation moves $\theta$ at any order, so the bulk dynamical axion must be a lattice mode. In \YIO{} the three axion-active $\Gamma_2^-$ ($A_{2u}$) phonons, at 229, 328, and 472~\cmi{}, change $\theta$ by $0.010$--$0.024$~rad per {\AA} of displacement. In \MBT{} the axion-active modes are the four zone-boundary $T_2^-$ phonons at 18, 83, 129, and 143~\cmi{}, which changes $\theta$ by 1.4~rad per {\AA}; the largest coupling, 3.6~rad per {\AA}, belongs to the 129~\cmi{} Mn-dominated mode, two orders of magnitude above \YIO{}.
 
 
 \end{abstract}
@@ -49,63 +146,414 @@ The Chern-Simons axion angle $\theta$ is pinned to $0$ or $\pi$ by any symmetry 
 
 Many properties of crystalline insulators are governed by the geometry of the occupied Bloch states rather than by the band energies alone~\cite{xiao2010berry, vanderbilt2018berry}. The electric polarization is the most familiar example: it is a Berry phase of the occupied manifold, defined only modulo a quantum~\cite{kingsmith1993theory, resta1994macroscopic}. Its three-dimensional, magnetoelectric counterpart is the Chern-Simons axion angle $\theta$, which describes the isotropic part of the orbital magnetoelectric response~\cite{qi2008topological, essin2009magnetoelectric, essin2010orbital, malashevich2010theory, coh2011chern}. An insulator with $\theta\neq0$ responds to a magnetic field $\mathbf B$ with an electric polarization $\mathbf P=(\theta e^2/2\pi h)\mathbf B$, and to an electric field with the corresponding magnetization; in the language of high-energy physics, $\theta$ plays the role of a background axion field coupled to $\mathbf E\cdot\mathbf B$~\cite{wilczek1987two}.
 
-Like the polarization, $\theta$ is a multivalued quantity, defined modulo $2\pi$. Any symmetry that reverses either spatial orientation or time maps $\theta$ to $-\theta$, and therefore pins it to $0$ or $\pi$~\cite{qi2008topological, essin2009magnetoelectric, mong2010antiferromagnetic, hughes2011inversion, turner2012quantized, marzari2012maximally}. Insulators with $\theta=\pi$ are axion insulators. Time-reversal-symmetric strong topological insulators are the original example, and their quantized magnetoelectric response has been observed through Faraday and Kerr rotation~\cite{wu2016quantized, armitage2019matter}. In magnetic insulators, $\theta=\pi$ can instead be protected by inversion or by a composite of time reversal with a fractional translation~\cite{mong2010antiferromagnetic}. The layered antiferromagnet \MBT{} is the most studied realization~\cite{otrokov2019prediction, li2019intrinsic, zhang2019topological, gong2019experimental}: it is an intrinsic antiferromagnetic topological insulator, and thin films show axion-insulator and Chern-insulator transport~\cite{deng2020quantum, liu2020robust, gao2021layer}.
+Like the polarization, $\theta$ is a multivalued quantity, defined modulo $2\pi$. Any symmetry that reverses either spatial orientation or time maps $\theta$ to $-\theta$, and therefore pins it to $0$ or $\pi$~\cite{qi2008topological, essin2009magnetoelectric, mong2010antiferromagnetic, hughes2011inversion, turner2012quantized, marzari2012maximally}. Insulators with $\theta=\pi$ are axion insulators. Time-reversal-symmetric strong topological insulators are the original example, and their quantized magnetoelectric response has been observed through Faraday and Kerr rotation~\cite{wu2016quantized, armitage2019matter}. In magnetic insulators, $\theta=\pi$ can instead be protected by inversion or by a composite of time reversal with a fractional translation~\cite{mong2010antiferromagnetic}. The layered antiferromagnet \MBT{} is the most studied realization~\cite{otrokov2019prediction, li2019intrinsic, zhang2019topological, gong2019experimental}: it is an intrinsic antiferromagnetic topological insulator, whose thin films exhibit quantum anomalous Hall transport~\cite{deng2020quantum}, transport signatures consistent with axion-insulator and Chern-insulator states~\cite{liu2020robust}, and a layer Hall effect~\cite{gao2021layer}.
+
+There is good reason to expect derivatives of $\theta$ to be more tractable than $\theta$ itself.
+The history of the polarization is instructive: Born effective charges and dielectric constants, which are first derivatives of $\mathbf P$, were computed before the Berry-phase theory made $\mathbf P$ itself accessible~\cite{kunc1982abinitio, resta1994macroscopic, baroni2001phonons, gonze1997dynamical}. The reason is that $\mathbf P$ is an integral of a gauge-dependent Berry connection and is defined modulo a quantum, whereas $\partial\mathbf P/\partial\lambda$ suffers from neither ambiguity. The same holds for $\theta$. Its Chern-Simons expression requires a smooth, periodic gauge for the occupied states, whose construction and numerical convergence can be delicate~\cite{coh2011chern, liu2015gauge, varnava2020axion, cole2026exact}. For the zero-Chern topological insulators of interest here, such a gauge exists after relaxing the protecting symmetries in the gauge choice; imposing a symmetry-respecting gauge can instead create an obstruction~\cite{soluyanov2011wannier, cole2025reduced}. By contrast, $\partial\theta/\partial\lambda$ is an integral of a gauge-invariant trace of products of Berry curvatures in the four-dimensional space of crystal momentum and $\lambda$~\cite{qi2008topological, essin2010orbital, taherinejad2015adiabatic, olsen2017surface}.
+
+A static, uniform $\theta$ has no effect on bulk electrodynamics. The axion term becomes observable when $\theta$ varies in space or time, producing a Hall current $\propto\nabla\theta\times\mathbf E$ or a current $\propto\dot\theta\,\mathbf B$~\cite{wilczek1987two}. This has motivated a large body of work on \emph{dynamical} axion fields in solids~\cite{nenno2020axion, sekine2021axion}, in which $\theta$ is modulated by a pre-existing degree of freedom of the crystal. Examples include antiferromagnetic fluctuations in magnetically doped topological insulators~\cite{li2010dynamical}, magnetization fluctuations in magnetic topological-insulator superlattices~\cite{wang2016dynamical}, and lattice vibrations that modulate the Dirac mass of a magnetic insulator~\cite{lhachemi2024phononic}. Recently, an oscillation of $\theta$ driven by an antiferromagnetic magnon was reported in a six-septuple-layer film of \MBT{}~\cite{qiu2025observation}. In an applied magnetic field, a dynamical axion mode can hybridize with light to form an axion polariton~\cite{li2010dynamical}. This field-induced mixing underlies proposals to use antiferromagnetic topological insulators as resonant detectors of axion dark matter~\cite{marsh2019proposal, schutteengel2021axion}. In every one of these proposals, the central material parameter is the coupling $\partial\theta/\partial\lambda$ between $\theta$ and the degree of freedom $\lambda$ that drives it. For phonons, however, this coupling has, to our knowledge, only been evaluated within model Hamiltonians.
 
 
-The electrodynamics of a homogeneous medium are unaffected by a spatially and temporally uniform $\theta$, being instead only sensitive to its spatial gradients---producing a local anomalous Hall current $\mathbf{J}(\mathbf{r}, t) \propto \mathbf{E} \times \nabla \theta(\mathbf{r}, t)$---or to its time derivative---producing a local chiral magnetic effect $\mathbf{J}(\mathbf{r}, t) \propto \mathbf{B}\, \partial_t \theta(\mathbf{r}, t)$.
-These effects will be activated insofar as some parameters in the crystal Hamiltonian are spatially inhomogeneous or time-dependent, and their magnitudes will be controlled by the first derivatives of $\theta$ with respect to those parameters.
-The axion field, usually treated as a static background quantity depending on the ground-state crystal Hamiltonian, has been proposed to become dynamical in certain contexts \cite{li_dynamical_2010, wang2016, ooguri2012instability, wider2020}.
-Rather than possessing its own independent dynamics, $\theta$ would vary in concert with preexisting degrees of freedom of the solid such as phonons or charge-density waves.
-Such situations could be especially interesting in magnetic insulators where $\theta$ is comparable to or equal to $\pi$.
+In this work, we develop a first-principles theory of the coupling between lattice vibrations and the Chern-Simons axion angle. We call a phonon \emph{axion-active} when it changes $\theta$ at first order in its amplitude.
+% We begin with the symmetry rules. A phonon couples linearly only if it transforms exactly as $\theta$, a one-dimensional representation of the magnetic point group; this is stronger than the commonly stated requirement that it break every quantizing symmetry. Two consequences follow. An axion-active phonon is infrared-active only if the magnetic group admits a net magnetization, and it is never Raman-active when the undistorted crystal has unprimed inversion. In magnets whose magnetic ions occupy inversion centers, which includes both materials studied here, uniform spin fluctuations at fixed ionic positions cannot move $\theta$ along a gapped path, so inversion-breaking phonons provide a bulk dynamical-axion channel that those spin fluctuations lack.
+We apply the theory to two magnetic insulators with contrasting axion topology: the pyrochlore iridate \YIO{} with all-in-all-out order, which we study in a correlation regime where it is a trivial insulator with $\theta=0$~\cite{wan2011topological, witczak2014correlated}, and the antiferromagnetic topological insulator \MBT{} with $\theta=\pi$. We first identify the symmetry conditions that allow phonons to couple linearly to the axion angle in each magnetic space group. From these rules, we then select the axion-active modes and distort the crystal structure according to these patterns. We compute the axion-phonon coupling from fully relativistic density-functional theory (DFT) by evaluating the four-curvature on Wannier-interpolated tight-binding Hamiltonians. The derivatives along the phonon direction are evaluated using finite differences between two independent Wannier models. 
 
-There is reason to think that the computation of \emph{derivatives} of $\theta$ may be more straightforward than the computation of $\theta$ itself.
-The axion angle is a 3D analog of the 1D electric polarization $\mathbf{P}$, and historically, first derivatives of $\mathbf{P}$---such as Born effective charges and dielectric constants---were computed well before the modern theory of polarization \cite{marzari2012}.
-This can be understood because $\mathbf{P}$ itself is only well-defined modulo a quantum and is expressed as an integral of a gauge-dependent Berry connection, whereas its derivative $\partial_\lambda \mathbf{P}$ does not suffer from either ambiguity.
-Analogously, $\partial_\lambda \theta$ can be expressed as a Brillouin-zone integral of a gauge-invariant four-curvature \cite{qi2008topological, taherinejad2015adiabatic, olsen2017surface},
-\begin{equation}
-\partial_\lambda \theta
-= \frac{1}{16\pi}
-\int_{\text{BZ}} d^3 k \,
-\epsilon^{ijkl} \mathrm{Tr}\!\left(
-\Omega_{ij} \Omega_{kl}
-\right),
-\eqlab{4curv}
-\end{equation}
-defined in the extended parameter space $(k_x,k_y,k_z,\lambda)$, where $\Omega_{ij}$ denotes the non-Abelian Berry curvature associated with coordinates $i,j \in \{k_x,k_y,k_z,\lambda\}$.
-Unlike the Chern-Simons 3-form in \eq{CS3form}, this expression is manifestly gauge invariant and does not require the construction of a globally smooth Bloch-state gauge.
 
-In this work, we develop and apply a first-principles methodology for computing the linear response of $\theta$ to lattice vibrations that modulate the axion angle away from its symmetry-enforced quantized values.
-We refer to phonon modes that break all protecting symmetries---and thus induce a nonzero $\partial_\lambda \theta$---as \emph{axion-active phonons}.
-We identify such modes through a systematic symmetry analysis using the \code{SMODES} software package, then compute the axion response from Wannierized tight-binding Hamiltonians derived from fully relativistic density-functional theory calculations.
-We apply this approach to two magnetic insulators with contrasting axion topology: MnBi$_2$Te$_4$ (MBT), an antiferromagnetic topological insulator with $\theta = \pi$, and the pyrochlore iridate Y$_2$Ir$_2$O$_7$ (YIO), studied in a non-topological regime where $\theta = 0$.
-This pairing allows us to contrast the axion-phonon response in a topological system, where $\theta$ departs from $\pi$, with that in a trivial system, where $\theta$ departs from $0$.
+% \begin{figure}[t]
+% \figbox{\textbf{Fig.~1 (overview).}
+% (a) Crystal and magnetic structures: \YIO{} (pyrochlore Ir network, all-in-all-out moments) and \MBT{} (two septuple layers of the A-type antiferromagnetic cell, moments $\pm c$).
+% (b) The axion-active displacement in each: the $\Gamma_2^-$ ``breathing'' pattern of \YIO{} (Y, Ir along local $\langle111\rangle$; O(48f)) and the antiphase $T_2^-$ pattern of \MBT{} (partner atoms of the two septuple layers move oppositely along $c$).
+% (c) Schematic $\theta(Q)$ for both: linear departure from $0$ (\YIO{}) and from $\pi$ (\MBT{}), slope $=\partial\theta/\partial Q$.
+% Arrows on atoms show the axion charges $\Tth_\kappa$ of \eq{axion-charge-def}.}
+% \caption{Overview of axion-active phonons in the two materials. \tcm{make: VESTA structures + schematic panel}}
+% \figlab{overview}
+% \end{figure}
 
-The remainder of this paper is organized as follows.
-In \sref{theory} we review the theoretical framework underlying the axion angle and its derivatives.
-In \sref{symmetry} we discuss the general symmetry requirements for axion-active phonons.
-\Sref{MBT} and \sref{YIO} present the symmetry analysis, computational details, and results for MnBi$_2$Te$_4$ and Y$_2$Ir$_2$O$_7$, respectively.
-In \sref{methods} we describe the shared first-principles methodology.
-Finally, in \sref{conclusions} we summarize our findings and discuss their implications.
 
 %==========================================================================
-\section{Theoretical framework}
+\section{The axion angle}
 \seclab{theory}
 %==========================================================================
 
-\subsection{The Chern-Simons axion angle}
 
-The Chern-Simons axion coupling arises from the topological part of the electromagnetic response of a three-dimensional insulator.
-As formulated by Qi, Hughes, and Zhang \cite{qi2008topological}, the effective action contains a term
+The orbital magnetoelectric tensor $\alpha_{ij}=\partial P_i/\partial B_j=\partial M_j/\partial E_i$ of an insulator contains an isotropic, topological part~\cite{qi2008topological, essin2009magnetoelectric, essin2010orbital, malashevich2010theory},
 \begin{equation}
-S_\theta = \frac{\theta e^2}{4\pi^2 \hbar c} \int d^3r\, dt\, \mathbf{E} \cdot \mathbf{B},
-\eqlab{action}
+\alpha^{\rm CS}_{ij}=\frac{\theta e^2}{2\pi h}\,\delta_{ij},
+\eqlab{alpha-CS}
 \end{equation}
-where $\theta$ is the axion angle given by \eq{CS3form}.
-Variation of this action with respect to the electromagnetic potentials yields the magnetoelectric response in \eq{alpha-CS}.
+with $\theta$ given by the Brillouin-zone integral of the Chern-Simons 3-form~\cite{chern1974characteristic},
+\begin{equation}
+\theta=-\frac{1}{4\pi}\int_{\rm BZ}d^3k\,\epsilon^{\mu\nu\sigma}\,\Tr\!\left[\mathcal A_\mu\partial_\nu\mathcal A_\sigma-\frac{2i}{3}\mathcal A_\mu\mathcal A_\nu\mathcal A_\sigma\right],
+\eqlab{CS3form}
+\end{equation}
+where $(\mathcal A_\mu)_{mn}=i\langle u_{m\mathbf k}|\partial_\mu u_{n\mathbf k}\rangle$ is the non-Abelian Berry connection of the occupied states and the trace runs over occupied bands. The integrand of \eq{CS3form} is gauge dependent, and $\theta$ is defined only modulo $2\pi$.
+The remaining, non-topological parts of the orbital response~\cite{essin2010orbital, malashevich2010theory}, and the spin and lattice-mediated contributions~\cite{iniguez2008firstprinciples, bousquet2011unexpectedly, malashevich2012full, ye2014dynamical}, are not quantized and are not considered here.
 
-The axion angle $\theta$ is a bulk quantity, well-defined for a fully gapped insulator.
-Because the Chern-Simons 3-form in \eq{CS3form} is gauge-dependent, $\theta$ is only well-defined modulo $2\pi$: a change of gauge (a unitary rotation of the occupied Bloch states) can shift $\theta$ by an integer multiple of $2\pi$, corresponding to the addition of an integer Chern number to the surface Hall conductivity.
-This situation is analogous to the electric polarization, which is defined modulo a quantum of polarization.
+
+\subsection{Four-curvature formula}
+\seclab{fourcurv}
+
+Let $\lambda$ be a parameter of the Hamiltonian along which the gap stays open, such as the amplitude of a lattice displacement, and treat it as a fourth coordinate alongside $\mathbf k$. The connection $\mathcal A_\mu$ then has four
+components, $\mu\in\{k_x,k_y,k_z,\lambda\}$, and a covariant curvature $\BB_{\mu\nu}=\partial_\mu\mathcal A_\nu-\partial_\nu\mathcal A_\mu-i[\mathcal A_\mu,\mathcal A_\nu]$.
+Differentiating \eq{CS3form} with respect to $\lambda$, the gauge-dependent terms combine into a total derivative in $\mathbf k$, which integrates to zero over the
+closed Brillouin zone. What remains is gauge invariant~\cite{qi2008topological, mong2010antiferromagnetic},
+\begin{equation}
+\frac{\partial\theta}{\partial\lambda}
+=\frac{1}{16\pi}\int_{\rm BZ}d^3k\;\epsilon^{\mu\nu\rho\sigma}\,\Tr\!\left[\BB_{\mu\nu}\BB_{\rho\sigma}\right].
+\eqlab{4curv}
+\end{equation}
+Around a closed cycle in $\lambda$, \eq{4curv} integrates to $2\pi C_2$, where
+$C_2$ is the second Chern number of the occupied bundle over $(\mathbf k,\lambda)$ ~\cite{essin2009magnetoelectric, taherinejad2015adiabatic}.
+
+Every nonvanishing term in \eq{4curv} carries exactly one $\lambda$ index, and the four placements contribute equally, so that
+\begin{equation}
+\frac{\partial\theta}{\partial\lambda}
+=\frac{1}{4\pi}\int_{\rm BZ}d^3k\;\epsilon^{ijl}\,\Tr\!\left[\BB_{ij}\,\BB_{l\lambda}\right],
+\eqlab{4curv-reduced}
+\end{equation}
+with $i,j,l$ the three momentum directions.
+In words, the response is the Brillouin-zone integral of the trace of the product of the ordinary (momentum-space) Berry curvature with the mixed momentum-phonon curvature.
+Both factors are gauge-covariant, so the integrand is gauge-invariant and no smooth gauge is needed.
+Because $\Tr(\BB\BB)\neq\Tr\BB\,\Tr\BB$, the full $N_{\rm occ}\times N_{\rm occ}$ matrices must be kept until the product is formed, where $N_{\rm occ}$ is the number of occupied bands.
+This differs from the anomalous Hall conductivity, which involves the band trace of a single curvature~\cite{wang2006abinitio}.
+
+\subsection{\texorpdfstring{Operations that quantize $\theta$}{Operations that quantize theta}}
+
+Because $\theta$ multiplies $\mathbf E\cdot\mathbf B$, and $\mathbf E$ is a polar, time-even vector while $\mathbf B$ is axial and time-odd, $\theta$ is unchanged by proper rotations and changes sign under improper operations and under time reversal.
+For an element $g$ of a magnetic point group with rotation part $R$, the character of $\theta$ is therefore
+\begin{equation}
+\chi_\theta(g)=\det R\;s(g),
+\eqlab{chi-theta}
+\end{equation}
+where $s(g)=+1$ for unprimed elements and $-1$ for primed elements (those containing $\mathcal T$).
+The crystal quantizes $\theta$ if it has any element with $\chi_\theta(g)=-1$; we call such elements $\theta$-odd. They are the unprimed improper operations and the primed proper operations~\cite{varnava2020axion}. In the presence of such symmetries, $\theta$ must be either $\pi$ (topological) or $0$ (trivial).
+
+% \Tref{theta-odd} lists them for the two materials.
+% In all-in-all-out \YIO{}, with magnetic point group $m\bar3m'$, inversion is only one of several: the primed fourfold and twofold rotations $C_4'$ and $C_2'$ also quantize $\theta$. In antiferromagnetic \MBT{}, the composite $\Theta=\mathcal T\tau_{1/2}$ of time reversal and the half translation that exchanges the two septuple layers~\cite{mong2010antiferromagnetic} makes the magnetic point group the grey group $\bar3m1'$, in which every primed proper element is $\theta$-odd.
+
+
+%==========================================================================
+\section{Axion-active phonons}
+\seclab{symmetry}
+%==========================================================================
+
+We consider lattice distortions that are periodic in the magnetic unit cell. The displacement of atom $\kappa$ from its reference position is denoted by $\mathbf u_\kappa$, and the collection of atomic displacements by $\mathbf u=\{\mathbf u_\kappa\}$. These distortions have zero wave vector in the magnetic Brillouin zone, although they need not be zone-center distortions of the crystallographic primitive cell. Assuming that the electronic gap remains open, we expand the axion angle about the undistorted structure as
+\begin{equation}
+\theta(\mathbf u)
+=\theta_0+\delta\theta^{(1)}[\mathbf u]
++\mathcal O(\|\mathbf u\|^2),
+\end{equation}
+where $\delta\theta^{(1)}$ is linear in the atomic displacements. The expansion is understood on a continuous branch of $\theta$ near the reference structure; its derivatives are independent of the $2\pi$ branch choice. We call a phonon axion-active when its displacement pattern produces a nonzero first-order change in $\theta$.
+
+The linear response can be expressed in terms of atom-resolved coefficients. The familiar Born effective charge tensor,
+\[
+Z^{*}_{\kappa,\alpha\beta}
+=\frac{\Omega}{e}
+\frac{\partial P_\alpha}{\partial u_{\kappa\beta}},
+\]
+describes the change in electric polarization induced by displacing an atomic sublattice, where \(\Omega\) is the cell volume and \(e\) the elementary charge. Analogously, we define the atomic axion charge
+\[
+\mathbf Z^\theta_\kappa
+=\left.\frac{\partial\theta}{\partial\mathbf u_\kappa}\right|_{\mathbf u=0},
+\]
+so that
+\[
+\delta\theta^{(1)}[\mathbf u]
+=\sum_\kappa\mathbf Z^\theta_\kappa\cdot\mathbf u_\kappa.
+\]
+Each derivative corresponds to displacing atom \(\kappa\) and its magnetic-cell periodic images while holding the other atomic coordinates fixed. Since \(\theta\) is a scalar, the axion charge has one Cartesian index, whereas the Born effective charge has two. With this definition, \(\mathbf Z^\theta_\kappa\) has units of inverse length, which we report in rad/\(\text{\AA}\).
+
+\subsection{Linear selection rule}
+The symmetries of the undistorted magnetic crystal constrain this linear response. Let \(g\) be an element of its magnetic space group, with spatial part \(\{R_g|\boldsymbol\tau_g\}\). If \(g\) maps reference atom \(\kappa\) onto atom \(g\kappa\), modulo a magnetic lattice translation, its action on the displacement pattern is
+\[
+[D(g)\mathbf u]_{g\kappa}=R_g\mathbf u_\kappa.
+\]
+Thus \(D(g)\) rotates each displacement vector and assigns it to the image of its atomic site. The translation \(\boldsymbol\tau_g\) enters through this mapping of sites; it is not added to the displacement itself. Displacements are time-even, so time reversal introduces no additional sign. Since \(D(g)\) combines a spatial rotation with a permutation of atomic labels, it is a real orthogonal matrix.
+
+The transformation law can be applied directly to the response of a frozen displacement pattern. For a distortion \(\mathbf u_\kappa=Q\mathbf v_\kappa\), define
+\[
+\gamma_{\mathbf v}
+=\left.\frac{d\theta(Q\mathbf v)}{dQ}\right|_{Q=0}
+=\sum_\kappa\mathbf Z^\theta_\kappa\cdot\mathbf v_\kappa.
+\]
+Suppose that \(\mathbf v\) belongs to a one-dimensional irrep \(\Gamma\), so that
+\[
+D(g)\mathbf v=\chi_\Gamma(g)\mathbf v.
+\]
+A symmetry operation therefore maps the frozen structure at amplitude \(Q\) onto the structure at amplitude \(\chi_\Gamma(g)Q\).
+
+There are two ways to express the response along this transformed pattern. The transformation law of the axion angle requires
+\[
+\gamma_{D(g)\mathbf v}
+=\chi_\theta(g)\gamma_{\mathbf v}.
+\]
+Meanwhile, the linearity of the response in the displacement direction gives
+\[
+\gamma_{D(g)\mathbf v}
+=\gamma_{\chi_\Gamma(g)\mathbf v}
+=\chi_\Gamma(g)\gamma_{\mathbf v}.
+\]
+Equating these expressions yields
+\[
+[\chi_\Gamma(g)-\chi_\theta(g)]\gamma_{\mathbf v}=0.
+\]
+Thus a mismatch between the two characters for even one magnetic symmetry operation forces the linear coupling to vanish. A nonzero coupling is allowed only if
+\[
+\chi_\Gamma(g)=\chi_\theta(g)
+\qquad\text{for every }g.
+\]
+In particular, the pattern must reverse under every operation that reverses \(\theta\), and remain unchanged under every operation that preserves \(\theta\).
+
+For a multidimensional irrep, symmetry operations mix several partner patterns rather than simply preserving or reversing one pattern. A nonzero linear response would single out a combination of their amplitudes that transforms independently according to the one-dimensional character \(\chi_\theta\). Such an independently transforming component cannot occur within a multidimensional irreducible representation. Consequently, only copies of the one-dimensional representation \(\chi_\theta\) can contribute to the linear axion response.
+
+This identifies the symmetry-allowed displacement sector before evaluating its coupling. The representation may occur several times, giving several independent patterns whose frozen-displacement responses must be calculated. Matching the required symmetry permits these responses to be nonzero but does not determine their values.
+
+Applying \(g\) to the distorted crystal produces the crystal with displacement pattern \(D(g)\mathbf u\). The transformation law of the axion angle, Eq.~\ref{eq:chi-theta}, therefore requires
+\[
+\theta[D(g)\mathbf u]
+=\chi_\theta(g)\theta[\mathbf u]
+\quad(\mathrm{mod}\ 2\pi).
+\]
+The reference value \(\theta_0\) obeys the same transformation law because \(g\) is a symmetry of the undistorted crystal. Subtracting the reference relation cancels the fixed \(2\pi\) offset on the continuous branch chosen above, giving
+\[
+\theta[D(g)\mathbf u]-\theta_0
+=\chi_\theta(g)\bigl(\theta[\mathbf u]-\theta_0\bigr).
+\]
+Retaining the terms linear in the displacements yields
+\[
+\delta\theta^{(1)}[D(g)\mathbf u]
+=\chi_\theta(g)\delta\theta^{(1)}[\mathbf u].
+\]
+
+Collecting the atomic axion charges into a vector \(\mathbf Z^\theta\), the linear response is
+\[
+\delta\theta^{(1)}[\mathbf u]
+=(\mathbf Z^\theta)^T\mathbf u.
+\]
+Since the preceding transformation relation holds for every displacement pattern,
+\[
+(\mathbf Z^\theta)^T D(g)
+=\chi_\theta(g)(\mathbf Z^\theta)^T.
+\]
+Using the orthogonality of \(D(g)\), this is equivalent to
+\[
+D(g)\mathbf Z^\theta
+=\chi_\theta(g)\mathbf Z^\theta.
+\]
+The pattern of atomic axion charges therefore transforms according to the one-dimensional representation \(\chi_\theta\).
+
+To connect this result to phonons, we first specify what it means to assign a phonon an irrep. The harmonic equations of motion respect the magnetic symmetries, so applying a symmetry operation to a normal-mode pattern produces another normal-mode pattern with the same frequency. The patterns can therefore be organized into sets that transform among themselves. An irreducible set is one that cannot be separated into smaller sets transforming independently. A one-dimensional irrep contains a single pattern; a multidimensional irrep contains degenerate partner patterns that symmetry can mix.
+
+Consider one such irreducible set and choose orthonormal patterns \(\mathbf v^{(i)}\), with amplitudes \(Q_i\). Within this set,
+\[
+\mathbf u=\sum_i Q_i\mathbf v^{(i)},
+\qquad
+\delta\theta^{(1)}=\sum_i\gamma_iQ_i,
+\qquad
+\gamma_i=\sum_\kappa
+\mathbf Z^\theta_\kappa\cdot\mathbf v_\kappa^{(i)}.
+\]
+Suppose that at least one coefficient \(\gamma_i\) is nonzero. The transformation law of the linear response then requires the amplitude combination
+\[
+Q_\theta=
+\frac{\sum_i\gamma_iQ_i}
+{\sqrt{\sum_i\gamma_i^2}}
+\]
+to transform independently as
+\[
+Q_\theta\longmapsto\chi_\theta(g)Q_\theta.
+\]
+Because the symmetry transformations are orthogonal, the remaining amplitude combinations can be chosen orthogonal to \(Q_\theta\) and do not mix with it. A nonzero linear response would therefore separate one independently transforming coordinate from the remaining coordinates. This is compatible with irreducibility only if the set consists of that single coordinate.
+
+Consequently, a phonon can couple linearly to \(\theta\) only if it belongs to the one-dimensional representation with character \(\chi_\theta\). Its displacement pattern must satisfy
+\[
+D(g)\mathbf v=\chi_\theta(g)\mathbf v
+\]
+for every magnetic symmetry operation: it changes sign under every \(\theta\)-odd operation and remains unchanged under every \(\theta\)-even operation. The representation may occur several times, allowing several independent phonons with this symmetry. Symmetry permits their linear couplings but does not fix their values or require them to be nonzero.
+
+We consider distortions that are periodic in the magnetic unit cell: atom $\kappa$ of that cell, with mass $m_\kappa$, is displaced by $\mathbf u_\kappa$ in every cell. 
+
+
+
+In the magnetic cell, these are zone-center phonons.
+With harmonic force constants $\Phi_{\kappa\alpha,\kappa'\beta}=\partial^2E/\partial u_{\kappa\alpha}\partial u_{\kappa'\beta}$, the normal modes solve
+\begin{equation}
+\sum_{\kappa'\beta}\frac{\Phi_{\kappa\alpha,\kappa'\beta}}{\sqrt{m_\kappa m_{\kappa'}}}\,e_{\kappa'\beta,n}=\omega_n^2\,e_{\kappa\alpha,n},
+\qquad
+\mathbf u_\kappa=\sum_n\frac{\mathbf e_{\kappa n}}{\sqrt{m_\kappa}}\,q_n,
+\eqlab{dynmat}
+\end{equation}
+with orthonormal eigenvectors $\mathbf e_n$ and normal coordinates $q_n$.
+For the symmetry analysis it is convenient to describe a distortion as a pattern $\mathbf v=\{\mathbf v_\kappa\}$ with amplitude $Q$, $\mathbf u_\kappa=Q\,\mathbf v_\kappa$; a normal mode is the pattern $\mathbf v_\kappa=\mathbf e_{\kappa n}/\sqrt{m_\kappa}$ with amplitude $q_n$.
+We write $\theta(Q)=\theta_0+\theta'_{\mathbf v}Q+\mathcal O(Q^2)$, with $\theta_0$ the value in the undistorted crystal.
+Displacements are time-even; an element $g$ of the magnetic group of the undistorted crystal permutes and rotates the $\mathbf v_\kappa$, and we denote the resulting pattern $g\mathbf v$.
+
+
+
+\begin{table*}[t]
+\caption{The $\theta$-odd elements [$\chi_\theta(g)=-1$, \eq{chi-theta}] of the magnetic point groups of all-in-all-out \YIO{} (magnetic space group $Fd\bar3m'$, BNS 227.131, as for the all-in-all-out pyrochlores in MAGNDATA~\cite{gallego2016magndata, guo2016direct}) and antiferromagnetic \MBT{} ($R_I\bar3c$, BNS 167.108~\cite{yan2019crystal, ding2020crystal, gallego2016magndata}); they are the unprimed improper and the primed proper elements. A prime denotes combination with time reversal $\mathcal T$; $S_6$ is the sixfold rotoreflection ($\bar3$); $C_2'$ in \YIO{} are the twofold axes along $\langle110\rangle$, and $C_{2\perp}$ in \MBT{} those perpendicular to $c$. Translations do not affect $\theta$, so only point operations are listed. In \MBT{}, $1'$, $C_3'$, and the unprimed $\sigma_d$ occur only combined with the half translation $\tau_{1/2}$ that exchanges the septuple layers, e.g.\ $\Theta=\mathcal T\tau_{1/2}$. Each group has exactly half of its elements $\theta$-odd.}
+\label{tab:theta-odd}
+\begin{ruledtabular}
+\begin{tabular}{@{}lccc@{}}
+ & group (order) & unprimed improper & primed proper \\
+\hline
+\YIO{} & $m\bar3m'$ (48) & $i$, $8S_6$, $3\sigma_h$ & $6C_4'$, $6C_2'$ \\
+\MBT{} & $\bar3m1'$ (24) & $i$, $2S_6$, $3\sigma_d$ & $1'$, $2C_3'$, $3C_{2\perp}'$ \\
+\end{tabular}
+\end{ruledtabular}
+\end{table*}
+
+\subsection{The linear selection rule}
+\seclab{selection-rule}
+
+An element $g$ of the undistorted group maps the crystal displaced by $Q\mathbf v$
+onto the crystal displaced by $Q\,D(g)\mathbf v$, where the $3N\times3N$ matrix
+$D(g)$ moves each atom to its image and rotates its displacement.
+It also multiplies the small change $\theta-\theta_0$ by $\chi_\theta(g)$.
+The slope $\theta'_{\mathbf v}=\partial\theta/\partial Q$ therefore obeys
+$\theta'_{D(g)\mathbf v}=\chi_\theta(g)\,\theta'_{\mathbf v}$ for every $g$.
+Averaging this relation over the group gives $\theta'_{\mathbf v}=\theta'_{P\mathbf v}$, with
+\begin{equation}
+P=\frac{1}{|G|}\sum_{g\in G}\chi_\theta(g)\,D(g).
+\eqlab{projector}
+\end{equation}
+$P$ projects onto the patterns that transform as $\theta$, $D(g)\mathbf v=\chi_\theta(g)\mathbf v$
+for all $g$; we denote this symmetry, the one-dimensional representation
+$g\mapsto\chi_\theta(g)$, by $\Gamma_\theta$. Hence
+\begin{quote}
+\emph{A displacement changes $\theta$ at linear order only through its component that transforms exactly as $\theta$.}
+\end{quote}
+The number of independent such patterns is the trace of the projector,
+\begin{equation}
+n_\theta=\Tr P=\frac{1}{|G|}\sum_{g\in G}\chi_\theta(g)\,\Tr D(g),
+\eqlab{n-theta}
+\end{equation}
+where $\Tr D(g)$ is the number of atoms that $g$ leaves in place times $\Tr R(g)$.
+
+% An element $g$ of the magnetic group maps the crystal distorted along $\mathbf v$ onto the crystal distorted along $g\mathbf v$ and multiplies $\theta$ by $\chi_\theta(g)$, modulo $2\pi$.
+% Since $\theta_0$ is itself invariant modulo $2\pi$, the slopes obey $\theta'_{g\mathbf v}=\chi_\theta(g)\,\theta'_{\mathbf v}$ for every $g$.
+% The slope is thus a linear function of the pattern that transforms according to the one-dimensional representation $\Gamma_\theta$ defined by \eq{chi-theta}, and by Schur's lemma it vanishes on every irreducible representation other than $\Gamma_\theta$.
+% Hence
+% \begin{quote}
+% \emph{A displacement changes $\theta$ at linear order only through its component that transforms exactly as $\theta$, $g\mathbf v=\chi_\theta(g)\mathbf v$ for all $g$.}
+% \end{quote}
+% A $\theta$-odd element of the undistorted group maps such a pattern onto its negative, $\mathbf v\to-\mathbf v$, so along it $\theta-\theta_0$ is odd and the energy even in $Q$; we use both facts in \srefs{modes}{phonon-direction}.
+% A mode in a multidimensional irreducible representation never couples linearly, and a mode that breaks every $\theta$-odd operation but lies in a different irreducible representation changes $\theta$ only at higher order: the lowest order $k$ is the smallest for which $\Gamma_\theta$ appears in the $k$th symmetric power of the mode's representation.
+% Breaking all quantizing symmetries is thus necessary but not sufficient.
+% The number of linearly axion-active modes in a representation $D$ of the displacements is
+% \begin{equation}
+% n_\theta(D)=\frac{1}{|G|}\sum_{g\in G}\chi_\theta(g)\,\Tr D(g).
+% \eqlab{n-theta}
+% \end{equation}
+% The stabilizer of an axion-active displacement is the kernel of $\chi_\theta$, which contains no $\theta$-odd element.
+% For \YIO{} this is $\bar4'3m'$; for \MBT{} it is $\bar3'm'$, the magnetic point group of the prototypical magnetoelectric Cr$_2$O$_3$~\cite{malashevich2012full}.
+% Both admit a nonzero trace of the magnetoelectric tensor, as they must.
+
+The $\theta$-odd elements follow by inspection from the magnetic point group, and the counts below from \eq{n-theta} with standard character tables. We verified that the DFT structures and moments realize the full magnetic groups by searching for all operations that map them onto themselves. The \code{PythMPG} package~\cite{urru2026pythmpg}, which counts the symmetry-allowed components of a tensor in each magnetic point group, gives an independent check of the point-group statements below: a time-odd pseudoscalar such as $\theta$ has no invariant component in $m\bar3m'$ or $\bar3m1'$ and one in $\bar4'3m'$ and $\bar3'm'$; a net magnetization is forbidden in all four; and the linear magnetoelectric tensor vanishes in the two undistorted groups, is purely isotropic in $\bar4'3m'$, and has two independent components ($\alpha_{xx}=\alpha_{yy}$, $\alpha_{zz}$) in $\bar3'm'$.
+
+\subsection{Axion-active phonons are optically dark}
+
+A zone-center mode is infrared-active when it transforms as a component $r_i$ of a polar, time-even vector.
+For it to be both infrared- and axion-active, the product $\theta\,r_i$ must contain the identity representation.
+But $\theta r_i$ transforms as $s(g)\det R\,R$, which is precisely the transformation law of a magnetization component $M_i$ (axial and time-odd).
+At the level of characters, the multiplicity of $\Gamma_\theta$ in the polar-vector representation, $|G|^{-1}\sum_g s(g)\det R\,\Tr R$, is identical to the number of symmetry-allowed components of $\mathbf M$.
+Thus:
+\begin{quote}
+\emph{An axion-active phonon is infrared-active only if the magnetic point group allows a net magnetization along the corresponding direction.}
+\end{quote}
+As for any phonon, these activities are classified in the group of the undistorted crystal, in which the mode's amplitude transforms according to its irreducible representation; the mode itself necessarily breaks every $\theta$-odd element. If the undistorted group contains unprimed inversion, $\chi_\theta(i)=-1$ makes every axion-active mode odd (ungerade) under it, while every component of the (polar, time-even) Raman tensor is even, so an axion-active mode is never Raman-active. This is the familiar mutual-exclusion rule of centrosymmetric crystals, applied to $\theta$. When $\theta$ is quantized only by other elements, such as unprimed mirrors or primed proper rotations, the rule does not apply, and an axion-active mode can be Raman-active if $\Gamma_\theta$ appears in the representation of symmetric rank-2 tensors.
+Both \YIO{} and \MBT{} are compensated magnets with unprimed inversion, so their axion-active phonons are silent to first-order infrared absorption and Raman scattering.
+An axion-active phonon drivable by first-order electric-dipole infrared absorption requires a magnet that allows a net moment.
+As a control, we repeated the analysis for \MBT{} with ferromagnetic order in the same cell: the axion-active set moves from the antiphase $T_2^-$ modes to their in-phase, $c$-polarized partners, which are infrared-active, exactly as the rule predicts.
+In bulk, ferromagnetic \MBT{} is predicted to be a magnetic Weyl semimetal~\cite{li2019intrinsic}, for which the insulating Chern-Simons $\theta$ is not defined; predicted centrosymmetric ferromagnetic axion insulators such as MnBi$_8$Te$_{13}$~\cite{hu2020realization} are natural candidates for infrared-drivable axion phonons.
+
+\subsection{No-go for uniform magnetic fluctuations}
+
+In both materials, each magnetic ion sits at an inversion center that is unprimed in the magnetic group: Ir occupies the $16c$ sites of $Fd\bar3m$, and in \MBT{} inversion about one Mn maps the Mn of the other septuple layer onto a lattice translate of itself in the magnetic cell.
+Spins are axial vectors and are unchanged by inversion.
+Consequently, \emph{every} spin configuration on these fixed magnetic sites that is periodic in the magnetic cell preserves this inversion.
+For insulating states with vanishing bulk Chern numbers, $\theta$ therefore remains quantized to $0$ or $\pi$ and cannot change along a continuous spin deformation that keeps the electronic gap open~\cite{turner2012quantized}.
+This includes periodic canting and spin-flop configurations within a connected gapped phase; a gap closing can change the topological phase or make $\theta$ undefined.
+Equivalently, \eq{n-theta} gives $n_\theta=0$ for the representation of uniform spin fluctuations in both materials.
+For the pyrochlore iridates this restates the known fact that their $q=0$ magnetic orders preserve inversion~\cite{wan2011topological}.
+Among the uniform spin and lattice degrees of freedom considered here, inversion-breaking phonons can thus carry a bulk dynamical axion in \MBT{}, while spin fluctuations at fixed ionic positions cannot.
+The linear-order obstruction was already noted in Refs.~\cite{zhang2020large, sekine2021axion}: inversion keeps $\theta$ quantized in bulk \MBT{}, so that N\'eel-field fluctuations make no linear contribution to a dynamical axion field.
+The result is also consistent with first-principles and model work that turned to films~\cite{zhu2021tunable} or to the related compound Mn$_2$Bi$_2$Te$_5$~\cite{zhang2020large} to obtain a magnon-driven dynamical axion, and with the observation of Ref.~\cite{qiu2025observation}, which was made on an even-layer film where the layer-exchanging symmetry is $\mathcal{PT}$ rather than $\mathcal P$.
+The supplement of Ref.~\cite{qiu2025observation} identifies the finite-thickness hybridization gap as essential to that film's dynamical axion.
+This film mechanism differs from the phonon coupling computed here, which survives in the bulk; the site-inversion argument does not rule out finite-wave-vector spin modes or inversion-breaking electronic collective excitations.
+
+\subsection{Application to the two materials}
+\seclab{application}
+
+\Tref{irreps} summarizes the zone-center phonons of \YIO{} and the phonons of the 14-atom magnetic cell of \MBT{}.
+In \YIO{} only the three $\Gamma_2^-$ ($A_{2u}$) modes are linearly axion-active; the $E_u$ and $T_{1u}$ modes break all quantizing symmetries but enter only at third order, and $T_{2u}$ at higher order still.
+In \MBT{} the four linearly axion-active modes are the zone-boundary $T_2^-$ modes of the nonmagnetic cell, which appear at $\Gamma$ of the doubled magnetic cell.
+In the point-group labels of the magnetic cell they are $A_{2u}(Z)$: the same intralayer pattern as the polar $A_{2u}(\Gamma)$ modes, but with neighboring septuple layers moving in antiphase.
+Each axion-active phonon of \MBT{} therefore has an infrared-active twin, split from it only by the interlayer coupling; for the rigid-layer mode, the twin is the acoustic translation.
+
+\begin{table*}[t]
+\caption{Phonon representations, linear axion activity, the lowest order at which $\theta$ can appear (``$>4$'' means not up to fourth order), and optical activity. \YIO{}: zone-center modes of the 22-atom primitive cell in the magnetic group $m\bar3m'$. \MBT{}: modes at $\Gamma$ of the 14-atom magnetic cell, labeled by $D_{3d}$ irreducible representations and by whether the half translation $\tau_{1/2}$ acts as $+1$ ($\Gamma$) or $-1$ ($Z$). SMODES labels the four $A_{2u}(Z)$ modes $T_2^-$.}
+\label{tab:irreps}
+\begin{ruledtabular}
+\begin{tabular}{llcccc}
+ & irrep & copies & linear $\theta$ & first order & IR / Raman \\
+\hline
+\YIO{} & $A_{1g}$ & 1 & -- & $>4$ & Raman \\
+ & $\mathbf{A_{2u}}$ ($\Gamma_2^-$) & 3 & \textbf{yes} & 1 & -- \\
+ & $E_g$ & 1 & -- & $>4$ & Raman \\
+ & $E_u$ & 3 & -- & 3 & -- \\
+ & $T_{1g}$ & 2 & -- & $>4$ & -- \\
+ & $T_{1u}$ & 8 & -- & 3 & IR \\
+ & $T_{2g}$ & 4 & -- & $>4$ & Raman \\
+ & $T_{2u}$ & 4 & -- & $>4$ & -- \\
+\hline
+\MBT{} & $A_{1g}(\Gamma)$ / $A_{1g}(Z)$ & 3 / 3 & -- & $>4$ & Raman / -- \\
+ & $\mathbf{A_{2u}(Z)}$ ($T_2^-$) & 4 & \textbf{yes} & 1 & -- \\
+ & $A_{2u}(\Gamma)$ & 4 & -- & $>4$ & IR \\
+ & $E_g(\Gamma)$ / $E_g(Z)$ & 3 / 3 & -- & $>4$ & Raman / -- \\
+ & $E_u(\Gamma)$ / $E_u(Z)$ & 4 / 4 & -- & $>4$ / 3 & IR / -- \\
+\end{tabular}
+\end{ruledtabular}
+\end{table*}
+
+\begin{figure}[t]
+\figbox{\textbf{Fig.~2 (selection rules).}
+(a) Venn-type diagram of the conditions: transforms as $\theta$ ($\Gamma_\theta$, axion-active), transforms as a polar vector (IR), transforms as $\mathbf M$ (net moment allowed); the overlap of the first two equals the third.
+(b) Stereographic projections of $m\bar3m'$ and $\bar3m1'$ with $\theta$-odd elements marked; the distorted groups $\bar4'3m'$ and $\bar3'm'$.
+(c) \MBT{}: the antiphase $A_{2u}(Z)$ (axion-active, dark) and in-phase $A_{2u}(\Gamma)$ (IR) twins of one pattern; the rigid-layer mode and its acoustic twin.}
+\caption{Symmetry rules for axion-active phonons.}
+\figlab{selection}
+\end{figure}
+
+
+
+
+\subsection{Linear coupling and axion charges}
+\seclab{axion-charge}
+
+Consider a periodic displacement of the atoms, $\Delta\mathbf r_\kappa=\lambda\,\mathbf v_\kappa$, where $\kappa$ labels the atoms of the (magnetic) unit cell and the same displacement is applied in every cell.
+For small $\lambda$,
+\begin{equation}
+\theta(\lambda)=\theta_0+\theta'\lambda+\mathcal O(\lambda^2),
+\qquad
+\theta'=\sum_\kappa\Tth_\kappa\cdot\mathbf v_\kappa,
+\eqlab{axion-charge}
+\end{equation}
+with
+\begin{equation}
+\Tth_{\kappa\alpha}\equiv\frac{\partial\theta}{\partial u_{\kappa\alpha}},
+\eqlab{axion-charge-def}
+\end{equation}
+where $u_{\kappa\alpha}$ is the Cartesian displacement of sublattice $\kappa$.
+We refer to $\Tth_\kappa$ as the \emph{axion charge} of atom $\kappa$, by analogy with the Born effective charge $Z^*_{\kappa,\alpha\beta}=(\Omega/e)\,\partial P_\alpha/\partial u_{\kappa\beta}$ and with the dynamical magnetic charges of Ref.~\cite{ye2014dynamical}.
+Because $\theta$ is a pseudoscalar, $\Tth_\kappa$ transforms as an axial, time-odd vector attached to site $\kappa$ (\sref{symmetry}).
+A uniform translation cannot change $\theta$, which gives the sum rule $\sum_\kappa\Tth_\kappa=0$.
+For a normal mode $n$ with mass-weighted eigenvector $\mathbf e_{\kappa n}$ and normal coordinate $q_n$, $\Delta\mathbf r_\kappa=q_n\mathbf e_{\kappa n}/\sqrt{m_\kappa}$ and
+\begin{equation}
+\frac{\partial\theta}{\partial q_n}=\sum_\kappa\frac{\Tth_\kappa\cdot\mathbf e_{\kappa n}}{\sqrt{m_\kappa}}.
+\eqlab{mode-coupling}
+\end{equation}
+
 
 \subsection{Symmetry constraints on the axion angle}
 

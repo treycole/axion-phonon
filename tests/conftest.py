@@ -4,7 +4,7 @@ only the unit tests), and builds the production models the data tests share, onc
 
 Fixtures (each a dict: the read_run dict of each run without its overlaps M, and the models):
   mbt_pair   MnBi2Te4 base and pattern 3 (Q = 0.01 A), production window: pair_models (~2 min, 4 GB)
-  yio_base   Y2Ir2O7 base, production run 214249: run_model with A(R), pinned (the base model of pair_models)
+  yio_base   Y2Ir2O7 base, production window (wannier90 220455): run_model with A(R), pinned (the base model of pair_models)
 """
 import sys
 from pathlib import Path
@@ -17,7 +17,8 @@ MBT_WINDOW = DATA / "MnBi2Te4/windows/f10.962_w12.810_k8"
 MBT_BASE_RUN = MBT_WINDOW / "base/out"
 MBT_MODE_RUN = MBT_WINDOW / "T2-_p3_Q0.01/out"
 MBT_N_OCC = 82
-YIO_BASE_RUN = DATA / "Y2Ir2O7/base/lda/w90_trial02_selftest_ampwin10_214249"
+YIO_WINDOW = DATA / "Y2Ir2O7/windows/f12.422_w22.644_k8"
+YIO_BASE_RUN = YIO_WINDOW / "base/out"
 YIO_N_OCC = 156
 # --------------
 

@@ -10,7 +10,8 @@ the identity); modes: -4'3m' (23). Operations and priming: yio_point_groups.npz 
   cross, external parts and the total;
 - control: a fourfold operation with its priming flipped (not a symmetry) must fail (paper: ~200%).
 
-The base is the local production run 214249; the mode runs' .chk are on the cluster only (skipped here).
+The base is the local production run (windows/f12.422_w22.644_k8/base, wannier90 220455); the mode runs' .chk are on
+the cluster only (skipped here).
 """
 from pathlib import Path
 

@@ -9,7 +9,7 @@ repository root with the `axion` env:
     python -m pytest tests -s              # also print the measured residuals
 
 `conftest.py` builds the production models the data tests share, once per session: the MnBi₂Te₄ base/pattern-3 pair
-(window `f10.962_w12.810_k8`, ~2 min) and the Y₂Ir₂O₇ base (run 214249, ~2 min). Their paths are its settings block.
+(window `f10.962_w12.810_k8`, ~2 min) and the Y₂Ir₂O₇ base (window `f12.422_w22.644_k8`, wannier90 220455, ~2 min). Their paths are its settings block.
 
 | test | what it checks | data | ported from (`archive/validation/`) |
 |---|---|---|---|
@@ -31,11 +31,16 @@ node, set `STRUCTURE` in the `.sh` and run it (`SUBMIT=false` first: a dry run);
 `windows/<window>/symmetry_<structure>/`. Copy that folder to `data/` with the job folder renamed `out/`, and
 `test_mbt_symmetry.py` checks it.
 
-## Not here yet
+## The Y₂Ir₂O₇ symmetry table (paper `tab:symmetry-yio`)
 
-- Y₂Ir₂O₇ displaced structures (−4′3m′): their `.chk` are on the cluster only.
-- Ports that need new runs: the curvature against postw90 (`kpath_task = curv`) and WannierBerri on a production
-  `.chk`, and the SrTiO₃ Born effective charge (the only check of the mixed k–u curvature against a measured number),
-  which needs SrTiO₃ base + Ti displacement through `pipeline/` steps 1–6.
-- What was not ported, and why: `archive/validation/` compared A(R) sources (`.mmn`, `_r.dat`, PR #702, Jae-Mo's
-  fork, postw90 `rfull`) and SrTiO₃ trial sets; production uses one source (CLAUDE.md pitfall 2), so those are a record.
+`symmetry/run_yio_symmetry.{sh,py}` is the Y₂Ir₂O₇ counterpart of the MnBi₂Te₄ runner (band-traced curvature instead of
+T_ab, since AIAO breaks time reversal). Run on the cluster as above (2026-11-03: jobs 220828-30); the results are in
+`data/Y2Ir2O7/windows/f12.422_w22.644_k8/symmetry_GM2-_p*_Q0.01/out/`, summarized by
+`analysis/yio/symmetry/yio_symmetry.ipynb`.
+
+## Not ported
+
+- `archive/validation/` compared A(R) sources (`.mmn`, `_r.dat`, PR #702, Jae-Mo's fork, postw90 `rfull`) and SrTiO₃
+  trial sets; production uses one source (CLAUDE.md pitfall 2), so those are a record.
+- The curvature against postw90 (`kpath_task = curv`) and WannierBerri on a production `.chk` (WannierBerri agrees
+  to 3×10⁻⁸ on the SrTiO₃ test model; paper App. "Computational details").

@@ -16,7 +16,7 @@ N_OCC=82
 N_GENERIC=7              # random k
 N_TUBE=5                 # k within 0.02 1/A of the k_z axis
 QUEUE=dko48m4,dko64m4
-SLOTS=4                  # local test: 4.0 GB peak, 131 s for 1 + 1 k
+SLOTS=8                  # memory: the A(R) fold needs > 14.4 GB (4 slots ran out, 11-03; as step 6)
 H_RT=04:00:00
 SUBMIT=true
 # ======================================================================================

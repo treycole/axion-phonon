@@ -29,7 +29,7 @@ milestones between bugs) is kept in [`../archive/bug_log_to_2026-10-08.md`](../a
 | [20](20_w90_centre_wrap_long_cell.md) | **FIXED** (recentred sites) | 2026-10-09 | wannier90 centres wrap for sites at crystal x > 2/3 in the long MBT cell, so the WS images are wrong; gap −346 meV |
 | [21](21_mbt_wf_centres_not_c3_covariant.md) | **FIXED** 2026-10-12 (`PIN_TO_ATOMS` in `run_axion.py`) | 2026-10-11 | MBT p_x/p_y WF centres sit off-axis, so a WS fold and τ on WF centres break C3: interpolated bands 62 meV asymmetric; pinned: exact |
 | [22](22_hopping_cut_and_hr_rounding.md) | **FIXED** 2026-10-12 (production: H from `.chk`, no hopping cut) | 2026-10-11 | PythTB `min_hopping_norm=1e-5` and `_hr.dat`'s 1e-6 eV print break the spin-mixing operations: the whole YIO 0.5-0.9% internal floor; without them 0.000% |
-| [23](23_generate_amn_no_paw_overlap.md) | **OPEN** (fix in progress: `wannier/paw_overlap.py`) | 2026-10-28 | `generate_amn.jl` overlaps PAW pseudo-wavefunctions without the augmentation term: the self-test `.amn` is O·V, not V (MBT \|A−V\|/\|V\| 0.22, Mn d norm 0.66); explains the self-test Ω_I shift; Λ = 0 no longer exact |
+| [23](23_generate_amn_no_paw_overlap.md) | **FIXED** (pipeline step 4: MBT 2026-10-30, YIO 2026-11-02) | 2026-10-28 | `generate_amn.jl` overlaps PAW pseudo-wavefunctions without the augmentation term: the self-test `.amn` is O·V, not V (MBT \|A−V\|/\|V\| 0.22, Mn d norm 0.66); Λ ≈ 0.03 Å⁻¹ instead of 0; moved MBT p3 dθ/dQ by 0.03-0.04% |
 
 **Status meanings:**
 - **FIXED:** the fix is in the code, builds and inputs used now.

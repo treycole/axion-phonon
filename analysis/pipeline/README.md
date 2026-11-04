@@ -14,12 +14,16 @@ are `OK` and their jobs have left the queue. Nothing is ever queued behind anoth
 | 5 | `5_wannier.sh` | `windows/<window>_k<N>/<structure>/` | step 3; displaced: step 4 and the base's step 5 | `mode_amn.py`, wannier90.x |
 | 6 | `6_c2.sh` | `windows/<window>_k<N>/dtheta_<structure>/c2/` | step 5 of the structure and of the base | `c2.py` × N_TASKS |
 | 7 | `7_dtheta.sh` | `windows/<window>_k<N>/dtheta_<structure>/` | every step-6 task | `dtheta.py`, on the login node |
+| – | `cs_theta.sh`, `cs_theta_sum.sh` | `windows/<window>_k<N>/dtheta_<structure>/cs/` | step 5 of the structure and of the base | `cs_theta.py` × N_TASKS; `cs_theta_sum.py` on the login node |
 | – | `dfpt.sh` | `dft/<structure>/ph/` | step 1; `ph/<prefix>.ph.in` (you write it) | pw.x (the SCF again, with wavefunctions), ph.x |
 
 Paths are relative to the material folder (`/mnt/wkdk/bc889/axion/<material>/`; the same tree in `data/<material>/`):
 `dft/` holds what depends only on a structure, `windows/` what depends also on the Wannier window (layout of
 `data/MnBi2Te4/README.md`). The base runs steps 1, 2, 3, 5. A displaced structure runs 1 to 7, after the base's step 5
-for the same window. `dfpt.sh` (SrTiO₃: the Born-charge reference) is outside the chain.
+for the same window. Two checks sit outside the chain: `dfpt.sh` (SrTiO₃: the Born-charge reference) and
+`cs_theta.sh` (θ from the Chern–Simons 3-form of each structure, so [θ(structure) − θ(base)]/Q checks ∂θ/∂Q without
+the frozen gauge; θ = 0 materials only, log 2026-10-14). Step 6 on a uniform mesh (Y₂Ir₂O₇): `NK_T=10 M=1 HALF=-1
+N3=10` is the plain 10³ grid, and step 7's sum is then its mean.
 
 **What you write by hand:** each structure's `dft/<structure>/scf/<prefix>.scf.in`, and for the base once per mesh its
 `nscf_k<N>/<prefix>.nscf.in` and `pw2wannier_k<N>/<prefix>.win`. A displaced structure's NSCF input and `.win` are the

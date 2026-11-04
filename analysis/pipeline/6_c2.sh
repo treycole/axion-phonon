@@ -24,7 +24,8 @@ N_TASKS=10
 BATCH=50
 QUEUE=dko48m4,dko64m4
 SLOTS=8                  # memory = SLOTS x 3.6 GB: 8 for an 8^3 mesh; 24 for 10^3 (the fold over 27 x 1000 R needs
-                         # more than 28.8 GB: the 10^3 tubes of 10-30 ran out of memory at 8)
+                         # more than 28.8 GB: the 10^3 tubes of 10-30 ran out of memory at 8). Y2Ir2O7 (176 WF, 8^3):
+                         # 24; 8 runs out of memory in the fold (11-02; qacct maxvmem misses the peak)
 H_RT=24:00:00
 SUBMIT=true
 # ======================================================================================

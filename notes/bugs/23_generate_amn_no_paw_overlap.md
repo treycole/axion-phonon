@@ -1,6 +1,12 @@
 # 23. `generate_amn.jl` overlaps PAW pseudo-wavefunctions without the augmentation term
 
-**Status: OPEN, fix in progress** (found 2026-10-28; Python fix `wannier/paw_overlap.py`, user's choice over a QE patch). Not fixed in any production run. Evidence:
+**Status: FIXED** (found 2026-10-28; MnBi₂Te₄ production 10-30, Y₂Ir₂O₇ rerun through the pipeline 11-02: dθ/dQ moved
+−0.15% / +0.55% / +0.18% for patterns 1-3, together with the change from the self-test to the atomic base; `data/Y2Ir2O7/README.md`). The fix (Python, the user's choice
+over a QE patch) is pipeline step 4 (`pipeline/overlap.py`, `axion_phonon/paw/`, theory and sources in `notes/theory/paw_overlap.md`; the 10-28 prototype was
+`wannier/paw_overlap.py`) with step 5's `mode_amn.py`: A = O·V_base with the PAW metric S. Every MBT production run
+(2026-10-30, window f10.962_w12.810_k8) uses it; there A_Q = 0 holds again (Λ 3e-10 Å⁻¹ for pattern 3, below).
+Every Y₂Ir₂O₇ mode run (the 2026-10-19 production and the amplitude series) still uses the Julia `.amn`; they are to be
+redone with step 4 when YIO moves into the pipeline (`notes/restructure/design.md` §7.5). Updated 2026-11-01. Evidence:
 `archive/diagnostics/2026-10-28_selftest_paw_overlap/` `check_selftest_amn.py` and its `.log` (inputs in
 `data/MnBi2Te4/archive/base/lda/selftest_paw_overlap_2026-10-28/`).
 
@@ -70,7 +76,9 @@ dθ by 0.5-1% from the atomic-base values (log 10-17).
 2. **The "Λ = 0 exactly" argument does not hold as stated.** It needs A(λ) = ⟨ψ_λ|g⟩ with orthonormal ψ_λ and a fixed
    trial g in the base subspace. Here the effective trial in the true metric depends on λ, through the augmentation
    spheres that move with the atoms, and it is not in the self-test subspace. So A_β = 0 is again an approximation
-   for production runs. Its size is unknown.
+   for runs with the Julia `.amn`. Its size was measured afterwards: for MBT pattern 3, Λ ≈ 0.03 Å⁻¹ and dθ/dQ moved
+   0.03-0.04% when corrected (below); for YIO the Chern–Simons 3-form, which does not use A_β, agrees with c₂ to
+   ≤ 0.04% (10-20). With step 4, Λ = 0 holds (3e-10 Å⁻¹).
 3. **YIO has the same defect** (7.6% of A outside span(V)), although its Ω_I moves only 0.6%.
 
 ## Whose bug

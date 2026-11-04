@@ -35,4 +35,6 @@ New note: name it `YYYY-MM-DD_<topic>.md`, open with a "Bottom line", and add on
 | 10-17 | [yio_amplitude_series](2026-10-17_yio_amplitude_series.md) | YIO Γ₂⁻ E(Q), F(Q), θ(Q) series: 3 basis modes × 0.01/0.02/0.03/0.05 Å at conv_thr 1e-10 + base (213998-214010) | — |
 | 10-24 | [cluster_cleanup_plan](2026-10-24_cluster_cleanup_plan.md) | Cluster inventory (10.9 TB): what to delete (superseded, ~4.3 TB), what to slim to outputs (~3.1 TB), production decisions (~1.5 TB) | — |
 
+| 11-03 | [status_through_11-02](2026-11-03_status_through_11-02.md) | The notes/README status, production settings and "Next" history as of 2026-11-02, moved verbatim when the README was rewritten for the wrap-up | — |
+
 All dates are 2026.

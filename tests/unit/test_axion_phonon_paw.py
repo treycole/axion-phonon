@@ -1,7 +1,7 @@
-"""axion_phonon/paw.py pieces that need no QE data: QE's real Y_lm, simpson, G matching.
+"""axion_phonon/paw/ pieces that need no QE data: QE's real Y_lm, simpson, G matching.
 
 The data check (agreement with the code that made the corrected .amn, S-orthonormality of QE's wavefunctions) is
-validation/restructure/accept_paw.py.
+archive/validation/restructure/accept_paw.py.
 """
 from __future__ import annotations
 
@@ -10,7 +10,8 @@ import unittest
 import numpy as np
 
 from axion_phonon.io.qe import Pseudo
-from axion_phonon.paw import angular_gradient_tables, channels, gradient_matrix, match_g, simpson, ylm_real
+from axion_phonon.paw.cross_structure import angular_gradient_tables, gradient_matrix, match_g
+from axion_phonon.paw.qe_port import channels, simpson, ylm_real
 
 
 class TestYlm(unittest.TestCase):

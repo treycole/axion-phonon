@@ -11,7 +11,6 @@ import re
 from pathlib import Path
 
 import numpy as np
-from scipy.io import FortranFile
 
 BOHR = 0.529177210903       # Angstrom
 
@@ -34,11 +33,12 @@ def _text(path: str | Path) -> str:
         return f.read()
 
 
-class _GzipFortranFile:
-    """Sequential little-endian Fortran records from a gzipped file (records over 2 GiB come as subrecords)."""
+class _FortranRecords:
+    """Sequential little-endian Fortran records, plain or gzipped. gfortran splits a record over 2 GiB into subrecords
+    whose leading marker is negative (scipy's FortranFile cannot read them: a 216-WF Y2Ir2O7 .chk, 2026-11-04)."""
 
     def __init__(self, path: Path):
-        self._f = gzip.open(path, "rb")
+        self._f = gzip.open(path, "rb") if path.suffix == ".gz" else open(path, "rb")
 
     def read_record(self, dtype):
         chunks = []
@@ -61,7 +61,7 @@ def read_chk(path: str | Path, m_matrix: bool = False) -> dict:
     b in the .nnkp neighbour order (1.2 GB for MnBi2Te4 at 8x8x8).
     """
     path = _existing(path)
-    f = _GzipFortranFile(path) if path.suffix == ".gz" else FortranFile(str(path), "r")
+    f = _FortranRecords(path)
     ints, floats = (lambda: f.read_record("<i4")), (lambda: f.read_record("<f8"))
 
     def complex_():

@@ -11,7 +11,10 @@ axion_phonon/
   io/qe.py           wfcN.dat, save XML, UPF, pw.x outputs (eigenvalues, bands, Fermi level, k-path), projwfc PDOS
   io/wannier90.py    .chk, .eig, .win, .nnkp, .amn; read_run(folder, prefix) -> one dict of arrays per Wannier run
   io/results.py      save_dtheta_results (uniform-mesh dθ tables)
-  paw.py             step 4: PAW metric S, overlaps O(k) = <psi_structure|S|psi_base> between two saves, A = O V_base
+  paw/               step 4: overlaps O(k) = <psi_structure|psi_base> with PAW between two saves, A = O V_base
+    qe_port.py         S of one structure, ported from QE (projectors, q_ij, spin-orbit, s_psi_nc)
+    cross_structure.py the two-structure overlap: projectors on each side's atoms + d.D_ij (new), mode_amn
+                       theory and what is new vs QE / QEWavefunctions.jl: notes/theory/paw_overlap.md
   wannier.py         step 6a: H(R), A(R) (transl_inv_full from the .chk), WS fold, pinning -> PythTB models
   curvature.py       step 6b: Omega and its three parts                                note §3-§7
   axion.py           step 6c: beta terms, c2, BZ integral (uniform mesh)                note §8-§9

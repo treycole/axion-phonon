@@ -1,7 +1,6 @@
 # Paper figures
 
-One notebook per figure of `paper/draft/main_draft.tex`, `fig<n>.ipynb` for Fig. n (numbering as of 2026-10-21; renumber when
-figures move). Each writes `paper/figures/fig<n>.pdf` (+ `.png`). Settings at the top, code inline.
+One notebook per figure of `paper/draft/main_draft.tex`, `fig<n>.ipynb` for Fig. n. Each writes `paper/figures/fig<n>.pdf` (+ `.png`). Settings at the top, code inline.
 
 | notebook | label | status |
 |---|---|---|
@@ -16,6 +15,6 @@ figures move). Each writes `paper/figures/fig<n>.pdf` (+ `.png`). Settings at th
 | fig9 | `fig:harmonic` | **done** (appendix, 11-03): ΔE(Q) against −½Qv·ΔF along every basis pattern, YIO (a) and MBT (b) (the panels a, d of the earlier Fig. 5) |
 | c2_distribution | (draft, not placed) | c₂ in Cartesian k on the densest data: MBT pattern 3 on the dense tube (16, 16, 5, 32), YIO 12³; concentration curves. Every mode: `../mbt/c2_distribution_modes.ipynb`, `../yio/c2_distribution_modes.ipynb` |
 
-**Colours** (shared): magnetic ion (Ir, Mn) `#7b3294`, other cation (Y, Bi) `#2b6cb0`, anion (O, Te1) `#d9821e`, Te2
+**Colors** (shared): magnetic ion (Ir, Mn) `#7b3294`, other cation (Y, Bi) `#2b6cb0`, anion (O, Te1) `#d9821e`, Te2
 `#f7dc6f` (lines `#d4ac0d`); arrows `#c0392b`. Fig. 3's PDOS uses the element colour, solid for the main valence
 orbital and dashed for the second.

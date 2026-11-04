@@ -1,24 +1,20 @@
-r"""Step 4: the projections of a displaced structure onto the base Wannier functions, with the PAW metric (bug #23).
+r"""The PAW metric S of one structure, ported from Quantum ESPRESSO (nothing here is new; ``notes/theory/paw_overlap.md``).
 
-    A(k) = O(k) V_0(k),    O_mn(k) = <psi_Q,mk | psi_0,nk>
-
-V_0 = U_dis U of the base Wannier run (its .chk), so the trial functions of the displaced structure are the base
-Wannier functions themselves. With PAW the stored pseudo-wavefunctions are orthonormal only in the metric
+With PAW, QE's stored pseudo-wavefunctions are orthonormal only in the metric
 
     S = 1 + sum_a sum_ij |p_i^a> q_ij^a <p_j^a|        (spin-orbit: q_ij -> qq_so[ij, s s'])
 
-and between two structures the projectors sit on different atoms. ``overlap`` is exact to first order in the
-displacement d = tau_Q - tau_0: each side's projectors on its own atoms, plus the one-centre term d . D_ij with
-D_ij = <phi_i|grad|phi_j> - <phi~_i|grad|phi~_j>. At d = 0 it is QE's S, so the base's own wavefunctions come out
-S-orthonormal to diagonalization precision (``validation/unit/test_paw_overlap.py``).
-
-Everything follows QE's construction:
+p_i^a are the projectors (QE's beta functions, ``vkb``) of atom a, one per channel (beta, l, m; j with spin-orbit),
+and q_ij = <phi_i|phi_j> - <phi~_i|phi~_j> is the norm the pseudo partial waves miss inside the sphere.
+Every function reproduces a QE routine, named in its docstring:
 - projectors as ``init_us_2``: (-i)^l Y_lm(k+G) beta_l(|k+G|) e^{-i(k+G).tau} / sqrt(Omega), beta_l(q) from QE's table
   (dq = 0.01 bohr^-1, 4 pi int r beta(r) j_l(qr) dr by QE's ``simpson`` up to kkbeta, cubic Lagrange interpolation),
   Y_lm from ``ylmr2``, ordering species -> atoms of that species -> (beta, m);
 - q_ij as ``compute_qqr`` at q = 0 (the L = 0 augmentation integral), rotated to qq_so with ``fcoef``
   (``init_us_1``, ``transform_qq_so``) for spin-orbit species;
-- S applied as ``s_psi_nc``.
+- S applied as ``s_psi_nc`` (``PAWSystem.augmentation``).
+Check: QE's own wavefunctions come out S-orthonormal to ~1e-14 (``analysis/pipeline/overlap.py`` prints it).
+The overlap between two structures, which QE never computes, is ``cross_structure.py``.
 Units: bohr, bohr^-1. Inputs come from ``axion_phonon/io/qe.py`` (wavefunctions, structure, UPFs).
 """
 from __future__ import annotations
@@ -32,7 +28,6 @@ from axion_phonon.io.qe import Pseudo
 
 DQ = 0.01                                            # QE beta_mod table step (bohr^-1)
 LMAXX = 3                                            # QE upf_spinorb lmaxx
-
 
 # ---------------------------------------------------------------- QE numerics
 def simpson(func: np.ndarray, rab: np.ndarray) -> float:
@@ -153,6 +148,7 @@ class Channels:
 
 
 def channels(ps: Pseudo, lspinorb: bool = True) -> Channels:
+    """QE ``init_us_1``: the channels (nh, indv, nhtol, nhtolm, nhtoj), qq_nt and, with spin-orbit, fcoef and qq_so."""
     indv, nhtol, nhtolm, nhtoj = [], [], [], []
     for nb, l in enumerate(ps.lll):
         for m in range(2 * l + 1):
@@ -195,66 +191,6 @@ def channels(ps: Pseudo, lspinorb: bool = True) -> Channels:
     return ch
 
 
-def angular_gradient_tables(lmax: int) -> tuple[np.ndarray, np.ndarray]:
-    """``G[a, i, j] = int Y_i rhat_a Y_j dOmega`` and ``H[a, i, j] = int Y_i (r d_a Y_j) dOmega`` (QE real Y_lm).
-
-    With these, <R_i Y_i| d_a |R_j Y_j> = G_a int r^2 R_i R_j' dr + H_a int r R_i R_j dr.
-    Exact quadrature (Gauss-Legendre in cos(theta) x uniform phi); r d_a Y by central differences of the
-    degree-0 extension of Y.
-    """
-    x, w = np.polynomial.legendre.leggauss(2 * lmax + 6)
-    phi = np.linspace(0, 2 * np.pi, 4 * lmax + 8, endpoint=False)
-    ct, ph = np.meshgrid(x, phi, indexing="ij")
-    st = np.sqrt(1 - ct ** 2)
-    rhat = np.stack([st * np.cos(ph), st * np.sin(ph), ct], axis=-1).reshape(-1, 3)
-    wt = (w[:, None] * np.full(len(phi), 2 * np.pi / len(phi))[None, :]).ravel()
-    y = ylm_real(rhat, lmax)
-    h = 1e-5
-    G = np.einsum("p,pi,pa,pj->aij", wt, y, rhat, y)
-    H = np.empty_like(G)
-    for a in range(3):
-        e = np.zeros(3)
-        e[a] = h
-        dy = (ylm_real(rhat + e, lmax) - ylm_real(rhat - e, lmax)) / (2 * h)
-        H[a] = np.einsum("p,pi,pj->ij", wt, y, dy)
-    return G, H
-
-
-def _radial_derivative(u: np.ndarray, rab: np.ndarray) -> np.ndarray:
-    """du/dr on a radial mesh (du/di / rab), 4th-order central differences, 2nd order at the two ends."""
-    d = np.gradient(u)
-    d[2:-2] = (-u[4:] + 8 * u[3:-1] - 8 * u[1:-3] + u[:-4]) / 12.0
-    return d / rab
-
-
-def gradient_matrix(ps: Pseudo, ch: Channels, G: np.ndarray, H: np.ndarray) -> np.ndarray:
-    """``D_a(ih, jh) = <phi_i|d_a|phi_j> - <phi~_i|d_a|phi~_j>`` (bohr^-1), one-centre, (3, nh, nh) real.
-
-    The O(d) term of the cross-structure augmentation: <phi_i(r - d)|phi_j(r)> = q_ij + d . D_ij + O(d^2).
-    Large components only (PP_AEWFC); the small-component (PP_AEWFC_REL) part of q_ij is not differentiated.
-    """
-    if not ps.augmented:                                                # norm-conserving: no partial waves
-        return np.zeros((3, len(ch.indv), len(ch.indv)))
-    k = ps.kkbeta
-    r, rab = ps.r[:k], ps.rab[:k]
-    nb = len(ps.lll)
-    i1 = np.zeros((nb, nb))                                             # int u_i (u_j' - u_j / r) dr, AE - PS
-    i2 = np.zeros((nb, nb))                                             # int u_i u_j / r dr, AE - PS
-    for a in range(nb):
-        for b in range(nb):
-            if abs(ps.lll[a] - ps.lll[b]) != 1:
-                continue
-            f1 = f2 = 0.0
-            for u, sign in ((ps.aewfc, 1.0), (ps.pswfc, -1.0)):
-                ua, ub = u[a][:k], u[b][:k]
-                dub = _radial_derivative(ub, rab)
-                f1 = f1 + sign * ua * (dub - ub / r)
-                f2 = f2 + sign * ua * ub / r
-            i1[a, b], i2[a, b] = simpson(f1, rab), simpson(f2, rab)
-    lm = ch.nhtolm
-    return (G[:, lm][:, :, lm] * i1[ch.indv][:, ch.indv][None] + H[:, lm][:, :, lm] * i2[ch.indv][:, ch.indv][None])
-
-
 def beta_table(ps: Pseudo, qmax: float) -> np.ndarray:
     """QE ``init_tab_beta``: 4 pi int r beta(r) j_l(q r) dr on q = 0, dq, ... (rows: projectors)."""
     nq = int(qmax / DQ + 4) + 1
@@ -294,9 +230,6 @@ class PAWSystem:
         self.chan = {name: channels(ps, lspinorb) for name, ps in self.pseudo.items()}
         self.tab = {name: beta_table(ps, qmax) for name, ps in self.pseudo.items()}
         self.lmax = max(int(ps.lll.max()) for ps in self.pseudo.values())
-        G, H = angular_gradient_tables(self.lmax)
-        self.dso = {name: np.stack([self.chan[name].to_so(d) for d in gradient_matrix(ps, self.chan[name], G, H)])
-                    for name, ps in self.pseudo.items()}                # (3, 4, nh, nh)
         # QE order of the projector blocks: species, then atoms of that species
         self.blocks = []                                                # (atom index, species, offset)
         off = 0
@@ -328,55 +261,17 @@ class PAWSystem:
         ng = vkb.shape[1]
         return np.stack([evc[:, :ng] @ vkb.conj().T, evc[:, ng:] @ vkb.conj().T], axis=1)
 
-    def augmentation(self, becp1: np.ndarray, becp2: np.ndarray, disp: np.ndarray | None = None) -> np.ndarray:
-        """sum_a sum_ij,ss' conj(becp1[m,s,i]) Q^a[ss',ij] becp2[n,s',j]  ->  (nbnd1, nbnd2).
 
-        Q^a = qq_so, plus d_a . D_so when ``disp`` (nat, 3; bohr) gives each atom's displacement of side 1
-        relative to side 2 (the O(d) partial-wave overlap of two displaced spheres).
+    def augmentation(self, becp1: np.ndarray, becp2: np.ndarray) -> np.ndarray:
+        """QE ``s_psi_nc``'s one-centre term: sum_a sum_ij,ss' conj(becp1[m,s,i]) qq_so^a[ss',ij] becp2[n,s',j].
+
+        Returns (nbnd1, nbnd2). With both becp from one structure, <psi1|S|psi2> = plane-wave overlap + this.
         """
         out = np.zeros((becp1.shape[0], becp2.shape[0]), complex)
         for a, sp, off in self.blocks:
             qq = self.chan[sp].qq_so
-            if disp is not None and np.any(disp[a]):
-                qq = qq + np.tensordot(disp[a], self.dso[sp], axes=(0, 0))
             sl = slice(off, off + qq.shape[1])
             b1, b2 = becp1[:, :, sl], becp2[:, :, sl]
             for ijs, (s1, s2) in enumerate(((0, 0), (0, 1), (1, 0), (1, 1))):
                 out += b1[:, s1].conj() @ qq[ijs] @ b2[:, s2].T
         return out
-
-
-def match_g(mill1: np.ndarray, mill2: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-    """Indices (i1, i2) with mill1[i1] == mill2[i2]."""
-    key = lambda m: (m[:, 0].astype(np.int64) * 4096 + m[:, 1]) * 4096 + m[:, 2]
-    k1, k2 = key(mill1 + 2048), key(mill2 + 2048)
-    common, i1, i2 = np.intersect1d(k1, k2, assume_unique=True, return_indices=True)
-    return i1, i2
-
-
-def pw_overlap(w1: dict, w2: dict) -> np.ndarray:
-    """Plane-wave part <psi1_m|psi2_n> on the shared G vectors (both spin components)."""
-    i1, i2 = match_g(w1["mill"], w2["mill"])
-    g1, g2 = w1["igwx"], w2["igwx"]
-    a = np.concatenate([w1["evc"][:, i1], w1["evc"][:, g1 + i1]], axis=1)
-    b = np.concatenate([w2["evc"][:, i2], w2["evc"][:, g2 + i2]], axis=1)
-    return a.conj() @ b.T
-
-
-def overlap(sys1: PAWSystem, w1: dict, sys2: PAWSystem, w2: dict) -> np.ndarray:
-    """O_mn = <psi1_m|psi2_n> with the PAW augmentation, exact to first order in d = tau1 - tau2; same k in both.
-
-    ``w1``, ``w2`` from ``io.qe.read_wfc``. The projectors of each side sit on its own atoms; species, channels and
-    tables are the same for both structures, so ``sys1``'s serve both.
-    """
-    if not np.allclose(w1["xk"], w2["xk"], atol=1e-8):
-        raise ValueError("k points differ")
-    tau1, tau2 = sys1.struct["tau"], sys2.struct["tau"]
-    p1 = sys1.vkb(w1["xk"], w1["mill"], w1["b"], tau1)
-    p2 = sys1.vkb(w2["xk"], w2["mill"], w2["b"], tau2)
-    return pw_overlap(w1, w2) + sys1.augmentation(sys1.becp(p1, w1["evc"]), sys1.becp(p2, w2["evc"]), tau1 - tau2)
-
-
-def mode_amn(O: np.ndarray, V_base: np.ndarray) -> np.ndarray:
-    """A(k) = O(k) V_0(k): (nk, num_bands, num_wann), the displaced structure's .amn."""
-    return O @ V_base
