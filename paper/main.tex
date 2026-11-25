@@ -1,4 +1,4 @@
-\def\draftversion{false}
+\def\draftversion{true}
 \RequirePackage{ifthen}
 \ifthenelse{\equal{\draftversion}{true}}{
   \documentclass[galley,aps,pra,10pt,amsmath,amssymb,
@@ -39,6 +39,9 @@
   \def\commmar{{\bf\color{blue}[\arabic{comm}]}}
   \def\dvm#1{\commnext\marginpar{\small DV\commmar: #1}\commtext}
   \def\tcm#1{\commnext\marginpar{\small TC\commmar: #1}\commtext}
+  \def\dsm#1{\commnext\marginpar{\small DS\commmar: #1}\commtext}
+  \def\aum#1{\commnext\marginpar{\small AU\commmar: #1}\commtext}
+  \def\jlm#1{\commnext\marginpar{\small JL\commmar: #1}\commtext}
   \def\tnewpage{\newpage\marginpar{\small Temporary newpage}}
   \newcommand{\seclab}[1]{\label{sec:#1}{\Red{\small\;\;[sec:~#1]}}}
   \newcommand{\eqlab}[1]{\Red{\hbox{\small\;\;[#1]}}\label{eq:#1}}
@@ -46,6 +49,9 @@
 }{
   \def\dvm#1{}
   \def\tcm#1{}
+  \def\dsm#1{}
+  \def\aum#1{}
+  \def\jlm#1{}
   \def\tnewpage{}
   \newcommand{\eqlab}[1]{\label{eq:#1}}
   \newcommand{\seclab}[1]{\label{sec:#1}}
@@ -118,6 +124,7 @@ Department of Physics, University of Texas at Austin, Austin, Texas 78712, USA}
 \author{Andrea Urru}
 \affiliation{
 Department of Physics \& Astronomy, Center for Materials Theory, Rutgers University, Piscataway, New Jersey 08854, USA}
+\affiliation{Dipartimento di Fisica, Università di Cagliari, Cittadella Universitaria, Monserrato, CA 09042, Italy}
 
 \author{Jae-Mo Lihm}
 \affiliation{
@@ -144,17 +151,17 @@ The Chern-Simons axion angle $\theta$ is pinned to $0$ or $\pi$ by any symmetry 
 \seclab{intro}
 %==========================================================================
 
-Many properties of crystalline insulators are governed by the geometry of the occupied Bloch states rather than by the band energies alone~\cite{xiao2010berry, vanderbilt2018berry}. The electric polarization is the most familiar example: it is a Berry phase of the occupied manifold, defined only modulo a quantum~\cite{kingsmith1993theory, resta1994macroscopic}. Its three-dimensional, magnetoelectric counterpart is the Chern-Simons axion angle $\theta$, which describes the isotropic part of the orbital magnetoelectric response~\cite{qi2008topological, essin2009magnetoelectric, essin2010orbital, malashevich2010theory, coh2011chern}. An insulator with $\theta\neq0$ responds to a magnetic field $\mathbf B$ with an electric polarization $\mathbf P=(\theta e^2/2\pi h)\mathbf B$, and to an electric field with the corresponding magnetization; in the language of high-energy physics, $\theta$ plays the role of a background axion field coupled to $\mathbf E\cdot\mathbf B$~\cite{wilczek1987two}.
+Many properties of crystalline insulators are governed by the geometry of the occupied Bloch states rather than by the band energies alone~\cite{xiao2010berry, vanderbilt2018berry}. The electric polarization is the most familiar example: it is a Berry phase of the occupied manifold, defined only modulo a quantum~\cite{kingsmith1993theory, resta1994macroscopic}. Its three-dimensional, magnetoelectric counterpart is the Chern-Simons axion angle $\theta$\dsm{I wonder if we should label the CS angle as $\theta_\text{CS}$, since later on you introduce $\alpha_\text{CS}$. This would also distinguish it from the Kubo contributions to the ME response.}, which describes the isotropic part of the orbital magnetoelectric response~\cite{qi2008topological, essin2009magnetoelectric, essin2010orbital, malashevich2010theory, coh2011chern}. An insulator with $\theta\neq0$ responds to a magnetic field $\mathbf B$ with an electric polarization $\mathbf P=(\theta e^2/2\pi h)\mathbf B$, and to an electric field with the corresponding magnetization; in the language of high-energy physics, $\theta$ plays the role of a background axion field coupled to $\mathbf E\cdot\mathbf B$~\cite{wilczek1987two}.
 
-Like the polarization, $\theta$ is a multivalued quantity, defined modulo $2\pi$. Any symmetry that reverses either spatial orientation or time maps $\theta$ to $-\theta$, and therefore pins it to $0$ or $\pi$~\cite{qi2008topological, essin2009magnetoelectric, mong2010antiferromagnetic, hughes2011inversion, turner2012quantized, marzari2012maximally}. Insulators with $\theta=\pi$ are axion insulators. Time-reversal-symmetric strong topological insulators are the original example, and their quantized magnetoelectric response has been observed through Faraday and Kerr rotation~\cite{wu2016quantized, armitage2019matter}. In magnetic insulators, $\theta=\pi$ can instead be protected by inversion or by a composite of time reversal with a fractional translation~\cite{mong2010antiferromagnetic}. The layered antiferromagnet \MBT{} is the most studied realization~\cite{otrokov2019prediction, li2019intrinsic, zhang2019topological, gong2019experimental}: it is an intrinsic antiferromagnetic topological insulator, whose thin films exhibit quantum anomalous Hall transport~\cite{deng2020quantum}, transport signatures consistent with axion-insulator and Chern-insulator states~\cite{liu2020robust}, and a layer Hall effect~\cite{gao2021layer}.
+Like the polarization, $\theta$ is a multivalued quantity, defined modulo $2\pi$. Any symmetry that reverses either spatial orientation or time maps $\theta$ to $-\theta$, and therefore pins it to $0$ or $\pi$~\cite{qi2008topological, essin2009magnetoelectric, mong2010antiferromagnetic, hughes2011inversion, turner2012quantized, marzari2012maximally,varnava2020axion,seleznev2023towards}. Insulators with $\theta=\pi$ are axion insulators. Time-reversal-symmetric strong topological insulators are the original example, and their quantized magnetoelectric response has been observed through Faraday and Kerr rotation~\cite{wu2016quantized, armitage2019matter}. In magnetic insulators, $\theta=\pi$ can instead be protected by inversion or by a composite of time reversal with a fractional translation~\cite{mong2010antiferromagnetic}. The layered antiferromagnet \MBT{} is the most studied realization~\cite{otrokov2019prediction, li2019intrinsic, zhang2019topological, gong2019experimental}: it is an intrinsic antiferromagnetic topological insulator, whose thin films exhibit quantum anomalous Hall transport~\cite{deng2020quantum}, transport signatures consistent with axion-insulator and Chern-insulator states~\cite{liu2020robust}, and a layer Hall effect~\cite{gao2021layer}.
 
 There is good reason to expect derivatives of $\theta$ to be more tractable than $\theta$ itself.
-The history of the polarization is instructive: Born effective charges and dielectric constants, which are first derivatives of $\mathbf P$, were computed before the Berry-phase theory made $\mathbf P$ itself accessible~\cite{kunc1982abinitio, resta1994macroscopic, baroni2001phonons, gonze1997dynamical}. The reason is that $\mathbf P$ is an integral of a gauge-dependent Berry connection and is defined modulo a quantum, whereas $\partial\mathbf P/\partial\lambda$ suffers from neither ambiguity. The same holds for $\theta$. Its Chern-Simons expression requires a smooth, periodic gauge for the occupied states, whose construction and numerical convergence can be delicate~\cite{coh2011chern, liu2015gauge, varnava2020axion, cole2026exact}. For the zero-Chern topological insulators of interest here, such a gauge exists after relaxing the protecting symmetries in the gauge choice; imposing a symmetry-respecting gauge can instead create an obstruction~\cite{soluyanov2011wannier, cole2025reduced}. By contrast, $\partial\theta/\partial\lambda$ is an integral of a gauge-invariant trace of products of Berry curvatures in the four-dimensional space of crystal momentum and $\lambda$~\cite{qi2008topological, essin2010orbital, taherinejad2015adiabatic, olsen2017surface}.
+The history of the polarization is instructive: Born effective charges and dielectric constants, which are first derivatives of $\mathbf P$, were computed before the Berry-phase theory made $\mathbf P$ itself accessible~\cite{kunc1982abinitio, resta1994macroscopic,Resta1992polarization, baroni2001phonons, gonze1997dynamical}. The reason is that $\mathbf P$ is an integral of a gauge-dependent Berry connection and is defined modulo a quantum, whereas $\partial\mathbf P/\partial\lambda$\dsm{Sudden introduction of $\lambda$ without an explanation of what is.} suffers from neither ambiguity. The same holds for $\theta$. Its Chern-Simons expression requires a smooth, periodic gauge for the occupied states, whose construction and numerical convergence can be delicate~\cite{coh2011chern, liu2015gauge, varnava2020axion, cole2026exact}. For the zero-Chern topological insulators of interest here, such a gauge exists after relaxing the protecting symmetries in the gauge choice; imposing a symmetry-respecting gauge can instead create an obstruction~\cite{soluyanov2011wannier, cole2025reduced}. By contrast, $\partial\theta/\partial\lambda$ is an integral of a gauge-invariant trace of products of Berry curvatures in the four-dimensional space of crystal momentum and $\lambda$~\cite{qi2008topological, essin2010orbital, taherinejad2015adiabatic, olsen2017surface}.
 
 A static, uniform $\theta$ has no effect on bulk electrodynamics. The axion term becomes observable when $\theta$ varies in space or time, producing a Hall current $\propto\nabla\theta\times\mathbf E$ or a current $\propto\dot\theta\,\mathbf B$~\cite{wilczek1987two}. This has motivated a large body of work on \emph{dynamical} axion fields in solids~\cite{nenno2020axion, sekine2021axion}, in which $\theta$ is modulated by a pre-existing degree of freedom of the crystal. Examples include antiferromagnetic fluctuations in magnetically doped topological insulators~\cite{li2010dynamical}, magnetization fluctuations in magnetic topological-insulator superlattices~\cite{wang2016dynamical}, and lattice vibrations that modulate the Dirac mass of a magnetic insulator~\cite{lhachemi2024phononic}. Recently, an oscillation of $\theta$ driven by an antiferromagnetic magnon was reported in a six-septuple-layer film of \MBT{}~\cite{qiu2025observation}. In an applied magnetic field, a dynamical axion mode can hybridize with light to form an axion polariton~\cite{li2010dynamical}. This field-induced mixing underlies proposals to use antiferromagnetic topological insulators as resonant detectors of axion dark matter~\cite{marsh2019proposal, schutteengel2021axion}. In every one of these proposals, the central material parameter is the coupling $\partial\theta/\partial\lambda$ between $\theta$ and the degree of freedom $\lambda$ that drives it. For phonons, however, this coupling has, to our knowledge, only been evaluated within model Hamiltonians.
 
 
-In this work, we develop a first-principles theory of the coupling between lattice vibrations and the Chern-Simons axion angle. We call a phonon \emph{axion-active} when it changes $\theta$ at first order in its amplitude. We apply the theory to two magnetic insulators with contrasting axion topology: the pyrochlore iridate \YIO{} with all-in-all-out order, which we study in a correlation regime where it is a trivial insulator with $\theta=0$~\cite{wan2011topological, witczak2014correlated}, and the antiferromagnetic topological insulator \MBT{} with $\theta=\pi$. We begin with the symmetry rules. A phonon couples linearly only if it transforms exactly as $\theta$, a one-dimensional representation of the magnetic point group; this is stronger than the commonly stated requirement that it break every quantizing symmetry. Two consequences follow. An axion-active phonon is infrared-active only if the magnetic group admits a net magnetization, and it is never Raman-active when the undistorted crystal has unprimed inversion. In magnets whose magnetic ions occupy inversion centers, which includes both materials studied here, uniform spin fluctuations at fixed ionic positions cannot move $\theta$ along a gapped path, so inversion-breaking phonons provide a bulk dynamical-axion channel that those spin fluctuations lack. From these rules, we then select the axion-active modes and distort the crystal structure according to these patterns. We compute the axion-phonon coupling from fully relativistic density-functional theory (DFT) by evaluating the four-curvature on Wannier-interpolated tight-binding Hamiltonians. The derivatives along the phonon direction are evaluated using finite differences between two independent Wannier models. 
+In this work, we develop a first-principles theory of the coupling between lattice vibrations and the Chern-Simons axion angle. We call a phonon \emph{axion-active} when it changes $\theta$ at first order in its amplitude. We apply the theory to two magnetic insulators with contrasting axion topology: the pyrochlore iridate \YIO{} with all-in-all-out order, which we study in a correlation regime where it is a trivial insulator with $\theta=0$~\cite{wan2011topological, witczak2014correlated}, and the antiferromagnetic topological insulator \MBT{} with $\theta=\pi$. We begin with the symmetry rules. A phonon couples linearly only if it transforms exactly as $\theta$, a one-dimensional representation of the magnetic point group; this is stronger than the commonly stated requirement that it break every quantizing symmetry. Two consequences follow. An axion-active phonon is infrared-active only if the magnetic group admits a net magnetization, and it is never Raman-active when the undistorted crystal has unprimed \dsm{``Primed" and ``unprimed" haven't been defined yet. \\ \textcolor{red}{AU: perhaps we can call it ``pure inversion (i.e., not coupled with time reversal)''.}} inversion. In magnets whose magnetic ions occupy inversion centers, which includes both materials studied here, uniform spin fluctuations at fixed ionic positions cannot move $\theta$ along a gapped path, so inversion-breaking phonons provide a bulk dynamical-axion channel that those spin fluctuations lack. From these rules, we then select the axion-active modes and distort the crystal structure according to these patterns. We compute the axion-phonon coupling from fully relativistic density-functional theory (DFT) by evaluating the four-curvature on Wannier-interpolated tight-binding Hamiltonians. The derivatives along the phonon direction are evaluated using finite differences between two independent Wannier models. 
 
 
 
@@ -189,7 +196,7 @@ with $\theta$ given by the Brillouin-zone integral of the Chern-Simons 3-form~\c
 \eqlab{CS3form}
 \end{equation}
 where $(\mathcal A_\mu)_{mn}=i\langle u_{m\mathbf k}|\partial_\mu u_{n\mathbf k}\rangle$ is the non-Abelian Berry connection of the occupied states and the trace runs over occupied bands. The integrand of \eq{CS3form} is gauge dependent, and $\theta$ is defined only modulo $2\pi$.
-The remaining, non-topological parts of the orbital response~\cite{essin2010orbital, malashevich2010theory}, and the spin and lattice-mediated contributions~\cite{iniguez2008firstprinciples, bousquet2011unexpectedly, malashevich2012full, ye2014dynamical}, are not quantized and are not considered here.
+The remaining, non-topological parts of the orbital response~\cite{essin2010orbital, malashevich2010theory}, and the spin and lattice-mediated contributions~\cite{iniguez2008firstprinciples, bousquet2011unexpectedly, malashevich2012full, ye2014dynamical} \aum{I think the spin and lattice-mediated contributions are not two separate things. In fact, the spin contribution is split into lattice-mediated and electronic contributions.}, are not quantized and are not considered here.
 
 
 \subsection{Four-curvature formula}
@@ -222,13 +229,13 @@ This differs from the anomalous Hall conductivity, which involves the band trace
 \subsection{\texorpdfstring{Operations that quantize $\theta$}{Operations that quantize theta}}
 
 Because $\theta$ multiplies $\mathbf E\cdot\mathbf B$, and $\mathbf E$ is a polar, time-even vector while $\mathbf B$ is axial and time-odd, $\theta$ is unchanged by proper rotations and changes sign under improper operations and under time reversal.
-For an element $g$ of a magnetic point group with rotation part $R$, the character of $\theta$ is therefore
+For an element $g$ of a magnetic point group with rotation part $R$ \aum{Would it be ok to add (proper or improper)? I am worried that $R$ could be interpreted as a proper rotation only.}, the character of $\theta$ is therefore
 \begin{equation}
 \chi_\theta(g)=\det R\;s(g),
 \eqlab{chi-theta}
 \end{equation}
-where $s(g)=+1$ for unprimed elements and $-1$ for primed elements (those containing $\mathcal T$).
-The crystal quantizes $\theta$ if it has any element with $\chi_\theta(g)=-1$; we call such elements $\theta$-odd. They are the unprimed improper operations and the primed proper operations~\cite{varnava2020axion}. In the presence of such symmetries, $\theta$ must be either $\pi$ (topological) or $0$ (trivial).
+where $s(g)=+1$ for unprimed elements and $-1$ for primed elements (those containing $\mathcal T$) \aum{As a possible alternative, we can call these ``unitary'' and ``anti-unitary'' instead of ``unprimed'' and ``primed'' -- I don't know if this is somewhat better.}.
+The crystal quantizes $\theta$ if it has any element with $\chi_\theta(g)=-1$; we call such elements $\theta$-odd. They are the unprimed improper operations and the primed proper operations~\cite{varnava2020axion,seleznev2023towards}. In the presence of such symmetries, $\theta$ must be either $\pi$ (topological) or $0$ (trivial).
 
 % \Tref{theta-odd} lists them for the two materials.
 % In all-in-all-out \YIO{}, with magnetic point group $m\bar3m'$, inversion is only one of several: the primed fourfold and twofold rotations $C_4'$ and $C_2'$ also quantize $\theta$. In antiferromagnetic \MBT{}, the composite $\Theta=\mathcal T\tau_{1/2}$ of time reversal and the half translation that exchanges the two septuple layers~\cite{mong2010antiferromagnetic} makes the magnetic point group the grey group $\bar3m1'$, in which every primed proper element is $\theta$-odd.
@@ -304,10 +311,8 @@ For a pattern belonging to a one-dimensional irreducible representation (irrep) 
 \gamma_{\mathbf v}=0.
 \eqlab{character-selection}
 \end{equation}
-A mismatch for even one operation forces the coupling to vanish. A multidimensional irrep cannot support a nonzero linear response either. To couple linearly to $\theta$, a phonon in a single irrep must keep the same displacement pattern under every symmetry, apart from an overall sign change. In a multidimensional irrep, any chosen pattern is transformed by at least one symmetry into a different pattern. It therefore cannot satisfy the linear selection rule. Therefore, the linear response must vanish. Consequently,
-\begin{quote}
-\emph{A symmetry-adapted phonon can couple linearly to the axion angle only if its displacement pattern transforms as $\theta$ under every magnetic symmetry operation.}
-\end{quote}
+A mismatch for even one operation forces the coupling to vanish. A multidimensional irrep cannot support a nonzero linear response either. To couple linearly to $\theta$, a phonon in a single irrep must keep the same displacement pattern under every symmetry, apart from an overall sign change. In a multidimensional irrep, any chosen pattern is transformed by at least one symmetry into a different pattern. It therefore cannot satisfy the linear selection rule. Therefore, the linear response must vanish. Consequently, a symmetry-adapted phonon can couple linearly to the axion angle only if its displacement pattern transforms as $\theta$ under every magnetic symmetry operation.
+
 We denote this one-dimensional representation by $\Gamma_\theta$. Its patterns satisfy
 \begin{equation}
 D(g)\mathbf v=\chi_\theta(g)\mathbf v
@@ -521,11 +526,83 @@ which are exactly those of a time-odd axial vector, such as magnetization. Thus 
 Finally, the location of the ordered magnetic moments distinguishes the lattice and spin channels in these materials. One common unprimed inversion maps every Ir site in \YIO{}, or every Mn site in \MBT{}, onto itself modulo a magnetic lattice translation. Spins are axial vectors and are unchanged by inversion. Consequently, any configuration of these local moments that is periodic in the magnetic cell preserves this inversion when the ionic positions are fixed. Within a connected insulating phase with vanishing bulk Chern numbers, $\theta$ remains quantized and cannot change along such a spin deformation that keeps the gap open~\cite{turner2012quantized,zhang2020large,sekine2021axion}. The obstruction applies beyond linear order to these fixed-site spin degrees of freedom. It does not exclude finite-wave-vector spin excitations, films, or additional inversion-breaking electronic order. The inversion-breaking phonon sectors identified above provide a bulk dynamical-axion channel that these magnetic-cell-periodic spin fluctuations cannot supply.
 
 
+\section{Wannier interpolation}
+
+We evaluate \eqo{4curv}{4curv-reduced} on tight-binding models built from $J$ Wannier functions $|\mathbf{R}s\rangle$ per cell, of which $N_{\rm occ}$ combinations are occupied at each $\mathbf k$. With the Bloch-like states $|u^W_s(\mathbf{k})\rangle = \sum_{\mathbf{R}} e^{-i\mathbf{k}(\hat{\mathbf{r}}- \mathbf{R} - \boldsymbol{\tau_s})} |\mathbf{R} s\rangle$, where $\boldsymbol{\tau}_s$ is a nominal reference position for orbital $s$, the Hamiltonian and Wannier-gauge connection are the Bloch sums
+\begin{align}
+\Hb_{st}(\mathbf k)&=\sum_{\mathbf R}e^{i\mathbf k\cdot\mathbf b_{st}(\mathbf R)}\langle\mathbf 0s|\hat H|\mathbf Rt\rangle,
+\eqlab{Hk}\\
+\Ab_{\mu,st}(\mathbf k)&=\sum_{\mathbf R}e^{i\mathbf k\cdot\mathbf b_{st}(\mathbf R)}\langle\mathbf 0s|\hat r_\mu-\tau_{s\mu}|\mathbf Rt\rangle,
+\eqlab{Ak}
+\end{align}
+with $\mathbf b_{st}(\mathbf R)=\mathbf R+\boldsymbol\tau_t-\boldsymbol\tau_s$ ~\cite{wang2006abinitio, yates2007spectral, marzari2012maximally}.
+Let $U$ ($J\times N_{\rm occ}$) and $\bar U$ ($J\times(J-N_{\rm occ})$) hold the occupied and unoccupied eigenvectors of $\Hb$, with energies $E_v$ and $E_c$.
+Starting from the identity $\BB_{\mu\nu}=i\langle\partial_\mu u|\hat{\mathcal Q}|\partial_\nu u\rangle-(\mu\leftrightarrow\nu)$, with $\hat{\mathcal Q}$ the projector onto all unoccupied states, the occupied-band curvature becomes
+\begin{equation}
+\BB_{\mu\nu}=\BB^{\rm int}_{\mu\nu}+\BB^{\rm cross}_{\mu\nu}+\BB^{\rm ext}_{\mu\nu},
+\eqlab{split}
+\end{equation}
+\begin{align}
+\BB^{\rm int}_{\mu\nu}&=i\left(d^\dagger_\mu d_\nu-d^\dagger_\nu d_\mu\right),\nn
+\BB^{\rm cross}_{\mu\nu}&=\left(d^\dagger_\mu a_\nu+a^\dagger_\nu d_\mu\right)-\left(d^\dagger_\nu a_\mu+a^\dagger_\mu d_\nu\right),\nn
+\BB^{\rm ext}_{\mu\nu}&=U^\dagger\Omb_{\mu\nu}U-i\left[U^\dagger\Ab_\mu U,\,U^\dagger\Ab_\nu U\right],
+\eqlab{parts}
+\end{align}
+where
+\begin{gather}
+d_{\mu,cv}=\frac{[\bar U^\dagger(\partial_\mu\Hb)U]_{cv}}{E_v-E_c},\qquad a_\mu=\bar U^\dagger\Ab_\mu U,\nn
+\Omb_{\mu\nu}=\partial_\mu\Ab_\nu-\partial_\nu\Ab_\mu.
+\eqlab{ingredients}
+\end{gather}
+The internal part depends only on the Wannier-interpolated tight-binding Hamiltonian alone and reduces to the familiar non-Abelian Kubo formula. The external part depends solely on the off-diagonal terms of the position matrix. The cross part mixes the two. Each part is a $N_{occ} \times N_{occ}$ Hermitian matrix that transforms covariantly under a change of basis of the occupied states, but only their sum is independent of the particular choice of Wannier space. Two limits bracket the decomposition: an occupied-only Wannier set ($J=N_{occ}$) has $\bar{U}$ empty and gives pure external curvature, while point-like orbitals at their reference positions ($\Ab = 0$) give pure internal curvature. Traced over bands, \eq{split} reduces to the decomposition of Ref.~\cite{wang2006abinitio}. The full matrix-valued curvature, including the external contributions, also appears in the Wannier-interpolation formalism of Liu \emph{et al.}~\cite{liu2023covariant}.
+
+\subsection{The phonon direction}
+\seclab{phonon-direction}
+
+Along the phonon direction, $\lambda=Q_i$ is the amplitude of one basis pattern (\sref{charges}), and the derivative acts on the Wannier functions themselves rather than on a Bloch phase. The $\lambda$ derivatives $\partial_\lambda\Hb$ and $\partial_\lambda\Ab_\mu$ are finite differences between the Wannier models of the undistorted structure and of the structure displaced by $Q\mathbf v_i$. We hold the reference positions fixed, $\partial_\lambda\boldsymbol\tau_s=0$; the physical motion of the Wannier centers then enters through the position matrix rather than through $\boldsymbol\tau$.
+The connection along $\lambda$ and the mixed curl are 
+\begin{align}
+\Ab_{\lambda,st}(\mathbf k)&=i\sum_{\mathbf R}e^{i\mathbf k\cdot\mathbf b_{st}(\mathbf R)}\Lambda_{st}(\mathbf R),
+\eqlab{Alambda}\\
+\Omb_{\lambda\mu,st}(\mathbf k)&=\sum_{\mathbf R}e^{i\mathbf k\cdot\mathbf b_{st}(\mathbf R)}\big[\partial_\lambda X_{\mu,st}(\mathbf R)\nn
+&\hspace{6em}+b_{\mu,st}(\mathbf R)\Lambda_{st}(\mathbf R)\big],
+\eqlab{Omegalambda}
+\end{align}
+with $\Lambda_{st}(\mathbf R)=\langle\mathbf 0s|\partial_\lambda|\mathbf Rt\rangle$ and $X_{\mu,st}(\mathbf R)=\langle\mathbf 0s|\hat r_\mu-\tau_{s\mu}|\mathbf Rt\rangle$.
+$\Lambda$ describes the rotation and deformation of the Wannier functions with $\lambda$; it is not written by standard Wannier codes, but it is determined by the projection matrices and gauge matrices of the two structures.
+
+
+%==========================================================================
+\section{\texorpdfstring{\YIO{}}{Y2Ir2O7}}
+\seclab{YIO}
+%==========================================================================
+
+\YIO{} crystallizes in the pyrochlore structure, space group $Fd\bar3m$, with 22 atoms in the primitive cell: four Y ($16d$), four Ir ($16c$), two O ($8b$), and twelve O ($48f$). The Ir$^{4+}$ ions form a network of corner-sharing tetrahedra. \YIO{} orders magnetically near 150--170~K~\cite{shapiro2012structure, disseler2012magnetic, son2019unconventional}; neutron diffraction has not resolved the ordered moment, placing an upper bound of about $0.5\,\mu_{\rm B}$/Ir for $q=0$ order~\cite{shapiro2012structure}. The magnetic moments order in an all-in-all-out configuration, 
+
+We use LDA+$U$ with $U=3$~eV on Ir $5d$, which places \YIO{} in the trivial insulating phase with $\theta=0$ 
+
+
+
+
+
 
 %==========================================================================
 \section{MnBi$_2$Te$_4$}
 \seclab{MBT}
 %==========================================================================
+
+
+\begin{figure*}[t]
+\includegraphics[width=\textwidth]{figures/fig3.pdf}
+\caption{Bands of the undistorted structures from DFT (solid) and from the Wannier interpolation used for $\partial\theta/\partial\lambda$ (dashed), relative to the valence-band maximum, with the projected density of states (PDOS) on the right of each panel.
+(a) \YIO{} (176 Wannier functions, 156 occupied; frozen-window top at 2.0~eV).
+(b) \MBT{} (116 Wannier functions, 82 occupied; frozen-window top at 3.7~eV).
+The dotted line is the top of the frozen window, above which the interpolated bands need not follow DFT.
+Each panel extends down to the lowest occupied Wannier bands (Y $4p$ and Te $5s$); the flat semicore states below are not in the Wannier sets.
+Most of the DFT $ k$-points lie outside the $8\times8\times8$ Wannier mesh.
+The PDOS is projected onto the pseudopotential atomic orbitals, summed over atoms and over $j$, on the $8\times8\times8$ DFT mesh with a Gaussian broadening of 0.11~eV; the grey fill is the total DOS, and the tallest peaks are cut off.}
+\figlab{bands}
+\end{figure*}
 
 \subsection{Crystal and magnetic structure}
 
